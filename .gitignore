@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+.venv/
+
+# Environment variables (secrets)
+.env
+backend/.env
+
+# Large model files
+*.pt
+
+# Logs
+*.log
+
+# OS junk
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+
+# Test data (optional, remove if you want them in repo)
+# test thumbnails/
+
+# Snapshots (generated data)
+backend/snapshots/

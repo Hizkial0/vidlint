@@ -20,7 +20,7 @@ const { analyzePipeline, PipelineError } = require('./pipeline_v2/orchestrator')
 const { connectDB, createRun, logStage, completeRun, failRun, getRun, listRuns } = require('./db');
 
 const app = express();
-const PORT = process.env.PORT || 8787;
+const PORT = process.env.PORT || 3000;
 const ANALYZER_URL = process.env.ANALYZER_URL || 'http://localhost:8001';
 
 app.use(cors());

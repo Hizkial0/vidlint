@@ -12,8 +12,8 @@ const analysisCache = {
 
 // --- API CONFIGURATION ---
 const API_CONFIG = {
-    // Local development backend
-    baseUrl: "http://localhost:8787",
+    // Auto-detect: use localhost for dev, empty string (relative) for production
+    baseUrl: window.location.hostname === 'localhost' ? "http://localhost:8787" : "",
     // Set to true to use live LLM backend, false for local mock data
     useLiveBackend: true // ✅ ENABLED - Using OpenAI Vision
 };
