@@ -1,0 +1,82 @@
+﻿python : Warning: You are sending 
+unauthenticated requests to the HF Hub. 
+Please set a HF_TOKEN to enable higher 
+rate limits and faster downloads.
+At line:1 char:27
++ .\.venv\Scripts\activate; python 
+server.py 2>&1 | Out-File -Encoding  ...
++                           
+~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecif 
+   ied: (Warning: You ar...ster downlo  
+  ads.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCom 
+   mandError
+ 
+The image processor of type 
+`SiglipImageProcessor` is now loaded as 
+a fast processor by default, even if 
+the model checkpoint was saved with a 
+slow processor. This is a breaking 
+change and may produce slightly 
+different outputs. To continue using 
+the slow processor, instantiate this 
+class with `use_fast=False`. 
+Traceback (most recent call last):
+  File "C:\Users\ACER\dashboard-linter\e
+mbedding_server\server.py", line 15, in 
+<module>
+    processor = 
+AutoProcessor.from_pretrained(MODEL_ID)
+  File "C:\Users\ACER\dashboard-linter\e
+mbedding_server\.venv\Lib\site-packages\
+transformers\models\auto\processing_auto
+.py", line 402, in from_pretrained
+    return 
+processor_class.from_pretrained(
+           
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        pretrained_model_name_or_path, 
+trust_remote_code=trust_remote_code, 
+**kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^
+    )
+    ^
+  File "C:\Users\ACER\dashboard-linter\e
+mbedding_server\.venv\Lib\site-packages\
+transformers\processing_utils.py", line 
+1400, in from_pretrained
+    args = cls._get_arguments_from_pretr
+ained(pretrained_model_name_or_path, 
+processor_dict, **kwargs)
+  File "C:\Users\ACER\dashboard-linter\e
+mbedding_server\.venv\Lib\site-packages\
+transformers\processing_utils.py", line 
+1514, in _get_arguments_from_pretrained
+    tokenizer = 
+cls._load_tokenizer_from_pretrained(
+        sub_processor_type, 
+pretrained_model_name_or_path, 
+subfolder=subfolder, **kwargs
+    )
+  File "C:\Users\ACER\dashboard-linter\e
+mbedding_server\.venv\Lib\site-packages\
+transformers\processing_utils.py", line 
+1461, in _load_tokenizer_from_pretrained
+    tokenizer = 
+auto_processor_class.from_pretrained(
+        pretrained_model_name_or_path, 
+subfolder=subfolder, **kwargs
+    )
+  File "C:\Users\ACER\dashboard-linter\e
+mbedding_server\.venv\Lib\site-packages\
+transformers\models\auto\tokenization_au
+to.py", line 652, in from_pretrained
+    and TOKENIZER_MAPPING_NAMES.get(conf
+ig_model_type, "").replace("Fast", "")
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has 
+no attribute 'replace'

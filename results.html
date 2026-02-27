@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linter Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=6">
+</head>
+<body>
+    <!-- Fixed Left Sidebar for Variants -->
+    <div class="variants-sidebar" id="variants-strip">
+        <div class="variant-item active" data-id="original">
+            <img src="https://placehold.co/100x60/1a1a1a/FFF?text=Orig" alt="Original" class="variant-thumb" id="thumb-orig">
+            <span class="variant-label">Original</span>
+        </div>
+        <!-- Generated variants will be injected here -->
+    </div>
+
+    <div class="dashboard-container">
+        <!-- Account Bar -->
+        <!-- Account Bar -->
+        <div class="account-bar">
+            <strong class="logo">VidLint</strong>
+            <div class="account-dropdown" id="plan-dropdown" onclick="togglePlanDropdown(event)">
+                <span class="plan-display">
+                    Plan: <strong id="plan-badge">...</strong>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </span>
+                <div class="account-dropdown-content">
+                    <div class="dropdown-item">
+                        <strong>Free Plan</strong>
+                        <span>Basic analysis & resolution</span>
+                    </div>
+                    <div class="dropdown-item" style="cursor: pointer;" onclick="window.location.href='/index.html#pricing'">
+                        <strong style="color: #3b82f6;">Upgrade to Pro ✨</strong>
+                        <span>Unlimited high-res AI insights</span>
+                    </div>
+                </div>
+            </div>
+            <button id="logout-btn" type="button" class="btn-ghost">Log out</button>
+            <a href="upload.html" class="btn-primary">New Analysis</a>
+        </div>
+
+        <!-- Top Section -->
+        <div class="top-section">
+            <div class="left-col">
+                <!-- The main preview card -->
+                <div class="thumbnail-card" id="thumbnail-card">
+                    <div class="preview-wrapper">
+                        <img src="https://placehold.co/600x400/1a1a1a/FFF?text=Preview" alt="Thumbnail" id="main-thumbnail" crossorigin="anonymous">
+                        <div id="region-overlays"></div>
+                        <div class="preview-overlay" style="display: none;">
+                            <div class="loader-spinner"></div>
+                            <div class="loader-text" id="preview-loader-text">Analyzing...</div>
+                        </div>
+                        <div class="mobile-status-badge">MOBILE: PASS</div>
+                    </div>
+                    
+                    <!-- Integrated Controls at the bottom of the card -->
+                    <div class="preview-controls">
+                        <div class="tab-switch">
+                            <button class="tab-btn active" data-mode="original" data-group="preview">Original</button>
+                            <button class="tab-btn" data-mode="squint" data-group="preview" title="Fast-scroll test">Squint</button>
+                            <button class="tab-btn" data-mode="mobile" data-group="preview" title="Small-screen test">Mobile</button>
+                        </div>
+                        
+                        <button id="focus-toggle-btn" class="icon-btn-expand" title="Focus View" onclick="toggleFocusMode()">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="15 3 21 3 21 9"></polyline>
+                                <polyline points="9 21 3 21 3 15"></polyline>
+                                <line x1="21" y1="3" x2="14" y2="10"></line>
+                                <line x1="3" y1="21" x2="10" y2="14"></line>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Focus Mode Prompt Bar (Hidden by default, shown in focus mode) -->
+                <div class="prompt-box" id="focus-prompt-bar" style="display: none;">
+                    <input type="text" id="focus-prompt-input" class="prompt-input-main" placeholder="Add or remove things in the image..." />
+                    <div class="prompt-actions">
+                        <button id="focus-add-image-btn" class="btn-prompt-action">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                            Add image
+                        </button>
+                        <input type="file" id="focus-add-image-input" accept="image/*" style="display:none;" />
+                        <div class="prompt-actions-right">
+                            <select id="focus-model-select" class="model-select">
+                                <option value="low">Model: Low (Fast)</option>
+                                <option value="high" selected>Model: High (Best)</option>
+                            </select>
+                            <button id="focus-generate-btn" class="btn-prompt-generate">
+                                Generate
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path></svg>
+                                30
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="right-col">
+                <div class="score-ring-container">
+                    <div class="score-ring" id="main-score-ring" style="--percent: 43; --color: #ff3b3b;">
+                        <div class="inner-circle">
+                            <span class="score-value" id="main-score">43</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="score-info">
+                    <div class="score-status"><span class="highlight-red" id="score-text">-- / 100</span> FIX then publish</div>
+                    <div class="weakest-text">Weakest: <span class="highlight-weak" id="weakest-link">--</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Metrics Grid -->
+        <div class="metrics-grid" id="metrics-grid">
+            <!-- Injected via JS -->
+        </div>
+
+        <!-- Quick Fix Plan -->
+        <div class="plan-panel quick-win-panel" id="quick-win-panel">
+            <div class="panel-header">
+                <div class="header-left">
+                    <h3>Quick Fix Plan</h3>
+                </div>
+                <button class="btn-copy-sm" data-action="copy-plan-quick">Copy Quick Fix Plan</button>
+            </div>
+            <div class="fix-list" id="quick-win-fixes">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+
+        <!-- High Impact Plan -> Layout Options -->
+        <div class="plan-panel high-impact-panel" id="high-impact-panel">
+            <div class="panel-header">
+                <div class="header-left">
+                    <h3>Layout Options</h3>
+                    <span class="time-pill" id="time-high" style="display:none;"></span>
+                </div>
+                <button class="btn-copy-sm" data-action="copy-plan-high">Copy Layouts</button>
+            </div>
+            <div class="fix-list" id="high-impact-fixes">
+                <!-- Injected via JS -->
+            </div>
+            <div class="panel-note" id="high-impact-note" style="display:none;"></div>
+        </div>
+
+
+        <!-- Copy Summary Action -->
+        <div class="summary-actions">
+            <button class="btn-primary-action" data-action="copy-summary">Copy Full Summary</button>
+        </div>
+        
+        <canvas id="cv_original" style="display:none;"></canvas>
+        <canvas id="cv_mobile" style="display:none;"></canvas>
+    </div>
+    
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay" style="display:none;">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <div class="loading-text" id="loading-text">Analyzing with AI...</div>
+            <div class="loading-subtext" id="loading-subtext">This may take a few seconds</div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast">Copied!</div>
+
+    <script src="demo_results.js"></script>
+    <script src="script.js?v=7"></script>
+    
+    <!-- Auth layer -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="/js/supabase-client.js"></script>
+    <script src="/js/auth.js?v=5"></script>
+    <script>
+      (async () => {
+        const session = await requireAuth();
+        if (!session) return;
+
+        const logoutBtn = document.getElementById('logout-btn');
+        if (logoutBtn) {
+          logoutBtn.addEventListener('click', handleLogoutClick);
+        }
+
+        const profile = await getMyProfile();
+        const planBadge = document.getElementById('plan-badge');
+        if (planBadge) {
+          planBadge.textContent = profile ? (profile.plan || 'free') : 'free';
+        }
+      })();
+    </script>
+    <!-- Logout Modal -->
+    <div id="logout-modal" class="modal-overlay">
+        <div class="custom-modal">
+            <div class="modal-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18.36 6.64a9 9 0 1 1-12.73 0"></path><line x1="12" y1="2" x2="12" y2="12"></line></svg>
+            </div>
+            <h3>Leaving so soon?</h3>
+            <p>Are you sure you want to log out of RateMyThumb? You will need to sign back in to view your analyses.</p>
+            <div class="modal-actions">
+                <button class="btn btn-ghost" onclick="closeLogoutModal()">Cancel</button>
+                <button class="btn btn-danger" onclick="signOutUser()">Log out</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

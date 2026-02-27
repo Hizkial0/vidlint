@@ -1,0 +1,80 @@
+{
+  "request": {
+    "mode": "finished|draft",
+    "game": "string",
+    "context": "string (optional)",
+    "publicId": "string",
+    "imageUrlSmall": "string (url)",
+    "retinaMetrics": {
+      "brightness": "number",
+      "contrastStd": "number",
+      "dynRange": "number",
+      "mobile": {
+        "width": "number",
+        "dynRange": "number",
+        "edgeDensity": "number",
+        "pass": "boolean"
+      }
+    }
+  },
+  "response": {
+    "mode": "finished|draft",
+    "score": "integer (0-100)",
+    "scoreColor": "string (hex)",
+    "verdict": "string",
+    "blockers": [
+      "string (label)",
+      "string (label)"
+    ],
+    "metrics": [
+      {
+        "label": "string",
+        "val": "integer",
+        "max": "integer",
+        "color": "string"
+      }
+    ],
+    "quickWinPlan": {
+      "time": "string (e.g. 10-25 min)",
+      "fixes": [
+        {
+          "priority": "P1|P2|P3",
+          "pts": "string (+N)",
+          "title": "string",
+          "measurableFix": "string"
+        },
+        { "priority": "P2" },
+        { "priority": "P3" }
+      ]
+    },
+    "highImpactPlan": {
+      "time": "string (e.g. 20-90 min)",
+      "fixes": [
+        {
+          "priority": "P1|P2",
+          "pts": "string (+N)",
+          "title": "string",
+          "measurableFix": "string"
+        },
+        { "priority": "P2" }
+      ],
+      "note": "string (optional)"
+    },
+    "layoutOptions": [
+      {
+        "label": "A",
+        "steps": ["string", "string"]
+      },
+      {
+        "label": "B",
+        "steps": ["string", "string"]
+      }
+    ],
+    "copyButtons": [
+      "Copy Quick Win Plan",
+      "Copy High-Impact Plan",
+      "Copy Summary",
+      "Copy Layout"
+    ]
+  }
+}

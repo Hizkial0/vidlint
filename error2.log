@@ -1,0 +1,21 @@
+﻿[DB] Connecting to mongodb://127.0.0.1:27017/thumbnail_linter...
+[DB] Connected & Indexed.
+node : FATAL ERROR: TypeError: getDB is 
+not a function
+At line:1 char:1
++ node 
+backend/tools/buildWinnerLibrary.js 2>&1 
+| Out-File -Encoding ut ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~
+    + CategoryInfo          : NotSpecif  
+  ied: (FATAL ERROR: Ty... not a func    
+tion:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCom  
+  mandError
+ 
+    at main (C:\Users\ACER\dashboard-lint
+er\backend\tools\buildWinnerLibrary.js:15
+4:20)
+    at process.processTicksAndRejections 
+(node:internal/process/task_queues:103:5)

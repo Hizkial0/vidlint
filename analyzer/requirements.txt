@@ -1,0 +1,27 @@
+# FastAPI server
+fastapi
+uvicorn[standard]
+
+# Computer Vision
+
+opencv-contrib-python
+numpy
+pillow
+mediapipe>=0.10.0
+
+# OCR (EasyOCR - better Windows compatibility than PaddleOCR)
+easyocr
+
+# Object Detection
+ultralytics
+
+# Style Classification (SigLIP)
+torch
+transformers
+timm
+
+# HTTP requests
+requests
+
+# Face Detection
+mediapipe

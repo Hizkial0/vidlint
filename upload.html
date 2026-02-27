@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Thumbnail - VidLint</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="landing.css?v=5">
+    <style>
+        /* Premium Upload Page Styles */
+        body {
+            background: #0f172a; /* deep slate */
+            color: #f8fafc;
+        }
+
+        /* Premium Account Bar Styles */
+        .account-bar {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .account-bar .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-right: auto;
+            background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.02em;
+        }
+
+        .account-bar .plan-display {
+            color: #cbd5e1;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .account-bar .plan-display strong {
+            color: #fff;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .account-bar .btn-ghost {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #cbd5e1;
+            border-radius: 8px;
+            padding: 8px 16px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .account-bar .btn-ghost:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .upload-page {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 64px 24px 100px;
+        }
+
+        .upload-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .upload-header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 12px;
+            letter-spacing: -0.02em;
+        }
+
+        .upload-header .subtitle {
+            color: #94a3b8;
+            font-size: 1.15rem;
+        }
+
+        .upload-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 24px 50px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 20px; /* Reduced from 32px */
+        }
+
+        /* Dropzone */
+        .dropzone {
+            border: 2px dashed rgba(148, 163, 184, 0.3);
+            border-radius: 16px;
+            padding: 48px 24px;
+            text-align: center;
+            background: rgba(15, 23, 42, 0.4);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dropzone:hover, .dropzone.drag-over {
+            border-color: #3b82f6;
+            background: rgba(59, 130, 246, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .dropzone .upload-icon {
+            color: #64748b;
+            margin-bottom: 16px;
+            transition: color 0.3s;
+        }
+
+        .dropzone:hover .upload-icon {
+            color: #3b82f6;
+        }
+
+        .dropzone span {
+            display: block;
+            color: #e2e8f0;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .dropzone .file-hint {
+            color: #64748b;
+            font-size: 0.85rem;
+            font-weight: 400;
+        }
+
+        .upload-preview {
+            width: 100%;
+            border-radius: 8px; /* Match inner radius closely */
+            display: block;
+        }
+
+        /* Game Dropdown */
+        .game-dropdown-wrapper {
+            position: relative;
+        }
+
+        #gameOptions {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            max-height: 200px;
+            overflow-y: auto;
+            background: #1e293b;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            margin-top: 8px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+
+        #gameOptions.show {
+            display: block;
+        }
+
+        .dropdown-option {
+            padding: 12px 16px;
+            cursor: pointer;
+            color: #cbd5e1;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+        }
+
+        .dropdown-option:hover {
+            background: rgba(59, 130, 246, 0.15);
+            color: #fff;
+        }
+
+        /* Inputs */
+        .input-group label {
+            display: block;
+            color: #cbd5e1;
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+        }
+
+        .input-dark {
+            width: 100%;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 12px 14px; /* Reduced from 14px 16px */
+            color: white;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+
+        .input-dark:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+            background: rgba(15, 23, 42, 0.8);
+        }
+
+        /* Mode Toggle */
+        .mode-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .modeBtn {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 16px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: left;
+            color: white;
+        }
+
+        .modeBtn:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+            background: rgba(30, 41, 59, 1);
+        }
+
+        .modeBtn.active {
+            background: rgba(59, 130, 246, 0.1);
+            border-color: #3b82f6;
+            box-shadow: inset 0 0 0 1px #3b82f6, 0 8px 20px rgba(59, 130, 246, 0.15);
+        }
+
+        .mode-icon {
+            color: #94a3b8;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 10px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .modeBtn.active .mode-icon {
+            color: #3b82f6;
+            background: rgba(59, 130, 246, 0.2);
+        }
+
+        .mode-text {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .mode-text strong {
+            color: #f8fafc;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .mode-text span {
+            color: #94a3b8;
+            font-size: 0.85rem;
+            transition: color 0.3s;
+        }
+
+        .modeBtn.active .mode-text strong {
+            color: #3b82f6;
+        }
+
+        /* Buttons & Status */
+        #analyzeBtn {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 16px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+            margin-top: 8px;
+        }
+
+        #analyzeBtn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px rgba(59, 130, 246, 0.4);
+        }
+
+        #analyzeBtn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background: #475569;
+            box-shadow: none;
+        }
+
+        #statusText {
+            text-align: center;
+            color: #94a3b8;
+            font-size: 0.95rem;
+            min-height: 24px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="sticky-header">
+        <div class="container header-inner">
+            <a href="index.html" class="logo">VidLint</a>
+            <nav class="nav-center">
+                <a href="index.html#pricing">Pricing</a>
+                <a href="index.html#support">Support</a>
+            </nav>
+            <div class="account-bar">
+                <div class="account-dropdown" id="plan-dropdown" onclick="togglePlanDropdown(event)">
+                    <span class="plan-display">
+                        Plan: <strong id="plan-badge">...</strong>
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </span>
+                    <div class="account-dropdown-content">
+                        <div class="dropdown-item">
+                            <strong>Free Plan</strong>
+                            <span>Basic analysis & resolution</span>
+                        </div>
+                        <div class="dropdown-item" style="cursor: pointer;" onclick="window.location.href='/index.html#pricing'">
+                            <strong style="color: #3b82f6;">Upgrade to Pro ✨</strong>
+                            <span>Unlimited high-res AI insights</span>
+                        </div>
+                    </div>
+                </div>
+                <button id="logout-btn" type="button" class="btn-ghost">Log out</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="upload-page">
+        <div class="upload-header">
+            <h1>Analyze Your Thumbnail</h1>
+            <p class="subtitle">Upload your image, pick a game, and get instant AI feedback.</p>
+        </div>
+
+        <div class="upload-card">
+
+            <!-- Dropzone -->
+            <div class="dropzone" id="dropzone">
+                <input type="file" id="fileInput" accept="image/png, image/jpeg" hidden>
+                <div id="upload-placeholder">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" class="upload-icon">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        <polyline points="17 8 12 3 7 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <line x1="12" y1="3" x2="12" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    <span>Drag & drop thumbnail or click to upload</span>
+                    <span class="file-hint">Supports PNG, JPG (Max 5MB)</span>
+                </div>
+            </div>
+
+            <!-- Game Selector -->
+            <div class="input-group">
+                <label for="gameSearch">Game</label>
+                <div class="game-dropdown-wrapper">
+                    <input type="text" id="gameSearch" class="input-dark" placeholder="Search game..." autocomplete="off" value="Grand Theft Auto V">
+                    <input type="hidden" id="gameInput" value="gta">
+                    <div id="gameOptions"></div>
+                </div>
+            </div>
+
+            <!-- Title -->
+            <div class="input-group">
+                <label for="titleInput">Video Title</label>
+                <input type="text" id="titleInput" class="input-dark" placeholder="Enter video title" required>
+            </div>
+
+            <!-- Context -->
+            <div class="input-group">
+                <label for="contextInput">Context (Optional)</label>
+                <input type="text" id="contextInput" class="input-dark" placeholder="e.g. Trying to appeal to kids">
+            </div>
+
+            <!-- Status -->
+            <div id="statusText"></div>
+
+            <!-- Analyze Button -->
+            <button id="analyzeBtn" disabled>Analyze Thumbnail</button>
+
+            <!-- Mode Toggle -->
+            <div class="input-group" style="margin-top: 16px;">
+                <label>Analysis Mode</label>
+                <div class="mode-row">
+                    <button class="modeBtn active" data-mode="fast">
+                        <div class="mode-icon">
+                            <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                        </div>
+                        <div class="mode-text">
+                            <strong>Low (Fast)</strong>
+                            <span>Quick review</span>
+                        </div>
+                    </button>
+                    <button class="modeBtn" data-mode="deep">
+                        <div class="mode-icon">
+                            <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                        </div>
+                        <div class="mode-text">
+                            <strong>Thinking</strong>
+                            <span>Deep AI analysis</span>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="upload.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="/js/supabase-client.js"></script>
+    <script src="/js/auth.js?v=5"></script>
+    <script>
+      (async () => {
+        const session = await requireAuth();
+        if (!session) return;
+
+        const logoutBtn = document.getElementById('logout-btn');
+        if (logoutBtn) {
+          logoutBtn.addEventListener('click', handleLogoutClick);
+        }
+
+        const profile = await getMyProfile();
+        const planBadge = document.getElementById('plan-badge');
+        if (planBadge) {
+          planBadge.textContent = profile ? (profile.plan || 'free') : 'free';
+        }
+      })();
+    </script>
+    <!-- Logout Modal -->
+    <div id="logout-modal" class="modal-overlay">
+        <div class="custom-modal">
+            <div class="modal-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18.36 6.64a9 9 0 1 1-12.73 0"></path><line x1="12" y1="2" x2="12" y2="12"></line></svg>
+            </div>
+            <h3>Leaving so soon?</h3>
+            <p>Are you sure you want to log out of VidLint? You will need to sign back in to analyze new thumbnails.</p>
+            <div class="modal-actions">
+                <button class="btn btn-ghost" onclick="closeLogoutModal()">Cancel</button>
+                <button class="btn btn-danger" onclick="signOutUser()">Log out</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
