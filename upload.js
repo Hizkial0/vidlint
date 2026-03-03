@@ -5,7 +5,7 @@ const UPLOAD_URL = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`;
 
 // ---- STATE ----
 let selectedFile = null;
-let mode = "fast"; // "fast" | "deep"
+let mode = "fast";
 
 // ---- ELEMENTS ----
 const dropzone = document.getElementById("dropzone");
@@ -14,7 +14,7 @@ const contextInput = document.getElementById("contextInput");
 const gameInput = document.getElementById("gameInput");
 const analyzeBtn = document.getElementById("analyzeBtn");
 const statusText = document.getElementById("statusText");
-const modeBtns = document.querySelectorAll(".modeBtn");
+
 
 // ---- HELPERS ----
 function setStatus(msg) {
@@ -26,23 +26,7 @@ function setAnalyzeEnabled() {
     analyzeBtn.disabled = !selectedFile;
 }
 
-function setMode(newMode) {
-    mode = newMode;
-    modeBtns.forEach(b => {
-        // Toggle logic for custom styling classes if present, simplifying here to align with existing CSS
-        if (b.dataset.mode === mode) b.classList.add("active");
-        else b.classList.remove("active");
-    });
 
-    if (mode === "fast") {
-        contextInput.placeholder = "Context (optional, fast analysis)";
-    } else if (mode === "deep") {
-        contextInput.placeholder = "Context (optional, deep thinking)";
-    } else {
-        contextInput.placeholder = "Context (optional)";
-    }
-    setAnalyzeEnabled();
-}
 
 function validateFile(file) {
     const okType = ["image/png", "image/jpeg"].includes(file.type);
@@ -71,9 +55,7 @@ function buildSmallUrl(publicId) {
 }
 
 // ---- EVENTS ----
-modeBtns.forEach(btn => {
-    btn.addEventListener("click", () => setMode(btn.dataset.mode));
-});
+
 
 contextInput?.addEventListener("input", setAnalyzeEnabled);
 
@@ -269,5 +251,4 @@ function initGameDropdown() {
 initGameDropdown();
 
 // init defaults
-setMode("fast");
 setAnalyzeEnabled();

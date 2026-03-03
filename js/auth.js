@@ -130,4 +130,5 @@ function bindAuthTriggers() {
 
 document.addEventListener('DOMContentLoaded', () => {
     bindAuthTriggers();
+    window.signInWithGoogle = signInWithGoogle;
 });

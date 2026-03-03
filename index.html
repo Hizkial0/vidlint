@@ -65,7 +65,7 @@
                             <input type="text" id="landing-context" placeholder="Title or video topic..." class="input-dark">
                         </div>
 
-                        <button class="btn btn-primary btn-full" id="landing-analyze-btn" data-auth-trigger="google" data-next="/upload.html">Check My Thumbnail</button>
+                        <button class="btn btn-primary btn-full" id="landing-analyze-btn">Check My Thumbnail</button>
                     </div>
                 </div>
             </div>
@@ -353,9 +353,12 @@
                         console.log("Image and context saved for post-login.");
                     }
 
-                    // Now manually trigger the auth flow from auth.js
-                    if (window.handleAuthTrigger) {
-                        window.handleAuthTrigger(analyzeBtn);
+                    // Now manually trigger the auth flow
+                    if (window.signInWithGoogle) {
+                        window.signInWithGoogle('/upload.html');
+                    } else {
+                        // Fallback if auth.js didn't expose it yet
+                        window.location.href = '/upload.html';
                     }
                 });
             }
