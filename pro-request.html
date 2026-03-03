@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request Pro Access - VidLint</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="landing.css?v=6">
+    <style>
+        body {
+            background: #0f172a;
+            color: #f8fafc;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .request-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .request-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            width: 100%;
+            max-width: 500px;
+            padding: 40px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: #94a3b8;
+            margin-bottom: 32px;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #cbd5e1;
+        }
+
+        .input-dark {
+            width: 100%;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 14px 16px;
+            color: white;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+
+        .input-dark:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+        }
+
+        textarea.input-dark {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .radio-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        .radio-item {
+            position: relative;
+        }
+
+        .radio-item input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .radio-label {
+            display: block;
+            padding: 12px;
+            background: rgba(15, 23, 42, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.95rem;
+        }
+
+        .radio-item input:checked + .radio-label {
+            border-color: #3b82f6;
+            background: rgba(59, 130, 246, 0.1);
+            color: #fff;
+        }
+
+        .btn-submit {
+            width: 100%;
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 8px;
+        }
+
+        .btn-submit:hover {
+            background: #2563eb;
+            transform: translateY(-1px);
+            box-shadow: 0 10px 20px -5px rgba(59, 130, 246, 0.5);
+        }
+
+        .success-state {
+            display: none;
+            text-align: center;
+        }
+
+        .success-icon {
+            width: 64px;
+            height: 64px;
+            background: rgba(16, 185, 129, 1);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 24px;
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="sticky-header">
+        <div class="container header-inner">
+            <a href="index.html" class="logo" style="text-decoration: none;">VidLint</a>
+        </div>
+    </header>
+
+    <div class="request-container">
+        <div class="request-card" id="form-container">
+            <div id="request-form-content">
+                <h1>Request Pro Access</h1>
+                <p class="subtitle">Join the waitlist for VidLint Pro. We'll reach out manually to onboard you while our automated billing is being finalized.</p>
+
+                <form id="proForm">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" class="input-dark" placeholder="Zeke Yeager" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" class="input-dark" placeholder="zeke@example.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="channel">YouTube Channel Link</label>
+                        <input type="url" id="channel" name="channel" class="input-dark" placeholder="https://youtube.com/@yourchannel" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="help">What do you need help with most?</label>
+                        <textarea id="help" name="help" class="input-dark" placeholder="e.g. Higher CTR, better thumbnails for my second channel..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Preferred Payment Method</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="paypal" name="payment" value="PayPal" checked>
+                                <label for="paypal" class="radio-label">PayPal</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="bank" name="payment" value="Bank Transfer">
+                                <label for="bank" class="radio-label">Bank Transfer</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="other" name="payment" value="Other">
+                                <label for="other" class="radio-label">Other</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-submit">Submit Request</button>
+                    <div style="text-align: center;">
+                        <a href="index.html" class="back-link">Return to Home</a>
+                    </div>
+                </form>
+            </div>
+
+            <div id="success-state" class="success-state">
+                <div class="success-icon">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </div>
+                <h1>Request Received!</h1>
+                <p class="subtitle">Thanks for your interest. We'll review your channel and reach out to you personally via email with onboarding instructions.</p>
+                <a href="index.html" class="btn-submit" style="display: block; text-decoration: none;">Back to Website</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('proForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            btn.disabled = true;
+            btn.textContent = 'Sending...';
+
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+
+            // In a real app, you'd send this to your backend
+            // For now, we simulate a success state to match the user's manual flow
+            console.log('Pro Request Data:', data);
+
+            // Mock submission to local storage just in case you want to see it
+            const requests = JSON.parse(localStorage.getItem('pro_requests') || '[]');
+            requests.push({...data, timestamp: new Date().toISOString()});
+            localStorage.setItem('pro_requests', JSON.stringify(requests));
+
+            setTimeout(() => {
+                document.getElementById('request-form-content').style.display = 'none';
+                document.getElementById('success-state').style.display = 'block';
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
