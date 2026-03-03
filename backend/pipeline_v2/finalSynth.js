@@ -164,13 +164,13 @@ async function runFinalSynth(cv, imageUrl, ragPack, analyzeMode, title, context)
     };
 
     // Model-specific settings
-    if (config.model.includes('o1') || config.model.includes('o3') || config.model.includes('gpt-5.2')) {
-      reqPayload.max_completion_tokens = config.max_completion_tokens;
-      if (config.model.includes('o3') || config.model.includes('gpt-5.2')) {
+    if (config.model.includes('o1') || config.model.includes('o3') || config.model.includes('gpt-5')) {
+      reqPayload.max_completion_tokens = config.max_completion_tokens || config.max_tokens;
+      if (config.reasoning_effort) {
         reqPayload.reasoning_effort = config.reasoning_effort;
       }
     } else {
-      reqPayload.max_tokens = config.max_completion_tokens;
+      reqPayload.max_tokens = config.max_tokens || config.max_completion_tokens;
       reqPayload.temperature = 0.28;
     }
 
