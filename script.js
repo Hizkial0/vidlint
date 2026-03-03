@@ -1787,7 +1787,7 @@ async function generateFromFocusBox() {
                 prompt: rawPrompt,
                 negativePrompt: '',
                 strength,
-                referenceImage: window.__referenceImage || null
+                referenceImages: window.__referenceImages.map(img => img.src) // Send array of base64s
             })
         });
 
@@ -1810,6 +1810,8 @@ async function generateFromFocusBox() {
             btn.style.opacity = '1';
             btn.style.background = ''; // reset to default CSS
             input.value = ''; // clear input
+            window.__referenceImages = []; // Clear chips
+            renderImageChips();
         }, 3000);
 
     } catch (err) {
@@ -1834,24 +1836,86 @@ document.addEventListener('DOMContentLoaded', () => {
         focusGenBtn.addEventListener('click', generateFromFocusBox);
     }
 
-    // Bind Add Image Button → opens file picker
+    // We'll store multiple reference images here
+    window.__referenceImages = [];
+
+    function renderImageChips() {
+        const container = document.getElementById('focus-image-chips');
+        if (!container) return;
+
+        container.innerHTML = window.__referenceImages.map((imgData, index) => {
+            return `
+                <div class="image-chip">
+                    <img src="${imgData.src}" alt="ref img" />
+                    <span title="${imgData.name}">${imgData.name.length > 10 ? imgData.name.substring(0, 8) + '...' : imgData.name}</span>
+                    <button class="chip-remove" onclick="removeReferenceImage(${index})" title="Remove">✕</button>
+                </div>
+            `;
+        }).join('');
+    }
+
+    window.removeReferenceImage = function (index) {
+        window.__referenceImages.splice(index, 1);
+        renderImageChips();
+    };
+
+    function addImageFromData(file, dataUrl) {
+        window.__referenceImages.push({
+            name: file.name || "Pasted Image",
+            src: dataUrl,
+            file: file
+        });
+        renderImageChips();
+        console.log(`[AddImage] Added reference: ${file.name || "Pasted"} (${(file.size / 1024).toFixed(0)} KB)`);
+    }
+
+    // Bind Add Image Button → opens file picker (multiple allowed)
     const addImageBtn = document.getElementById('focus-add-image-btn');
     const addImageInput = document.getElementById('focus-add-image-input');
+
+    if (addImageInput) {
+        addImageInput.multiple = true; // allow multiple
+    }
+
     if (addImageBtn && addImageInput) {
         addImageBtn.addEventListener('click', () => addImageInput.click());
         addImageInput.addEventListener('change', (e) => {
-            const file = e.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = (ev) => {
-                window.__referenceImage = ev.target.result; // base64 data URL
-                addImageBtn.innerHTML = `
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
-                    ${file.name.substring(0, 15)}…`;
-                addImageBtn.style.color = 'var(--color-success, #22c55e)';
-                console.log(`[AddImage] Loaded reference: ${file.name} (${(file.size / 1024).toFixed(0)} KB)`);
-            };
-            reader.readAsDataURL(file);
+            const files = Array.from(e.target.files);
+            if (!files.length) return;
+
+            files.forEach(file => {
+                const reader = new FileReader();
+                reader.onload = (ev) => {
+                    addImageFromData(file, ev.target.result);
+                };
+                reader.readAsDataURL(file);
+            });
+            // reset input so same file can be selected again if removed
+            addImageInput.value = '';
+        });
+    }
+
+    // Handle Paste Events on the Prompt Textarea
+    const promptInput = document.getElementById('focus-prompt-input');
+    if (promptInput) {
+        promptInput.addEventListener('paste', (e) => {
+            const items = (e.clipboardData || e.originalEvent.clipboardData).items;
+            let foundImage = false;
+
+            for (let item of items) {
+                if (item.type.indexOf('image') === 0) {
+                    foundImage = true;
+                    const blob = item.getAsFile();
+                    const reader = new FileReader();
+                    reader.onload = (ev) => {
+                        addImageFromData(blob, ev.target.result);
+                    };
+                    reader.readAsDataURL(blob);
+                }
+            }
+
+            // If we pasted an image, we don't want the filename text to also paste (sometimes browsers do this)
+            // But we still want to allow text pasting. We'll just let default text paste happen.
         });
     }
 

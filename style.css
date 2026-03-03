@@ -331,6 +331,87 @@ textarea.auto-expand {
     background: rgba(255,255,255,0.05);
 }
 
+/* Image Chips inside Prompt Box */
+.image-chips-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+.image-chips-container:empty {
+    display: none;
+}
+
+.image-chip {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-body);
+    padding: 4px 8px 4px 6px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+}
+.image-chip img {
+    width: 20px;
+    height: 20px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+.chip-remove {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px;
+}
+.chip-remove:hover {
+    color: var(--color-danger);
+}
+
+/* Simple Mode Options */
+.mode-options-simple {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin-top: 12px;
+    margin-bottom: 0px;
+}
+
+.simple-radio {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.9rem;
+    color: var(--text-body);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.simple-radio.active {
+    color: #fff;
+    font-weight: 500;
+}
+
+.simple-radio input[type="radio"] {
+    accent-color: var(--color-primary);
+    width: 14px;
+    height: 14px;
+}
+
+.simple-radio.locked-mode {
+    cursor: help;
+    opacity: 0.6;
+}
+
+.simple-radio.locked-mode:hover {
+    opacity: 1;
+}
+
 /* Mobile Sidebar Layout */
 @media (max-width: 768px) {
     body {
