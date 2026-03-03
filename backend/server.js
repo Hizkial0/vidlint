@@ -270,7 +270,7 @@ Fix Requested: ${JSON.stringify(fix)}
 Write the exact prompt and negative prompt to execute this fix.`;
 
         const response = await getServerOpenAI().chat.completions.create({
-            model: 'gpt-4o',
+            model: 'gpt-5-mini',
             messages: [
                 { role: 'system', content: systemPrompt },
                 { role: 'user', content: userPrompt }
