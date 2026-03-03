@@ -239,6 +239,135 @@ body::before {
     transform: none;
 }
 
+/* Auto Expanding Textarea */
+textarea.auto-expand {
+    min-height: 40px;
+    max-height: 150px;
+    overflow-y: hidden;
+    line-height: 1.5;
+    resize: none;
+}
+
+/* Custom Select Wrapper */
+.custom-select-wrapper {
+    position: relative;
+    display: inline-flex;
+}
+
+.mode-select {
+    appearance: none;
+    -webkit-appearance: none;
+    background: rgba(15, 23, 42, 0.4);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-body);
+    padding: 8px 32px 8px 12px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.2s;
+}
+
+.mode-select:hover {
+    border-color: rgba(255,255,255,0.2);
+}
+
+.custom-select-wrapper::after {
+    content: "▼";
+    font-size: 0.5rem;
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: var(--text-muted);
+}
+
+/* Upload Mode Options */
+.mode-options {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-bottom: 24px;
+    width: 100%;
+}
+
+.mode-radio {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    background: rgba(15, 23, 42, 0.4);
+    border: 1px solid var(--border-subtle);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    flex: 1;
+    justify-content: center;
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+}
+
+.mode-radio input[type="radio"] {
+    accent-color: var(--primary);
+    width: 16px;
+    height: 16px;
+}
+
+.mode-radio:has(input:checked), .mode-radio.active {
+    border-color: var(--primary);
+    background: rgba(59, 130, 246, 0.1);
+    color: var(--text-primary);
+}
+
+.mode-radio.locked-mode {
+    cursor: help;
+    opacity: 0.6;
+}
+
+.mode-radio.locked-mode:hover {
+    border-color: rgba(255,255,255,0.2);
+    opacity: 1;
+    background: rgba(255,255,255,0.05);
+}
+
+/* Mobile Sidebar Layout */
+@media (max-width: 768px) {
+    body {
+        flex-direction: column;
+        justify-content: flex-start;
+        padding: 0;
+    }
+    
+    .dashboard-container {
+        margin-left: 0;
+        padding: 16px;
+    }
+    
+    .variants-sidebar {
+        position: static;
+        width: 100%;
+        height: auto;
+        flex-direction: row;
+        border-right: none;
+        border-bottom: 1px solid var(--border-subtle);
+        padding: 12px 16px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        align-items: center;
+    }
+    
+    .variant-item {
+        width: 90px;
+        flex-shrink: 0;
+    }
+    
+    .account-bar {
+        margin-top: 16px;
+    }
+}
+
+
 
 /* -------------------------------------
    THUMBNAIL CARD & CONTROLS

@@ -131,6 +131,8 @@ analyzeBtn.addEventListener("click", async () => {
 
         const ctx = (contextInput?.value || "").trim();
         const titleVal = (document.getElementById('titleInput')?.value || "").trim();
+        const modeInput = document.querySelector('input[name="upload-mode"]:checked');
+        const selectedMode = modeInput ? modeInput.value : "fast";
 
         const up = await uploadToCloudinary(selectedFile);
         const imageUrlFull = up.secure_url;
@@ -141,7 +143,7 @@ analyzeBtn.addEventListener("click", async () => {
         localStorage.setItem("linter_data", JSON.stringify({
             title: titleVal,
             game: gameInput?.value || "gta",
-            mode,                 // "fast" | "normal" | "deep"
+            mode: selectedMode,                 // "fast" | "high" 
             context: ctx,
             imageUrlFull,
             imageUrlSmall,

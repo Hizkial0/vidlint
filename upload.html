@@ -399,7 +399,18 @@
             <!-- Context -->
             <div class="input-group">
                 <label for="contextInput">Context (Optional)</label>
-                <input type="text" id="contextInput" class="input-dark" placeholder="e.g. Trying to appeal to kids">
+                <textarea id="contextInput" class="input-dark auto-expand" placeholder="e.g. Trying to appeal to kids" rows="1"></textarea>
+            </div>
+
+            <div class="mode-options">
+                <label class="mode-radio active">
+                    <input type="radio" name="upload-mode" value="fast" checked>
+                    <span>Fast Mode</span>
+                </label>
+                <label class="mode-radio locked-mode" onclick="window.location.href='pro-request.html'">
+                    <input type="radio" name="upload-mode" value="high" disabled>
+                    <span>🔒 High Mode</span>
+                </label>
             </div>
 
             <!-- Status -->
@@ -413,6 +424,14 @@
         </div>
     </div>
 
+    <script>
+        document.addEventListener('input', function (e) {
+            if (e.target && e.target.classList.contains('auto-expand')) {
+                e.target.style.height = 'auto';
+                e.target.style.height = (e.target.scrollHeight) + 'px';
+            }
+        });
+    </script>
     <script src="upload.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="/js/supabase-client.js"></script>

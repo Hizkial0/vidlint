@@ -162,18 +162,8 @@
         <section class="pricing" id="pricing">
             <div class="container">
                 <h2 class="section-title">Simple Pricing for MVP</h2>
-                <div class="pricing-grid" style="grid-template-columns: repeat(2, 1fr); max-width: 800px; margin: 0 auto;">
-                    <div class="glass-card price-card">
-                        <h3>Free</h3>
-                        <div class="price">0 <span class="period">/mo</span></div>
-                        <p style="color: var(--text-muted); margin-bottom: 24px; font-size: 14px;">Best for trying the tool</p>
-                        <ul class="features">
-                            <li>Limited daily checks</li>
-                            <li>Basic scoring</li>
-                            <li>Standard processing</li>
-                        </ul>
-                        <button class="btn btn-ghost btn-full" data-auth-trigger="google" data-next="/upload.html">Check My Thumbnail</button>
-                    </div>
+                <div class="pricing-grid">
+                    <!-- Pro Card First -->
                     <div class="glass-card price-card popular">
                         <div class="pop-badge">Recommended</div>
                         <h3>Pro</h3>
@@ -186,6 +176,19 @@
                         </ul>
                         <a href="pro-request.html" class="btn btn-primary btn-full">Request Pro Access</a>
                         <p style="font-size: 11px; color: var(--text-muted); text-align: center; margin-top: 8px;">Manual onboarding while billing is being finalized.</p>
+                    </div>
+
+                    <!-- Free Card Second -->
+                    <div class="glass-card price-card">
+                        <h3>Free</h3>
+                        <div class="price">0 <span class="period">/mo</span></div>
+                        <p style="color: var(--text-muted); margin-bottom: 24px; font-size: 14px;">Best for trying the tool</p>
+                        <ul class="features">
+                            <li>Limited daily checks</li>
+                            <li>Basic scoring</li>
+                            <li>Standard processing</li>
+                        </ul>
+                        <button class="btn btn-ghost btn-full" data-auth-trigger="google" data-next="/upload.html">Check My Thumbnail</button>
                     </div>
                 </div>
             </div>
