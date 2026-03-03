@@ -193,7 +193,7 @@ async function runAnalysis(mode, metrics) {
         // Generate the central hash key based on the image being sent to the backend
         const imageHash = payload.imageUrlSmall.substring(0, 100);
 
-        showLoading("🤖 Processing with OpenAI...", "Analyzing composition, clarity, and more");
+        showLoading("✨ Processing Analysis...", "Evaluating composition, clarity, and structure");
 
         const result = await fetchBackendAnalysis(payload);
 

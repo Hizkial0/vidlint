@@ -59,7 +59,16 @@ function buildSmallUrl(publicId) {
 
 contextInput?.addEventListener("input", setAnalyzeEnabled);
 
-dropzone.addEventListener("click", () => fileInput.click());
+dropzone.addEventListener("click", (e) => {
+    if (e.target !== fileInput) {
+        fileInput.click();
+    }
+});
+
+fileInput.addEventListener("click", (e) => {
+    e.stopPropagation();
+    e.target.value = null; // Allow re-selecting the same file without ignoring it
+});
 
 dropzone.addEventListener("dragover", (e) => {
     e.preventDefault();
