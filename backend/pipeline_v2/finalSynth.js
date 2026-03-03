@@ -124,7 +124,7 @@ function buildFinalUserPrompt(ragPack, title, context) {
 
 const MODE_CONFIGS = {
   fast: {
-    model: process.env.FINAL_MODEL_FAST || 'gpt-5-mini',
+    model: process.env.FINAL_MODEL_FAST || 'gpt-5-mini-2025-08-07',
     max_completion_tokens: 3000
   },
   deep: {
