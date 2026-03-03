@@ -36,7 +36,7 @@ async function analyzePipeline(cv, imageUrl, options = {}, onStage = null) {
         title = '',
         context = '',
         stageMode = 'full',
-        analyzeMode = 'normal', // fast | normal | deep
+        analyzeMode = 'high', // fast | deep | high
         game = ''
     } = options;
 

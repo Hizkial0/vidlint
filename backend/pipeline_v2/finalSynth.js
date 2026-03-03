@@ -128,14 +128,14 @@ const MODE_CONFIGS = {
     reasoning_effort: 'low',
     max_completion_tokens: 3000
   },
-  normal: {
-    model: process.env.FINAL_MODEL_NORMAL || 'gpt-5.2',
-    reasoning_effort: 'medium',
-    max_completion_tokens: 5000
-  },
   deep: {
     model: process.env.FINAL_MODEL_DEEP || 'gpt-5.2',
-    reasoning_effort: 'high',
+    reasoning_effort: 'low',
+    max_completion_tokens: 7000
+  },
+  high: {
+    model: process.env.FINAL_MODEL_DEEP || 'gpt-5.2',
+    reasoning_effort: 'low',
     max_completion_tokens: 7000
   }
 };
@@ -144,7 +144,7 @@ async function runFinalSynth(cv, imageUrl, ragPack, analyzeMode, title, context)
   console.log(`[V4] Final Decider executing in ${analyzeMode.toUpperCase()} mode...`);
   const start = Date.now();
 
-  const config = MODE_CONFIGS[analyzeMode] || MODE_CONFIGS['normal'];
+  const config = MODE_CONFIGS[analyzeMode] || MODE_CONFIGS['fast'];
 
   try {
     const messages = [

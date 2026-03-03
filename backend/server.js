@@ -221,7 +221,7 @@ app.post('/analyze', async (req, res, next) => {
             title,
             context,
             textPolicy,
-            analyzeMode: analyzeMode || 'normal',
+            analyzeMode: analyzeMode || 'high',
             game: game || '',
             tags: ['prod_analyze']
         });
