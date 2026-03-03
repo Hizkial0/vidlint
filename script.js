@@ -1360,7 +1360,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     previewTabs.forEach(btn => {
         btn.addEventListener('click', () => {
-            // 1. Toggle Active State
+            // 1. Handle Locked Modes
+            if (btn.classList.contains('locked')) {
+                window.location.href = 'pro-request.html';
+                return;
+            }
+
+            // 2. Toggle Active State
             previewTabs.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
 

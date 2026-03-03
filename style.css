@@ -196,6 +196,50 @@ body::before {
     background: var(--color-primary);
 }
 
+/* Locked / Restricted Modes */
+.tab-btn.locked {
+    position: relative;
+    opacity: 0.7;
+    cursor: help;
+    background: rgba(15, 23, 42, 0.4);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: var(--text-muted);
+}
+
+.tab-btn.locked .lock-icon {
+    margin-right: 4px;
+    font-size: 0.8rem;
+}
+
+.tab-btn.locked::after {
+    content: "Upgrade to Pro";
+    position: absolute;
+    bottom: 120%;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    background: #3b82f6;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    z-index: 1000;
+}
+
+.tab-btn.locked:hover::after {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+.tab-btn.locked:active {
+    transform: none;
+}
+
+
 /* -------------------------------------
    THUMBNAIL CARD & CONTROLS
    ------------------------------------- */
