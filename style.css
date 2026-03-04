@@ -422,7 +422,7 @@ textarea.auto-expand {
     
     .dashboard-container {
         margin-left: 0;
-        padding: 16px;
+        padding: 12px;
     }
     
     .variants-sidebar {
@@ -432,19 +432,64 @@ textarea.auto-expand {
         flex-direction: row;
         border-right: none;
         border-bottom: 1px solid var(--border-subtle);
-        padding: 12px 16px;
+        padding: 10px 16px;
         overflow-x: auto;
         overflow-y: hidden;
         align-items: center;
+        justify-content: center;
+        gap: 10px;
+        -webkit-overflow-scrolling: touch;
+        scroll-padding: 16px;
     }
     
     .variant-item {
-        width: 90px;
+        width: 80px;
         flex-shrink: 0;
     }
+
+    .variant-label {
+        font-size: 0.7rem;
+    }
     
+    /* ---- Mobile Account Bar Redesign ---- */
     .account-bar {
-        margin-top: 16px;
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 10px 12px;
+        justify-content: center;
+        border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .account-bar .logo {
+        font-size: 1.15rem;
+        margin-right: 0;
+        flex-basis: 100%;
+        text-align: center;
+    }
+
+    .account-bar .plan-display {
+        font-size: 0.8rem;
+    }
+
+    .account-bar .btn-ghost,
+    .account-bar .btn-primary {
+        font-size: 0.78rem;
+        padding: 6px 12px;
+        border-radius: 6px;
+    }
+
+    .account-bar .btn-primary {
+        box-shadow: 0 2px 8px rgba(59, 130, 246, 0.25);
+    }
+
+    .account-dropdown {
+        order: 0;
+    }
+
+    /* Focus Mode: remove desktop sidebar offset on mobile */
+    .dashboard-container.focus-mode {
+        margin-left: 0;
+        max-width: 100%;
     }
 }
 

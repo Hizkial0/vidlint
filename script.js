@@ -197,6 +197,11 @@ async function runAnalysis(mode, metrics) {
 
         const result = await fetchBackendAnalysis(payload);
 
+        // HARD VALIDATION: Prevent empty _meta blocks from breaking the UI
+        if (!result || (!result.rating && !result.metrics && (!result.fixes || result.fixes.length === 0))) {
+            throw new Error("Analysis failed: Incomplete response from the model. Please try again.");
+        }
+
         // Save successful result to localStorage cache
         try {
             localStorage.setItem('linter_analysis_hash', imageHash);
