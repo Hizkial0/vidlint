@@ -490,6 +490,52 @@ textarea.auto-expand {
     .dashboard-container.focus-mode {
         margin-left: 0;
         max-width: 100%;
+        width: 100%;
+        padding: 12px;
+        box-sizing: border-box;
+    }
+
+    /* Prevent ANY horizontal overflow on mobile */
+    html, body {
+        overflow-x: hidden;
+        max-width: 100vw;
+    }
+
+    .dashboard-container {
+        max-width: 100%;
+        box-sizing: border-box;
+        overflow-x: hidden;
+    }
+
+    .dashboard-container .left-col {
+        max-width: 100%;
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+
+    .thumbnail-card {
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .prompt-box {
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .prompt-actions {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .prompt-actions-right {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .top-section {
+        max-width: 100%;
+        overflow: hidden;
     }
 }
 
