@@ -177,6 +177,7 @@ async function runFinalSynth(cv, imageUrl, ragPack, analyzeMode, title, context)
     const response = await getOpenAI().chat.completions.create(reqPayload);
 
     let content = response.choices[0]?.message?.content || '{}';
+    console.log(`[V4] Raw LLM content snippet: ${content.substring(0, 500).replace(/\n/g, '\\n')}`);
 
     // Strip markdown code block wrappers if present
     if (content.startsWith('```json')) {
