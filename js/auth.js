@@ -4,10 +4,15 @@ async function signInWithGoogle(next = '/dashboard.html') {
     try {
         sessionStorage.setItem('post_login_redirect', next);
 
+        const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+        const redirectUrl = isLocal
+            ? `${window.location.origin}/auth/callback.html`
+            : 'https://vidlint.com/auth/callback.html';
+
         const { error } = await window.sb.auth.signInWithOAuth({
             provider: 'google',
             options: {
-                redirectTo: `${window.location.origin}/auth/callback.html`
+                redirectTo: redirectUrl
             }
         });
 
