@@ -729,6 +729,16 @@ textarea.auto-expand {
     margin-left: 120px;
 }
 
+@media (max-width: 768px) {
+    .dashboard-container.focus-mode {
+        max-width: 100%;
+        margin-left: 0;
+        width: 100%;
+        padding: 12px;
+        box-sizing: border-box;
+    }
+}
+
 .dashboard-container.focus-mode .right-col,
 .dashboard-container.focus-mode .metrics-grid,
 .dashboard-container.focus-mode .score-ring-container,
