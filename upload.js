@@ -61,13 +61,13 @@ contextInput?.addEventListener("input", setAnalyzeEnabled);
 
 dropzone.addEventListener("click", (e) => {
     if (e.target !== fileInput) {
+        fileInput.value = null; // Clear value right before clicking to ensure 'change' fires even for the same file
         fileInput.click();
     }
 });
 
 fileInput.addEventListener("click", (e) => {
     e.stopPropagation();
-    e.target.value = null; // Allow re-selecting the same file without ignoring it
 });
 
 dropzone.addEventListener("dragover", (e) => {
