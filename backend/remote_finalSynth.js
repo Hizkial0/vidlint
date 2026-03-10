@@ -124,16 +124,16 @@ function buildFinalUserPrompt(ragPack, title, context) {
 
 const MODE_CONFIGS = {
   fast: {
-    model: process.env.FINAL_MODEL_FAST || 'gpt-4o-mini',
+    model: process.env.FINAL_MODEL_FAST || 'gpt-5-mini-2025-08-07',
     max_tokens: 3000
   },
   deep: {
-    model: process.env.FINAL_MODEL_DEEP || 'gpt-4o',
+    model: process.env.FINAL_MODEL_DEEP || 'gpt-5.2',
     reasoning_effort: 'medium',
     max_tokens: 7000
   },
   high: {
-    model: process.env.FINAL_MODEL_DEEP || 'gpt-4o',
+    model: process.env.FINAL_MODEL_DEEP || 'gpt-5.2',
     reasoning_effort: 'medium',
     max_tokens: 7000
   }
