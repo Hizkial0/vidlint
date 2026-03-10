@@ -38,7 +38,7 @@ Look for:
 - emotional or curiosity pull
 
 Prefer high-leverage changes over polish:
-crop, enlarge, isolate, remove, reposition, simplify, relight, replace, exaggerate.
+crop, enlarge, isolate, remove, reposition, simplify, relight, replace, exaggerate, recolor, rotate, etc.
 
 Use references only to borrow winning structure:
 bigger subject, cleaner framing, stronger depth, stronger contrast, simpler read.
@@ -51,7 +51,7 @@ Every fix must be a direct editor instruction:
 say what changes, how to change it, and why it improves clicks.
 
 Be harsh about weak concepts.
-Favor bold moves over safe tweaks.
+Favor bold moves over safe tweaks. but short and simple text.
 
 Output JSON only with this schema (no extra):
 {
@@ -120,16 +120,16 @@ function buildFinalUserPrompt(ragPack, title, context) {
 
 const MODE_CONFIGS = {
   fast: {
-    model: process.env.FINAL_MODEL_FAST || 'gpt-5-mini-2025-08-07',
+    model: process.env.FINAL_MODEL_FAST || 'gpt-4o-mini',
     max_tokens: 3000
   },
   deep: {
-    model: process.env.FINAL_MODEL_DEEP || 'gpt-5.2',
+    model: process.env.FINAL_MODEL_DEEP || 'gpt-4o',
     reasoning_effort: 'medium',
     max_tokens: 7000
   },
   high: {
-    model: process.env.FINAL_MODEL_DEEP || 'gpt-5.2',
+    model: process.env.FINAL_MODEL_DEEP || 'gpt-4o',
     reasoning_effort: 'medium',
     max_tokens: 7000
   }
@@ -161,7 +161,7 @@ async function runFinalSynth(cv, imageUrl, ragPack, analyzeMode, title, context)
 
     // Modern OpenAI SDK uses max_completion_tokens for o-series and gpt-series now
     reqPayload.max_completion_tokens = config.max_tokens || config.max_completion_tokens || 4000;
-    
+
     // Add reasoning effort only if the model is an o-series
     if ((config.model.includes('o1') || config.model.includes('o3') || config.model.includes('gpt-5')) && config.reasoning_effort) {
       reqPayload.reasoning_effort = config.reasoning_effort;
