@@ -251,7 +251,7 @@ function getServerOpenAI() {
 // 1. Generate Prompt (ChatGPT)
 app.post('/generate-prompt', async (req, res, next) => {
     try {
-        const { cv, fix, game, baseImage, referenceImages } = req.body;
+        const { fix, game, baseImage, referenceImages } = req.body;
         if (!fix) throw new Error("Missing selected fix");
 
         const systemPrompt = `You are a strict Prompt Engineer for an image-to-image editing model (like Midjourney/Gemini).
@@ -264,7 +264,6 @@ CRITICAL RULES:
 4. Output STRICT JSON: { "prompt": "...", "negativePrompt": "..." }`;
 
         const userPromptText = `
-CV Context: ${JSON.stringify(cv || {})}
 Fix Requested: ${JSON.stringify(fix)}
 
 Write the exact prompt and negative prompt to execute this fix.`;

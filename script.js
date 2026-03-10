@@ -1677,7 +1677,6 @@ async function generateFix(uniqueId, fixIndex, containerId) {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                cv: currentResult?._meta?.cv || {},
                 fix: {
                     title: fix.title,
                     instruction: fix.measurableFix || fix.detail,
