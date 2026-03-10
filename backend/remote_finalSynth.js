@@ -146,22 +146,41 @@ async function runFinalSynth(cv, imageUrl, ragPack, analyzeMode, title, context)
   const config = MODE_CONFIGS[analyzeMode] || MODE_CONFIGS['fast'];
 
   try {
-    const messages = [
-      { role: 'system', content: FINAL_DECIDER_SYSTEM },
-      {
-        role: 'user',
-        content: [
-          { type: 'text', text: buildFinalUserPrompt(ragPack, title, context) },
-          { type: 'image_url', image_url: { url: imageUrl, detail: 'high' } }
-        ]
-      }
-    ];
+    const isOSeries = config.model.includes('o1') || config.model.includes('o3') || config.model.includes('gpt-5');
+
+    const combinedUserText = isOSeries
+      ? FINAL_DECIDER_SYSTEM + '\n\n' + buildFinalUserPrompt(ragPack, title, context)
+      : buildFinalUserPrompt(ragPack, title, context);
+
+    const messages = isOSeries
+      ? [
+        {
+          role: 'user',
+          content: [
+            { type: 'text', text: combinedUserText },
+            { type: 'image_url', image_url: { url: imageUrl, detail: 'high' } }
+          ]
+        }
+      ]
+      : [
+        { role: 'system', content: FINAL_DECIDER_SYSTEM },
+        {
+          role: 'user',
+          content: [
+            { type: 'text', text: combinedUserText },
+            { type: 'image_url', image_url: { url: imageUrl, detail: 'high' } }
+          ]
+        }
+      ];
 
     const reqPayload = {
       model: config.model,
-      messages,
-      response_format: { type: 'json_object' }
+      messages
     };
+
+    if (!isOSeries) {
+      reqPayload.response_format = { type: 'json_object' };
+    }
 
     // Model-specific settings
     if (config.model.includes('o1') || config.model.includes('o3') || config.model.includes('gpt-5')) {

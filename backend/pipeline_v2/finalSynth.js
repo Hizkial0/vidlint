@@ -38,10 +38,10 @@ Look for:
 - emotional or curiosity pull
 
 Prefer high-leverage changes over polish:
-crop, enlarge, isolate, remove, reposition, simplify, relight, replace, exaggerate.
+crop, enlarge, isolate, remove, reposition, simplify, relight, replace, exaggerate, recolor, rotate, etc.
 
 Use references only to borrow winning structure:
-bigger subject, cleaner framing, stronger depth, stronger contrast, simpler read.
+bigger subject, cleaner framing, stronger depth, stronger contrast, simpler read, in-game specific style.
 
 Do not give generic advice.
 Do not nitpick tiny polish unless it affects CTR.
@@ -51,7 +51,8 @@ Every fix must be a direct editor instruction:
 say what changes, how to change it, and why it improves clicks.
 
 Be harsh about weak concepts.
-Favor bold moves over safe tweaks.
+Favor bold moves over safe tweaks. 
+Write like a ruthless human thumbnail judge: blunt, visual, and ultra-compact—no filler, no repetition, no long explanations.
 
 Output JSON only with this schema (no extra):
 {
@@ -142,26 +143,45 @@ async function runFinalSynth(cv, imageUrl, ragPack, analyzeMode, title, context)
   const config = MODE_CONFIGS[analyzeMode] || MODE_CONFIGS['fast'];
 
   try {
-    const messages = [
-      { role: 'system', content: FINAL_DECIDER_SYSTEM },
-      {
-        role: 'user',
-        content: [
-          { type: 'text', text: buildFinalUserPrompt(ragPack, title, context) },
-          { type: 'image_url', image_url: { url: imageUrl, detail: 'high' } }
-        ]
-      }
-    ];
+    const isOSeries = config.model.includes('o1') || config.model.includes('o3') || config.model.includes('gpt-5');
+
+    const combinedUserText = isOSeries
+      ? FINAL_DECIDER_SYSTEM + '\n\n' + buildFinalUserPrompt(ragPack, title, context)
+      : buildFinalUserPrompt(ragPack, title, context);
+
+    const messages = isOSeries
+      ? [
+        {
+          role: 'user',
+          content: [
+            { type: 'text', text: combinedUserText },
+            { type: 'image_url', image_url: { url: imageUrl, detail: 'high' } }
+          ]
+        }
+      ]
+      : [
+        { role: 'system', content: FINAL_DECIDER_SYSTEM },
+        {
+          role: 'user',
+          content: [
+            { type: 'text', text: combinedUserText },
+            { type: 'image_url', image_url: { url: imageUrl, detail: 'high' } }
+          ]
+        }
+      ];
 
     const reqPayload = {
       model: config.model,
-      messages,
-      response_format: { type: 'json_object' }
+      messages
     };
+
+    if (!isOSeries) {
+      reqPayload.response_format = { type: 'json_object' };
+    }
 
     // Modern OpenAI SDK uses max_completion_tokens for o-series and gpt-series now
     reqPayload.max_completion_tokens = config.max_tokens || config.max_completion_tokens || 4000;
-    
+
     // Add reasoning effort only if the model is an o-series
     if ((config.model.includes('o1') || config.model.includes('o3') || config.model.includes('gpt-5')) && config.reasoning_effort) {
       reqPayload.reasoning_effort = config.reasoning_effort;
