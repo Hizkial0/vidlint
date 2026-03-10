@@ -344,7 +344,7 @@ Rules:
             max_completion_tokens: 700
         });
 
-        const content = response.choices?.[0]?.message?.content || "{}";
+        let content = response.choices?.[0]?.message?.content || "{}";
         const refusal = response.choices?.[0]?.message?.refusal;
         
         if (refusal) {
@@ -352,8 +352,18 @@ Rules:
             throw new Error(`Model Refusal: ${refusal}`);
         }
 
-        console.log(`[FixGenerator] RAW Content: ${content}`);
+        console.log(`[FixGenerator] RAW Content (Raw): ${content}`);
+        
+        // Strip markdown blocks if present
+        if (content.startsWith('```json')) {
+            content = content.replace(/^```json\s*/, '').replace(/\s*```$/, '');
+        } else if (content.startsWith('```')) {
+            content = content.replace(/^```\s*/, '').replace(/\s*```$/, '');
+        }
+
+        console.log(`[FixGenerator] RAW Content (Stripped): ${content}`);
         const result = JSON.parse(content);
+        console.log(`[FixGenerator] Parsed Result:`, result);
         console.log(`[FixGenerator] Generated Prompt: ${result.prompt}`);
         
         res.json({
