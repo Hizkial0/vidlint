@@ -251,74 +251,108 @@ function getServerOpenAI() {
 // 1. Generate Prompt (ChatGPT)
 app.post('/generate-prompt', async (req, res, next) => {
     try {
-        const { fix, game, baseImage, referenceImages } = req.body;
+        const { fix, game, baseImage, referenceImages, sceneSummary } = req.body;
         if (!fix) throw new Error("Missing selected fix");
+        if (!baseImage) throw new Error("Missing baseImage");
 
-        const systemPrompt = `You are a strict Prompt Engineer for an image-to-image editing model (like Midjourney/Gemini).
-Your job is to translate a thumbnail critique into a precise, bounded prompt for the image generator.
+        const developerPrompt = `
+You write smart image-edit prompts for thumbnail iteration.
 
-CRITICAL RULES:
-1. Be extremely specific. Do NOT say "enhance" or "make better".
-2. Preserve the existing game world, style, and character identity. Game: ${game || 'Unknown Gaming'}.
-3. Provide hard instructions for negative prompts to prevent style drift.
-4. Output STRICT JSON: { "prompt": "...", "negativePrompt": "..." }`;
+Goal:
+Turn a selected thumbnail fix into a clean, intent-driven edit prompt.
 
-        const userPromptText = `
-Fix Requested: ${JSON.stringify(fix)}
+Rules:
+- Understand the whole thumbnail before writing the prompt.
+- Preserve the existing game world, character identity, camera feel, and overall style unless the fix explicitly changes them.
+- Ignore temporary analysis artifacts, UI labels, numbers, arrows, guides, measurement text, or overlays unless explicitly requested.
+- Convert critique into visual intent, not rigid numeric commands.
+- Prefer practical edit language like:
+  "make the knife more dominant"
+  "push focus to the face"
+  "simplify the background"
+  "increase separation between subject and background"
+- Avoid fake precision:
+  no unnecessary percentages, angles, or numeric ranges.
+- Be specific, but flexible enough for image editing.
+- Return only JSON matching the schema.
+        `.trim();
 
-Write the exact prompt and negative prompt to execute this fix.`;
+        const compactPayload = {
+            game: game || "Unknown Gaming",
+            sceneSummary: sceneSummary || {},
+            selectedFix: {
+                title: fix.title || "",
+                why: fix.why || "",
+                instruction: fix.instruction || "",
+                applyTo: fix.applyTo || [],
+                lever: fix.lever || "",
+                evidence: fix.evidence || ""
+            }
+        };
 
-        const model = 'gpt-5-mini-2025-08-07';
-        const isOSeries = model.includes('o1') || model.includes('o3') || model.includes('gpt-5');
+        const baseResolved = await resolveImage(baseImage);
 
-        let combinedUserText = isOSeries ? systemPrompt + '\n\n' + userPromptText : userPromptText;
-        const userContent = [{ type: 'text', text: combinedUserText }];
+        const userContent = [
+            {
+                type: "text",
+                text: JSON.stringify(compactPayload)
+            },
+            {
+                type: "image_url",
+                image_url: { url: baseResolved, detail: "high" }
+            }
+        ];
 
-        if (baseImage) {
-            const baseResolved = await resolveImage(baseImage);
-            userContent.push({ type: 'image_url', image_url: { url: baseResolved, detail: 'high' } });
-        }
-        
-        if (referenceImages && referenceImages.length > 0) {
+        if (Array.isArray(referenceImages) && referenceImages.length) {
             const refsResolved = await Promise.all(referenceImages.map(img => resolveImage(img)));
-            refsResolved.forEach(img => {
-                userContent.push({ type: 'image_url', image_url: { url: img, detail: 'low' } });
+            refsResolved.forEach((url) => {
+                userContent.push({
+                    type: "image_url",
+                    image_url: { url, detail: "low" }
+                });
             });
         }
 
-        const messages = isOSeries
-            ? [{ role: 'user', content: userContent }]
-            : [
-                { role: 'system', content: systemPrompt },
-                { role: 'user', content: userContent }
-              ];
+        const response = await getServerOpenAI().chat.completions.create({
+            model: "gpt-5-mini-2025-08-07",
+            messages: [
+                {
+                    role: "developer",
+                    content: developerPrompt
+                },
+                {
+                    role: "user",
+                    content: userContent
+                }
+            ],
+            response_format: {
+                type: "json_schema",
+                json_schema: {
+                    name: "thumbnail_edit_prompt",
+                    strict: true,
+                    schema: {
+                        type: "object",
+                        additionalProperties: false,
+                        required: ["prompt", "negativePrompt"],
+                        properties: {
+                            prompt: { type: "string" },
+                            negativePrompt: { type: "string" }
+                        }
+                    }
+                }
+            },
+            max_completion_tokens: 700
+        });
 
-        const reqPayload = {
-            model,
-            messages
-        };
-
-        if (isOSeries) {
-            reqPayload.max_completion_tokens = 2000;
-        } else {
-            reqPayload.response_format = { type: 'json_object' };
-            reqPayload.max_tokens = 2000;
-            reqPayload.temperature = 0.28;
-        }
-
-        const response = await getServerOpenAI().chat.completions.create(reqPayload);
-
-        let content = response.choices[0]?.message?.content || '{}';
-        if (content.startsWith('```json')) {
-            content = content.replace(/^```json\s*/, '').replace(/\s*```$/, '');
-        } else if (content.startsWith('```')) {
-            content = content.replace(/^```\s*/, '').replace(/\s*```$/, '');
-        }
-
+        const content = response.choices?.[0]?.message?.content || "{}";
         const result = JSON.parse(content);
         console.log(`[FixGenerator] Generated Prompt: ${result.prompt}`);
-        res.json({ ok: true, prompt: result.prompt, negativePrompt: result.negativePrompt });
-
+        
+        res.json({
+            ok: true,
+            prompt: result.prompt,
+            negativePrompt: result.negativePrompt
+        });
     } catch (e) {
         console.error("[FixGenerator] Prompt generation failed:", e.message);
         res.status(500).json({ ok: false, error: e.message });

@@ -51,6 +51,13 @@ QUALITY BAR & REQUIRED COUNTS:
 
 Output JSON only with this schema (no extra):
 {
+  "sceneSummary": {
+    "hero": "short string: main focus",
+    "threat": "short string: opposing force (or empty)",
+    "background": "short string",
+    "story": "1-sentence summary of action",
+    "ignoreArtifacts": ["list of overlays/UI/arrows or empty"]
+  },
   "rating": {
     "POP": { "val": 0, "max": 20, "why": "evidence" },
     "CLARITY": { "val": 0, "max": 20, "why": "evidence" },

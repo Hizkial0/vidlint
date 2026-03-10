@@ -1684,7 +1684,8 @@ async function generateFix(uniqueId, fixIndex, containerId) {
                 },
                 game: window.__currentGame || '',
                 baseImage: baseImageUrl,
-                referenceImages
+                referenceImages,
+                sceneSummary: currentResult?.sceneSummary || {}
             })
         });
 
