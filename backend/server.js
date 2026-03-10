@@ -252,6 +252,7 @@ function getServerOpenAI() {
 app.post('/generate-prompt', async (req, res, next) => {
     try {
         const { fix, game, baseImage, referenceImages, sceneSummary } = req.body;
+        console.log("[FixGenerator] /generate-prompt START", { fix: fix?.title, game });
         if (!fix) throw new Error("Missing selected fix");
         if (!baseImage) throw new Error("Missing baseImage");
 
