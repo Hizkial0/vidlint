@@ -1660,6 +1660,18 @@ async function generateFix(uniqueId, fixIndex, containerId) {
         btn.textContent = 'Generating Prompt…';
         btn.disabled = true;
         btn.style.opacity = '0.7';
+        
+        const storedData = JSON.parse(localStorage.getItem('linter_data') || '{}');
+        const baseImageUrl = storedData.imageUrlSmall || '';
+        
+        let referenceImages = [];
+        if (currentResult?.topReferences) {
+            referenceImages.push(...currentResult.topReferences.slice(0, 3).map(r => r.thumbnailUrl || r.url));
+        }
+        if (currentResult?.liveReferences) {
+            referenceImages.push(...currentResult.liveReferences.slice(0, 2).map(r => r.thumbnailUrl || r.url));
+        }
+        referenceImages = referenceImages.filter(Boolean);
 
         const promptRes = await fetch(`${API_CONFIG.baseUrl}/generate-prompt`, {
             method: 'POST',
@@ -1671,7 +1683,9 @@ async function generateFix(uniqueId, fixIndex, containerId) {
                     instruction: fix.measurableFix || fix.detail,
                     priority: fix.priority
                 },
-                game: window.__currentGame || ''
+                game: window.__currentGame || '',
+                baseImage: baseImageUrl,
+                referenceImages
             })
         });
 

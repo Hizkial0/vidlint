@@ -251,7 +251,7 @@ function getServerOpenAI() {
 // 1. Generate Prompt (ChatGPT)
 app.post('/generate-prompt', async (req, res, next) => {
     try {
-        const { cv, fix, game } = req.body;
+        const { cv, fix, game, baseImage, referenceImages } = req.body;
         if (!fix) throw new Error("Missing selected fix");
 
         const systemPrompt = `You are a strict Prompt Engineer for an image-to-image editing model (like Midjourney/Gemini).
@@ -263,22 +263,60 @@ CRITICAL RULES:
 3. Provide hard instructions for negative prompts to prevent style drift.
 4. Output STRICT JSON: { "prompt": "...", "negativePrompt": "..." }`;
 
-        const userPrompt = `
+        const userPromptText = `
 CV Context: ${JSON.stringify(cv || {})}
 Fix Requested: ${JSON.stringify(fix)}
 
 Write the exact prompt and negative prompt to execute this fix.`;
 
-        const response = await getServerOpenAI().chat.completions.create({
-            model: 'gpt-5-mini-2025-08-07',
-            messages: [
-                { role: 'system', content: systemPrompt },
-                { role: 'user', content: userPrompt }
-            ],
-            response_format: { type: 'json_object' }
-        });
+        const model = 'gpt-5-mini-2025-08-07';
+        const isOSeries = model.includes('o1') || model.includes('o3') || model.includes('gpt-5');
 
-        const result = JSON.parse(response.choices[0].message.content || '{}');
+        let combinedUserText = isOSeries ? systemPrompt + '\n\n' + userPromptText : userPromptText;
+        const userContent = [{ type: 'text', text: combinedUserText }];
+
+        if (baseImage) {
+            const baseResolved = await resolveImage(baseImage);
+            userContent.push({ type: 'image_url', image_url: { url: baseResolved, detail: 'high' } });
+        }
+        
+        if (referenceImages && referenceImages.length > 0) {
+            const refsResolved = await Promise.all(referenceImages.map(img => resolveImage(img)));
+            refsResolved.forEach(img => {
+                userContent.push({ type: 'image_url', image_url: { url: img, detail: 'low' } });
+            });
+        }
+
+        const messages = isOSeries
+            ? [{ role: 'user', content: userContent }]
+            : [
+                { role: 'system', content: systemPrompt },
+                { role: 'user', content: userContent }
+              ];
+
+        const reqPayload = {
+            model,
+            messages
+        };
+
+        if (isOSeries) {
+            reqPayload.max_completion_tokens = 2000;
+        } else {
+            reqPayload.response_format = { type: 'json_object' };
+            reqPayload.max_tokens = 2000;
+            reqPayload.temperature = 0.28;
+        }
+
+        const response = await getServerOpenAI().chat.completions.create(reqPayload);
+
+        let content = response.choices[0]?.message?.content || '{}';
+        if (content.startsWith('```json')) {
+            content = content.replace(/^```json\s*/, '').replace(/\s*```$/, '');
+        } else if (content.startsWith('```')) {
+            content = content.replace(/^```\s*/, '').replace(/\s*```$/, '');
+        }
+
+        const result = JSON.parse(content);
         console.log(`[FixGenerator] Generated Prompt: ${result.prompt}`);
         res.json({ ok: true, prompt: result.prompt, negativePrompt: result.negativePrompt });
 
