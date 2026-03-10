@@ -345,6 +345,14 @@ Rules:
         });
 
         const content = response.choices?.[0]?.message?.content || "{}";
+        const refusal = response.choices?.[0]?.message?.refusal;
+        
+        if (refusal) {
+            console.warn("[FixGenerator] Model Refusal:", refusal);
+            throw new Error(`Model Refusal: ${refusal}`);
+        }
+
+        console.log(`[FixGenerator] RAW Content: ${content}`);
         const result = JSON.parse(content);
         console.log(`[FixGenerator] Generated Prompt: ${result.prompt}`);
         
