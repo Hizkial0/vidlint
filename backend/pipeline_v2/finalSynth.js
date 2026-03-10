@@ -20,7 +20,7 @@ function getOpenAI() {
 }
 
 // System prompt — uses router hints as context, not as commands
-const FINAL_DECIDER_SYSTEM = `You are "GTA V ThumbJudge" — ruthless, mobile-first, CTR obsessed.
+const FINAL_DECIDER_SYSTEM = `You are "Gaming ThumbJudge" — ruthless, mobile-first, CTR obsessed.
 
 HOW YOU THINK
 Phase 1 — Diagnose:
@@ -46,7 +46,7 @@ CRITICAL RULES:
 
 QUALITY BAR & REQUIRED COUNTS:
 - topProblems: 2 to 4 true blockers.
-- fixes: 3–5 short, direct fixes (each fix MUST include at least one measurable action like crop %, scale %, blur strength, opacity %, or "move X to left third")
+- fixes: 2–5 bold, highly noticeable, and dramatic fixes. Focus on massive improvements that completely transform the appeal. NO tiny, rigid percentage tweaks - act like a creative human designer. 
 - layoutOptions: 2–3 composition layout options (A/B/C), each with 2–3 moves.
 
 Output JSON only with this schema (no extra):
@@ -83,43 +83,35 @@ Output JSON only with this schema (no extra):
 }`;
 
 function buildFinalUserPrompt(ragPack, title, context) {
-  let prompt = `VIDEO TITLE: ${title}\n`;
+  let prompt = `TITLE: ${title}\n`;
   if (context) prompt += `CONTEXT: ${context}\n`;
-  prompt += `\n`;
 
-  // Router interpretation hints (compact)
   const router = ragPack.routerOutput || {};
   if (router.interpretationHints) {
+    prompt += `\nROUTER:\n`;
     const hints = router.interpretationHints;
-    prompt += `=== ROUTER INTERPRETATION (use as hint, not command) ===\n`;
-    if (hints.likelyThesis) prompt += `Likely thesis: ${hints.likelyThesis}\n`;
-    if (hints.likelyJudgmentFrame) prompt += `Judgment frame: ${hints.likelyJudgmentFrame}\n`;
-    if (hints.possibleHiddenContext) prompt += `Hidden context: ${hints.possibleHiddenContext}\n`;
-    prompt += `Router confidence: ${router.confidence || 0}\n\n`;
+    if (hints.likelyThesis) prompt += `- thesis: ${hints.likelyThesis}\n`;
+    if (hints.likelyJudgmentFrame) prompt += `- frame: ${hints.likelyJudgmentFrame}\n`;
+    if (hints.possibleHiddenContext) prompt += `- viewer pull: ${hints.possibleHiddenContext}\n`;
   }
 
-  // Local references (max 3, compact)
   const localRefs = ragPack.topLocalRefs || [];
   if (localRefs.length > 0) {
-    prompt += `=== WINNING REFERENCE THUMBNAILS (${localRefs.length}) ===\n`;
-    localRefs.forEach((ref, i) => {
-      prompt += `${i + 1}. "${ref.title}" (outlier: ${ref.outlierScore || 0}) — ${ref.reason || ''}\n`;
+    prompt += `\nREFS:\n`;
+    localRefs.forEach(ref => {
+      if (ref.reason) prompt += `- ${ref.reason}\n`;
     });
-    prompt += `\n`;
   }
 
-  // YouTube references (max 2, compact)
   const ytRefs = ragPack.topYoutubeRefs || [];
   if (ytRefs.length > 0) {
-    prompt += `=== LIVE YOUTUBE EXAMPLES (${ytRefs.length}) ===\n`;
-    ytRefs.forEach((ref, i) => {
-      prompt += `${i + 1}. "${ref.title}" (views: ${ref.views || 0}) — ${ref.reason || ''}\n`;
+    prompt += `\nLIVE:\n`;
+    ytRefs.forEach(ref => {
+      if (ref.reason) prompt += `- ${ref.reason}\n`;
     });
-    prompt += `\n`;
   }
 
-  prompt += `Produce final strategic output now. The image is the primary truth. Prioritize structural fixes.`;
-  return prompt;
+  return prompt.trim();
 }
 
 const MODE_CONFIGS = {
