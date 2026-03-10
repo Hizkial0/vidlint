@@ -20,38 +20,34 @@ function getOpenAI() {
 }
 
 // System prompt — uses router hints as context, not as commands
-const FINAL_DECIDER_SYSTEM = `You are Gaming ThumbJudge: ruthless, mobile-first, CTR-obsessed.
+const FINAL_DECIDER_SYSTEM = `You are "GTA V ThumbJudge" — ruthless, mobile-first, CTR obsessed.
 
-The image is the source of truth.
-Router is a hint.
-References are examples.
-If they disagree, trust what is visible.
+HOW YOU THINK
+Phase 1 — Diagnose:
+- Look at the IMAGE ITSELF as the primary truth.
+- Use the provided router interpretation as a HINT, not a command.
+- If the image and router disagree, trust the image.
+- Compare against the provided reference thumbnails (if any).
 
-Judge the thumbnail for one thing: will it win the 1-second mobile glance?
+Phase 2 — Create options:
+- Generate explicit, structured layout and concept options.
 
-Look for:
-- one clear hero
-- instant story
-- strong foreground/background separation
-- low clutter
-- obvious focal point
-- emotional or curiosity pull
+WHAT TO OPTIMIZE
+- Optimize for a 1-second mobile glance: one hero, clear separation, low clutter, readable story instantly.
+- Prefer structural leverage (crop/scale/remove/reposition) over polish.
+- No generic lines like "make it better / more engaging / improve clarity".
+- Use the reference thumbnails only to copy what works (subject dominance, depth, lighting, simplicity).
 
-Prefer high-leverage changes over polish:
-crop, enlarge, isolate, remove, reposition, simplify, relight, replace, exaggerate.
+CRITICAL RULES:
+1. The IMAGE is the primary source of truth. Judge what you SEE.
+2. Router output and references are context helpers only.
+3. Every fix must be written like an editor instruction: "Do X by Y amount so Z happens."
+4. Return the EXACT JSON schema below. Do not add or remove keys.
 
-Use references only to borrow winning structure:
-bigger subject, cleaner framing, stronger depth, stronger contrast, simpler read.
-
-Do not give generic advice.
-Do not nitpick tiny polish unless it affects CTR.
-Do not invent details not visible in the image.
-
-Every fix must be a direct editor instruction:
-say what changes, how to change it, and why it improves clicks.
-
-Be harsh about weak concepts.
-Favor bold moves over safe tweaks.
+QUALITY BAR & REQUIRED COUNTS:
+- topProblems: 2 to 4 true blockers.
+- fixes: 3–5 short, direct fixes (each fix MUST include at least one measurable action like crop %, scale %, blur strength, opacity %, or "move X to left third")
+- layoutOptions: 2–3 composition layout options (A/B/C), each with 2–3 moves.
 
 Output JSON only with this schema (no extra):
 {
@@ -87,35 +83,43 @@ Output JSON only with this schema (no extra):
 }`;
 
 function buildFinalUserPrompt(ragPack, title, context) {
-  let prompt = `TITLE: ${title}\n`;
+  let prompt = `VIDEO TITLE: ${title}\n`;
   if (context) prompt += `CONTEXT: ${context}\n`;
+  prompt += `\n`;
 
+  // Router interpretation hints (compact)
   const router = ragPack.routerOutput || {};
   if (router.interpretationHints) {
-    prompt += `\nROUTER:\n`;
     const hints = router.interpretationHints;
-    if (hints.likelyThesis) prompt += `- thesis: ${hints.likelyThesis}\n`;
-    if (hints.likelyJudgmentFrame) prompt += `- frame: ${hints.likelyJudgmentFrame}\n`;
-    if (hints.possibleHiddenContext) prompt += `- viewer pull: ${hints.possibleHiddenContext}\n`;
+    prompt += `=== ROUTER INTERPRETATION (use as hint, not command) ===\n`;
+    if (hints.likelyThesis) prompt += `Likely thesis: ${hints.likelyThesis}\n`;
+    if (hints.likelyJudgmentFrame) prompt += `Judgment frame: ${hints.likelyJudgmentFrame}\n`;
+    if (hints.possibleHiddenContext) prompt += `Hidden context: ${hints.possibleHiddenContext}\n`;
+    prompt += `Router confidence: ${router.confidence || 0}\n\n`;
   }
 
+  // Local references (max 3, compact)
   const localRefs = ragPack.topLocalRefs || [];
   if (localRefs.length > 0) {
-    prompt += `\nREFS:\n`;
-    localRefs.forEach(ref => {
-      if (ref.reason) prompt += `- ${ref.reason}\n`;
+    prompt += `=== WINNING REFERENCE THUMBNAILS (${localRefs.length}) ===\n`;
+    localRefs.forEach((ref, i) => {
+      prompt += `${i + 1}. "${ref.title}" (outlier: ${ref.outlierScore || 0}) — ${ref.reason || ''}\n`;
     });
+    prompt += `\n`;
   }
 
+  // YouTube references (max 2, compact)
   const ytRefs = ragPack.topYoutubeRefs || [];
   if (ytRefs.length > 0) {
-    prompt += `\nLIVE:\n`;
-    ytRefs.forEach(ref => {
-      if (ref.reason) prompt += `- ${ref.reason}\n`;
+    prompt += `=== LIVE YOUTUBE EXAMPLES (${ytRefs.length}) ===\n`;
+    ytRefs.forEach((ref, i) => {
+      prompt += `${i + 1}. "${ref.title}" (views: ${ref.views || 0}) — ${ref.reason || ''}\n`;
     });
+    prompt += `\n`;
   }
 
-  return prompt.trim();
+  prompt += `Produce final strategic output now. The image is the primary truth. Prioritize structural fixes.`;
+  return prompt;
 }
 
 const MODE_CONFIGS = {
@@ -159,20 +163,20 @@ async function runFinalSynth(cv, imageUrl, ragPack, analyzeMode, title, context)
       response_format: { type: 'json_object' }
     };
 
-    // Modern OpenAI SDK uses max_completion_tokens for o-series and gpt-series now
-    reqPayload.max_completion_tokens = config.max_tokens || config.max_completion_tokens || 4000;
-    
-    // Add reasoning effort only if the model is an o-series
-    if ((config.model.includes('o1') || config.model.includes('o3') || config.model.includes('gpt-5')) && config.reasoning_effort) {
-      reqPayload.reasoning_effort = config.reasoning_effort;
-    } else if (!config.model.includes('o1') && !config.model.includes('o3') && !config.model.includes('gpt-5')) {
+    // Model-specific settings
+    if (config.model.includes('o1') || config.model.includes('o3') || config.model.includes('gpt-5')) {
+      reqPayload.max_completion_tokens = config.max_completion_tokens || config.max_tokens;
+      if (config.reasoning_effort) {
+        reqPayload.reasoning_effort = config.reasoning_effort;
+      }
+    } else {
+      reqPayload.max_tokens = config.max_tokens || config.max_completion_tokens;
       reqPayload.temperature = 0.28;
     }
 
     const response = await getOpenAI().chat.completions.create(reqPayload);
 
     let content = response.choices[0]?.message?.content || '{}';
-    console.log(`[V4] Raw LLM content snippet: ${content.substring(0, 500).replace(/\n/g, '\\n')}`);
 
     // Strip markdown code block wrappers if present
     if (content.startsWith('```json')) {
