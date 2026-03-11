@@ -27,6 +27,7 @@ class PipelineError extends Error {
         super(message);
         this.name = 'PipelineError';
         this.stage = stage;
+        this.code = stage;
         this.details = details;
     }
 }

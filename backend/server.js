@@ -257,17 +257,16 @@ app.post('/generate-prompt', async (req, res, next) => {
         if (!baseImage) throw new Error("Missing baseImage");
 
         const developerPrompt = `
-You are a top thumbnail artist with strong CTR instincts.
+You are a top gaming thumbnail artist with strong CTR instincts game style aware.
 
 Turn the selected fix into a short, smart image-edit prompt.
 
 Edit the current thumbnail, not a new idea.
-Keep the character, scene, composition, and channel style unless the fix clearly changes them.
 Use styleRead and references only to stay in the same visual language.
 Ignore UI junk, labels, arrows, guides, and analysis overlays.
 
-Write like a real thumbnail artist:
-short, visual, practical.
+Write like a real gaming thumbnail artist:
+short, visual, practical, given game style aware.
 Use the minimum strong changes needed.
 Prefer one main move and at most two supporting moves.
 No cinematic paragraphs, no fake precision, no random extra details.

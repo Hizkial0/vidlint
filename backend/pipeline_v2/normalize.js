@@ -100,6 +100,7 @@ function normalizeOutput(result) {
             throw new Error("Contract violation: layoutOptions must have 2 to 3 items.");
         }
         result.layoutOptions.forEach(l => {
+            if (l.name) l.name = scrubText(l.name);
             if (l.title) l.title = scrubText(l.title);
             if (l.goal) l.goal = scrubText(l.goal);
             if (l.moves && Array.isArray(l.moves)) {
