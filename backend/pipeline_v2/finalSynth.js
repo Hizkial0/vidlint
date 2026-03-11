@@ -230,6 +230,11 @@ async function runFinalSynth(cv, imageUrl, ragPack, analyzeMode, title, context)
 
     const response = await getOpenAI().chat.completions.create(reqPayload);
 
+    console.log(`[V4] finish_reason: ${response.choices?.[0]?.finish_reason}, tokens: ${JSON.stringify(response.usage)}`);
+    if (!response.choices?.[0]?.message?.content) {
+      console.error(`[V4] CRITICAL: OpenAI returned empty content! Full choice:`, JSON.stringify(response.choices?.[0]));
+    }
+
     let content = response.choices[0]?.message?.content || '{}';
     console.log(`[V4] Raw LLM content snippet: ${content.substring(0, 500).replace(/\n/g, '\\n')}`);
 
