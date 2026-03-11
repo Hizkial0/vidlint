@@ -292,6 +292,7 @@ Rules:
         };
 
         const baseResolved = await resolveImage(baseImage);
+        console.log(`[FixGenerator] baseImage type: ${baseResolved?.substring(0, 30)}... (len=${baseResolved?.length})`);
 
         const userContent = [
             {
@@ -305,6 +306,7 @@ Rules:
         ];
 
         if (Array.isArray(referenceImages) && referenceImages.length) {
+            console.log(`[FixGenerator] ${referenceImages.length} reference images`);
             const refsResolved = await Promise.all(referenceImages.map(img => resolveImage(img)));
             refsResolved.forEach((url) => {
                 userContent.push({
@@ -314,6 +316,7 @@ Rules:
             });
         }
 
+        console.log(`[FixGenerator] Calling OpenAI with ${userContent.length} content blocks...`);
         const response = await getServerOpenAI().chat.completions.create({
             model: "gpt-5-mini-2025-08-07",
             messages: [
@@ -348,6 +351,7 @@ Rules:
         const finishReason = response.choices?.[0]?.finish_reason;
         const usage = response.usage;
         console.log(`[FixGenerator] finish_reason: ${finishReason}, tokens: ${JSON.stringify(usage)}`);
+        console.log(`[FixGenerator] Full choice[0]:`, JSON.stringify(response.choices?.[0]));
 
         let content = response.choices?.[0]?.message?.content || "{}";
         const refusal = response.choices?.[0]?.message?.refusal;
