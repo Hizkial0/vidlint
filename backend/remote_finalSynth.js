@@ -122,6 +122,7 @@ function buildFinalUserPrompt(ragPack, title, context) {
   if (router.interpretationHints) {
     const hints = router.interpretationHints;
     prompt += `=== ROUTER INTERPRETATION (use as hint, not command) ===\n`;
+    if (hints.subjectAndScene) prompt += `Subject & Scene: ${hints.subjectAndScene}\n`;
     if (hints.likelyThesis) prompt += `Likely thesis: ${hints.likelyThesis}\n`;
     if (hints.likelyJudgmentFrame) prompt += `Judgment frame: ${hints.likelyJudgmentFrame}\n`;
     if (hints.possibleHiddenContext) prompt += `Hidden context: ${hints.possibleHiddenContext}\n`;

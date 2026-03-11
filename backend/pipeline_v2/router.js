@@ -23,6 +23,7 @@ You must return ONLY a JSON object with this exact schema:
     "avoid": ["reference type to avoid 1"]
   },
   "interpretationHints": {
+    "subjectAndScene": "who is in the thumbnail (character names, players, specific games) and what is the exact setting/action",
     "likelyThesis": "what the thumbnail is trying to sell to the viewer",
     "likelyJudgmentFrame": "how the final critic should evaluate this (e.g. judge for emotional readability, meme recognition, cinematic quality)",
     "possibleHiddenContext": "any trend, meme, or cultural reference that might be relevant (or empty string if none)"
@@ -120,6 +121,7 @@ function getDefaultRouterOutput(title, game) {
             avoid: ['unrelated content']
         },
         interpretationHints: {
+            subjectAndScene: 'Unknown — router skipped',
             likelyThesis: 'Unknown — router skipped',
             likelyJudgmentFrame: 'judge for general thumbnail effectiveness',
             possibleHiddenContext: ''
