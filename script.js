@@ -36,7 +36,11 @@ async function fetchBackendAnalysis(payload) {
 
         if (!response.ok) {
             const errorData = await response.json().catch(() => ({}));
-            throw new Error(errorData.error || `HTTP ${response.status}`);
+            const parts = [];
+            if (errorData.code) parts.push(errorData.code);
+            if (errorData.message) parts.push(errorData.message);
+            if (errorData.error) parts.push(errorData.error);
+            throw new Error(parts.length ? parts.join(': ') : `HTTP ${response.status}`);
         }
 
         const data = await response.json();

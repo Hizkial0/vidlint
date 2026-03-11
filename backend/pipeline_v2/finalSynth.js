@@ -126,6 +126,175 @@ Output JSON only with this schema (no extra):
   ]
 }`;
 
+const SCORE_BUCKET_SCHEMA = {
+  type: 'object',
+  additionalProperties: false,
+  required: ['val', 'max', 'why'],
+  properties: {
+    val: { type: 'number', minimum: 0, maximum: 20 },
+    max: { type: 'number', const: 20 },
+    why: { type: 'string' }
+  }
+};
+
+const FINAL_DECIDER_SCHEMA = {
+  type: 'object',
+  additionalProperties: false,
+  required: ['sceneSummary', 'styleRead', 'rating', 'topProblems', 'fixes', 'layoutOptions'],
+  properties: {
+    sceneSummary: {
+      type: 'object',
+      additionalProperties: false,
+      required: ['hero', 'threat', 'background', 'story', 'ignoreArtifacts'],
+      properties: {
+        hero: { type: 'string' },
+        threat: { type: 'string' },
+        background: { type: 'string' },
+        story: { type: 'string' },
+        ignoreArtifacts: {
+          type: 'array',
+          items: { type: 'string' }
+        }
+      }
+    },
+    styleRead: {
+      type: 'object',
+      additionalProperties: false,
+      required: ['family', 'styleRead', 'referenceEffect', 'confidence'],
+      properties: {
+        family: { type: 'string' },
+        styleRead: { type: 'string' },
+        referenceEffect: {
+          type: 'string',
+          enum: ['reinforce', 'sharpen', 'weakly_support']
+        },
+        confidence: { type: 'number', minimum: 0, maximum: 1 }
+      }
+    },
+    rating: {
+      type: 'object',
+      additionalProperties: false,
+      required: ['POP', 'CLARITY', 'HOOK', 'CLEAN', 'TRUST', 'total', 'focus'],
+      properties: {
+        POP: SCORE_BUCKET_SCHEMA,
+        CLARITY: SCORE_BUCKET_SCHEMA,
+        HOOK: SCORE_BUCKET_SCHEMA,
+        CLEAN: SCORE_BUCKET_SCHEMA,
+        TRUST: SCORE_BUCKET_SCHEMA,
+        total: { type: 'number', minimum: 0, maximum: 100 },
+        focus: {
+          type: 'array',
+          minItems: 1,
+          maxItems: 2,
+          items: { type: 'string' }
+        }
+      }
+    },
+    topProblems: {
+      type: 'array',
+      minItems: 2,
+      maxItems: 4,
+      items: {
+        type: 'object',
+        additionalProperties: false,
+        required: ['problem', 'evidence'],
+        properties: {
+          problem: { type: 'string' },
+          evidence: { type: 'string' }
+        }
+      }
+    },
+    fixes: {
+      type: 'array',
+      minItems: 3,
+      maxItems: 5,
+      items: {
+        type: 'object',
+        additionalProperties: false,
+        required: ['priority', 'title', 'why', 'ops', 'applyTo', 'instruction', 'evidence', 'lever', 'impact'],
+        properties: {
+          priority: { type: 'string', enum: ['P1', 'P2', 'P3', 'P4', 'P5'] },
+          title: { type: 'string' },
+          why: { type: 'string' },
+          ops: {
+            type: 'array',
+            items: {
+              type: 'object',
+              additionalProperties: true
+            }
+          },
+          applyTo: {
+            type: 'array',
+            items: { type: 'string' }
+          },
+          instruction: { type: 'string' },
+          evidence: { type: 'string' },
+          lever: {
+            type: 'string',
+            enum: ['composition', 'separation', 'promise', 'proof', 'emotion', 'polish']
+          },
+          impact: { type: 'string', enum: ['high', 'medium'] }
+        }
+      }
+    },
+    layoutOptions: {
+      type: 'array',
+      minItems: 2,
+      maxItems: 3,
+      items: {
+        type: 'object',
+        additionalProperties: false,
+        required: ['label', 'name', 'goal', 'moves'],
+        properties: {
+          label: { type: 'string', enum: ['A', 'B', 'C'] },
+          name: { type: 'string' },
+          goal: { type: 'string' },
+          moves: {
+            type: 'array',
+            minItems: 2,
+            maxItems: 3,
+            items: { type: 'string' }
+          }
+        }
+      }
+    }
+  }
+};
+
+function supportsStructuredOutputs(model) {
+  return /gpt-5|gpt-4\.1|gpt-4o|o1|o3/i.test(model || '');
+}
+
+function getResponseFormat(model) {
+  if (!supportsStructuredOutputs(model)) {
+    return { type: 'json_object' };
+  }
+
+  return {
+    type: 'json_schema',
+    json_schema: {
+      name: 'thumbnail_analysis',
+      strict: true,
+      schema: FINAL_DECIDER_SCHEMA
+    }
+  };
+}
+
+function extractMessageContent(message) {
+  const raw = message?.content;
+  if (typeof raw === 'string') return raw;
+  if (!Array.isArray(raw)) return '';
+
+  return raw
+    .map(part => {
+      if (typeof part === 'string') return part;
+      if (typeof part?.text === 'string') return part.text;
+      return '';
+    })
+    .join('')
+    .trim();
+}
+
 function buildFinalUserPrompt(ragPack, title, context) {
   let prompt = `TITLE: ${title}\n`;
   if (context) prompt += `CONTEXT: ${context}\n`;
@@ -211,12 +380,9 @@ async function runFinalSynth(cv, imageUrl, ragPack, analyzeMode, title, context)
 
     const reqPayload = {
       model: config.model,
-      messages
+      messages,
+      response_format: getResponseFormat(config.model)
     };
-
-    if (!isOSeries) {
-      reqPayload.response_format = { type: 'json_object' };
-    }
 
     // Modern OpenAI SDK uses max_completion_tokens for o-series and gpt-series now
     reqPayload.max_completion_tokens = config.max_tokens || config.max_completion_tokens || 4000;
@@ -230,14 +396,20 @@ async function runFinalSynth(cv, imageUrl, ragPack, analyzeMode, title, context)
 
     const response = await getOpenAI().chat.completions.create(reqPayload);
 
-    console.log(`[V4] finish_reason: ${response.choices?.[0]?.finish_reason}, tokens: ${JSON.stringify(response.usage)}`);
-    if (!response.choices?.[0]?.message?.content) {
-      console.error(`[V4] CRITICAL: OpenAI returned empty content! Full choice:`, JSON.stringify(response.choices?.[0]));
+    const choice = response.choices?.[0];
+    console.log(`[V4] finish_reason: ${choice?.finish_reason}, tokens: ${JSON.stringify(response.usage)}`);
+
+    if (!choice?.message?.content && !choice?.message?.refusal) {
+      console.error(`[V4] CRITICAL: OpenAI returned empty content! Full choice:`, JSON.stringify(choice));
     }
 
-    let content = response.choices[0]?.message?.content;
+    if (choice?.message?.refusal) {
+      throw new Error(`Model refusal: ${choice.message.refusal}`);
+    }
+
+    let content = extractMessageContent(choice?.message);
     if (!content) {
-      throw new Error(`OpenAI returned empty content. finish_reason: ${response.choices?.[0]?.finish_reason}`);
+      throw new Error(`OpenAI returned empty content. finish_reason: ${choice?.finish_reason}`);
     }
     console.log(`[V4] Raw LLM content snippet: ${content.substring(0, 500).replace(/\n/g, '\\n')}`);
 
@@ -270,7 +442,8 @@ async function runFinalSynth(cv, imageUrl, ragPack, analyzeMode, title, context)
     };
 
   } catch (err) {
-    console.error(`[V4] Final Decider failed: ${err.message}`);
+    const requestMeta = [err.status, err.request_id].filter(Boolean).join(' | ');
+    console.error(`[V4] Final Decider failed${requestMeta ? ` (${requestMeta})` : ''}: ${err.message}`);
     throw new Error(`Strategist failed: ${err.message}`);
   }
 }

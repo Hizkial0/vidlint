@@ -257,29 +257,22 @@ app.post('/generate-prompt', async (req, res, next) => {
         if (!baseImage) throw new Error("Missing baseImage");
 
         const developerPrompt = `
-You write smart image-edit prompts for thumbnail iteration.
+You are a top thumbnail artist with strong CTR instincts.
 
-Goal:
-Turn a selected thumbnail fix into a clean, intent-driven edit prompt.
+Turn the selected fix into a short, smart image-edit prompt.
 
-Rules:
-- Understand the whole thumbnail before writing the prompt.
-- Preserve the existing game world, character identity, camera feel, and overall style unless the fix explicitly changes them.
-- Ignore temporary analysis artifacts, UI labels, numbers, arrows, guides, measurement text, or overlays unless explicitly requested.
-- Convert critique into visual intent, not rigid numeric commands.
-- Prefer practical edit language like:
-  "make the knife more dominant"
-  "push focus to the face"
-  "simplify the background"
-  "increase separation between subject and background"
-- Avoid fake precision:
-  no unnecessary percentages, angles, or numeric ranges.
-- Be specific, but flexible enough for image editing.
-- Preserve the current thumbnail's visual language.
-- Use styleRead as a strong guide for how the edit should feel.
-- Use reference images only when they reinforce the same visual language.
-- Do not force generic thumbnail tricks if they do not fit the styleRead.
-- Return only JSON matching the schema.
+Edit the current thumbnail, not a new idea.
+Keep the character, scene, composition, and channel style unless the fix clearly changes them.
+Use styleRead and references only to stay in the same visual language.
+Ignore UI junk, labels, arrows, guides, and analysis overlays.
+
+Write like a real thumbnail artist:
+short, visual, practical.
+Use the minimum strong changes needed.
+Prefer one main move and at most two supporting moves.
+No cinematic paragraphs, no fake precision, no random extra details.
+
+Return only JSON matching the schema.
         `.trim();
 
         const compactPayload = {
@@ -360,14 +353,14 @@ Rules:
 
         let content = response.choices?.[0]?.message?.content || "{}";
         const refusal = response.choices?.[0]?.message?.refusal;
-        
+
         if (refusal) {
             console.warn("[FixGenerator] Model Refusal:", refusal);
             throw new Error(`Model Refusal: ${refusal}`);
         }
 
         console.log(`[FixGenerator] RAW Content (Raw): ${content}`);
-        
+
         // Strip markdown blocks if present
         if (content.startsWith('```json')) {
             content = content.replace(/^```json\s*/, '').replace(/\s*```$/, '');
@@ -379,7 +372,7 @@ Rules:
         const result = JSON.parse(content);
         console.log(`[FixGenerator] Parsed Result:`, result);
         console.log(`[FixGenerator] Generated Prompt: ${result.prompt}`);
-        
+
         res.json({
             ok: true,
             prompt: result.prompt,
@@ -553,7 +546,13 @@ app.get('/debug/run/:id', async (req, res) => {
 app.use((err, req, res, next) => {
     console.error(`[SERVER ERROR] ${err.message}`);
     if (err instanceof PipelineError) {
-        return res.status(422).json({ ok: false, status: 422, code: err.code, message: err.message });
+        return res.status(422).json({
+            ok: false,
+            status: 422,
+            code: err.code || err.stage || 'pipeline_error',
+            stage: err.stage || err.code || 'pipeline_error',
+            message: err.message
+        });
     }
     res.status(500).json({ ok: false, status: 500, message: 'Internal Server Error', error: err.message });
 });
