@@ -198,7 +198,12 @@ const FINAL_DECIDER_SCHEMA = {
             type: 'array',
             items: {
               type: 'object',
-              additionalProperties: true
+              additionalProperties: false,
+              required: ['target', 'action'],
+              properties: {
+                target: { type: 'string' },
+                action: { type: 'string' }
+              }
             }
           },
           applyTo: {
