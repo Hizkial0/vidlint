@@ -1685,7 +1685,8 @@ async function generateFix(uniqueId, fixIndex, containerId) {
                 game: window.__currentGame || '',
                 baseImage: baseImageUrl,
                 referenceImages,
-                sceneSummary: currentResult?.sceneSummary || {}
+                sceneSummary: currentResult?.sceneSummary || {},
+                styleRead: currentResult?.styleRead || {}
             })
         });
 

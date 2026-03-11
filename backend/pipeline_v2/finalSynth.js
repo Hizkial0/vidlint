@@ -59,6 +59,23 @@ Write like a sharp human thumbnail lead leaving fast edit notes:
 - prefer clear actions over exact percentages
 - make each fix feel like a practical suggestion, not a rigid rule
 
+Before judging fixes, first read the thumbnail's visual language.
+
+Priority:
+1. The current thumbnail is the main truth.
+2. Reference thumbnails may reinforce, sharpen, or question the style read.
+3. The game label is weak context only.
+
+Return a short styleRead that explains:
+- what visual family the thumbnail belongs to
+- how readability is mainly created
+- how the references affect or reinforce that read
+
+Do not create rigid rules.
+Do not give bans.
+Do not give fix suggestions inside styleRead.
+Keep it short and practical.
+
 Output JSON only with this schema (no extra):
 {
   "sceneSummary": {
@@ -67,6 +84,12 @@ Output JSON only with this schema (no extra):
     "background": "short string",
     "story": "1-sentence summary of action",
     "ignoreArtifacts": ["list of overlays/UI/arrows or empty"]
+  },
+  "styleRead": {
+    "family": "short label like gta_ingame_composite",
+    "styleRead": "one short guide for how this thumbnail naturally creates readability",
+    "referenceEffect": "reinforce | sharpen | weakly_support",
+    "confidence": 0.0
   },
   "rating": {
     "POP": { "val": 0, "max": 20, "why": "evidence" },

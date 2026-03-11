@@ -251,7 +251,7 @@ function getServerOpenAI() {
 // 1. Generate Prompt (ChatGPT)
 app.post('/generate-prompt', async (req, res, next) => {
     try {
-        const { fix, game, baseImage, referenceImages, sceneSummary } = req.body;
+        const { fix, game, baseImage, referenceImages, sceneSummary, styleRead } = req.body;
         console.log("[FixGenerator] /generate-prompt START", { fix: fix?.title, game });
         if (!fix) throw new Error("Missing selected fix");
         if (!baseImage) throw new Error("Missing baseImage");
@@ -275,12 +275,17 @@ Rules:
 - Avoid fake precision:
   no unnecessary percentages, angles, or numeric ranges.
 - Be specific, but flexible enough for image editing.
+- Preserve the current thumbnail's visual language.
+- Use styleRead as a strong guide for how the edit should feel.
+- Use reference images only when they reinforce the same visual language.
+- Do not force generic thumbnail tricks if they do not fit the styleRead.
 - Return only JSON matching the schema.
         `.trim();
 
         const compactPayload = {
             game: game || "Unknown Gaming",
             sceneSummary: sceneSummary || {},
+            styleRead: styleRead || {},
             selectedFix: {
                 title: fix.title || "",
                 why: fix.why || "",
