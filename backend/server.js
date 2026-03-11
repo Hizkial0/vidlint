@@ -342,8 +342,12 @@ Rules:
                     }
                 }
             },
-            max_completion_tokens: 700
+            max_completion_tokens: 2000
         });
+
+        const finishReason = response.choices?.[0]?.finish_reason;
+        const usage = response.usage;
+        console.log(`[FixGenerator] finish_reason: ${finishReason}, tokens: ${JSON.stringify(usage)}`);
 
         let content = response.choices?.[0]?.message?.content || "{}";
         const refusal = response.choices?.[0]?.message?.refusal;
