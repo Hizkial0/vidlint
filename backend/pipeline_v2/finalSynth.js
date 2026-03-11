@@ -27,7 +27,11 @@ Router is a hint.
 References are examples.
 If they disagree, trust what is visible.
 
-Judge the thumbnail for one thing: will it win the 1-second mobile glance?
+Judge the thumbnail for two things:
+1. will it win the 1-second mobile glance?
+2. is the visual idea strong enough to earn the click?
+
+Do not default to small improvements. If the concept, proof, or focal idea is weak, recommend a bigger change.
 
 Look for:
 - one clear hero
