@@ -230,7 +230,10 @@ async function runFinalSynth(cv, imageUrl, ragPack, analyzeMode, title, context)
       console.error(`[V4] CRITICAL: OpenAI returned empty content! Full choice:`, JSON.stringify(response.choices?.[0]));
     }
 
-    let content = response.choices[0]?.message?.content || '{}';
+    let content = response.choices[0]?.message?.content;
+    if (!content) {
+      throw new Error(`OpenAI returned empty content. finish_reason: ${response.choices?.[0]?.finish_reason}`);
+    }
 
     // Strip markdown code block wrappers if present
     if (content.startsWith('```json')) {
