@@ -84,8 +84,8 @@ Output JSON only with this schema:
     "total": 0,
     "focus": ["two weakest buckets"]
   },
-  "topProblems": [
-    { "problem": "short click-killer", "evidence": "what in the image proves this is hurting click strength" }
+  "topProblem": [
+    { "problem": "the main click-killer", "evidence": "what in the image proves this is hurting click strength" }
   ],
   "fixes": [
     {
@@ -182,8 +182,8 @@ const FINAL_DECIDER_SCHEMA = {
     },
     fixes: {
       type: 'array',
-      minItems: 3,
-      maxItems: 5,
+      minItems: 2,
+      maxItems: 4,
       items: {
         type: 'object',
         additionalProperties: false,

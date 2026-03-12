@@ -535,6 +535,31 @@ function renderPlan(containerId, planData) {
     }).join("");
 }
 
+function renderTopProblems(containerId, problems) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    if (!problems || problems.length === 0) {
+        container.innerHTML = `<div class="p-4 text-white/50 text-sm">No top problems identified</div>`;
+        return;
+    }
+
+    container.innerHTML = problems.map((prob, i) => {
+        return `
+        <div class="fix-item" style="border-left-color: #ff3b3b; background: rgba(0,0,0,0.2);">
+            <div class="fix-header" style="cursor: default; pointer-events: none;">
+                <span class="fix-title-text" style="color: #ffbba6; font-size: 0.95rem;">► ${prob.problem}</span>
+            </div>
+            <div class="fix-body" style="display: block; padding-top: 0;">
+                 <div class="fix-content-block" style="padding: 12px 16px; background: rgba(255,255,255,0.03); border-radius: 6px;">
+                     <div class="fix-measurables" style="color: rgba(255,255,255,0.7); font-size: 0.85rem;">${prob.evidence}</div>
+                 </div>
+            </div>
+        </div>
+        `;
+    }).join("");
+}
+
 /* --- REGION HIGHLIGHTING --- */
 
 function clearHighlights() {
