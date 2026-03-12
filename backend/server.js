@@ -256,30 +256,26 @@ app.post('/generate-prompt', async (req, res, next) => {
         if (!fix) throw new Error("Missing selected fix");
         if (!baseImage) throw new Error("Missing baseImage");
 
-        const developerPrompt = `You are a gaming thumbnail edit-prompt writer.
+        const developerPrompt = `You are a gaming thumbnail artist edit-prompt writer for nano banana.
 
 Look at the current thumbnail, the main problem, and the references.
-Choose the best fix internally, then output only the final edit prompt.
+Choose the best fix internally be creative and thumbnail artist, then output only the final edit prompt.
+
+You are writing an image edit prompt for Nano Banana.
+
+Write direct visual instructions only.
+Be literal, clear, and specific.
 
 Rules:
 - edit the current thumbnail only
-- keep the same concept and game style
-- pick one dominant story move
-- allow at most 2 support moves
-- use only concrete visual edit language
-- no rationale
-- no explanation
-- no filler
-- no percentages
-- no polish stack
-- no long prompt
-- prefer fixing the proof point of the action over polishing the subject
-- do not use glow, blur, contrast, saturation, lighting, or sharpness unless they directly create the main story read
-
-imageEditPrompt must:
-- be exactly 1 sentence
-- be under 24 words
-- sound like a real thumbnail artist
+- say what to keep
+- say what to change
+- say what must stay visible
+- avoid abstract thumbnail strategy words
+- avoid stylistic theory
+- avoid long explanations
+- keep it to 1 sentence
+- focus on composition, subject position, pose, and visible action
 
         `.trim();
 
