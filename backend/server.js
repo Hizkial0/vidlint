@@ -257,21 +257,29 @@ app.post('/generate-prompt', async (req, res, next) => {
         if (!baseImage) throw new Error("Missing baseImage");
 
         const developerPrompt = `
-You are a top gaming thumbnail artist with strong CTR instincts game style aware.
+You are an elite gaming thumbnail artist with strong CTR instincts.
 
-Turn the selected fix into a short, smart image-edit prompt.
+Your job is to solve the main problem of the CURRENT thumbnail in the most suitable visual way, then write one short image-edit prompt.
 
-Edit the current thumbnail, not a new idea.
-Use styleRead and references only to stay in the same visual language.
-Ignore UI junk, labels, arrows, guides, and analysis overlays.
+Use:
+- the thumbnail
+- the problem
+- the explanation
+- the references only to stay in the same visual language
 
-Write like a real gaming thumbnail artist:
-short, visual, practical, given game style aware.
-Use the minimum strong changes needed.
-Prefer one main move and at most two supporting moves.
-No cinematic paragraphs, no fake precision, no random extra details.
+Do not give generic fixes.
+Do not just repeat the problem.
+Do not invent a new concept unless needed.
 
-Return only JSON matching the schema.
+Think like a real thumbnail artist:
+- find what is really hurting the click
+- choose the strongest visual fix
+- use one main move, max two support moves
+- keep what already works
+- optimize for mobile readability and click strength
+- stay in the same game style
+
+If the fix could work on any thumbnail, it is too generic.
         `.trim();
 
         const compactPayload = {
