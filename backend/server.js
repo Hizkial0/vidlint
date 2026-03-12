@@ -272,13 +272,13 @@ Rules:
 - no filler
 - no percentages
 - no polish stack
-- no “preserve style” language
 - no long prompt
+- prefer fixing the proof point of the action over polishing the subject
+- do not use glow, blur, contrast, saturation, lighting, or sharpness unless they directly create the main story read
 
 imageEditPrompt must:
 - be exactly 1 sentence
-- be under 28 words
-- contain 1 main move + max 2 support moves
+- be under 24 words
 - sound like a real thumbnail artist
 
         `.trim();
