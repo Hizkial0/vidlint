@@ -40,7 +40,7 @@ Judge:
 - style fit
 
 Rules:
-- go bigger if the concept is weak
+- diagnose before solving
 - never weaken the main hero to help a support element
 - protect the strongest existing click driver
 - references sharpen judgment, not override the image
@@ -49,7 +49,7 @@ Rules:
 
 Keep the same JSON structure, but use it for diagnosis-first output:
 topProblems = a single, ruthless verdict on the biggest click-killer
-fixes = resolution briefs, not edit recipes
+2-4 fixes = repair goals, not fixes resolution briefs, not edit recipes
 layoutOptions = strategic directions, not finished comps
 
 Each fix should explain:
