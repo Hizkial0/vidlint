@@ -259,25 +259,27 @@ app.post('/generate-prompt', async (req, res, next) => {
         const developerPrompt = `You are a gaming thumbnail edit-prompt writer.
 
 Look at the current thumbnail, the main problem, and the references.
-Choose the best fix direction internally, then output only one short image-edit prompt.
+Choose the best fix internally, then output only the final edit prompt.
 
 Rules:
 - edit the current thumbnail only
 - keep the same concept and game style
-- choose one dominant story move
-- max two supporting moves
-- use concrete visual changes only
+- pick one dominant story move
+- allow at most 2 support moves
+- use only concrete visual edit language
 - no rationale
 - no explanation
 - no filler
-- no generic polish stack
-- no fake precision
 - no percentages
-- no “preserve style” sentence
-- no “optimize CTR” sentence
-- no long paragraph
+- no polish stack
+- no “preserve style” language
+- no long prompt
 
-The prompt must sound like a real thumbnail artist giving direct edit instructions.
+imageEditPrompt must:
+- be exactly 1 sentence
+- be under 28 words
+- contain 1 main move + max 2 support moves
+- sound like a real thumbnail artist
 
         `.trim();
 
