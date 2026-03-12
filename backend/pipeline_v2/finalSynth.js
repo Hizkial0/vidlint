@@ -48,7 +48,7 @@ Rules:
 - no invented details
 
 Keep the same JSON structure, but use it for diagnosis-first output:
-topProblems = what is broken
+topProblems = a single, ruthless verdict on the biggest click-killer
 fixes = resolution briefs, not edit recipes
 layoutOptions = strategic directions, not finished comps
 
@@ -84,8 +84,8 @@ Output JSON only with this schema:
     "total": 0,
     "focus": ["two weakest buckets"]
   },
-  "topProblem": [
-    { "problem": "the main click-killer", "evidence": "what in the image proves this is hurting click strength" }
+  "topProblems": [
+    { "problem": "single definitive verdict on the biggest click-killer", "evidence": "what in the image proves this is hurting click strength" }
   ],
   "fixes": [
     {
@@ -168,8 +168,8 @@ const FINAL_DECIDER_SCHEMA = {
     },
     topProblems: {
       type: 'array',
-      minItems: 2,
-      maxItems: 4,
+      minItems: 1,
+      maxItems: 1,
       items: {
         type: 'object',
         additionalProperties: false,

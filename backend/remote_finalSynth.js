@@ -45,7 +45,7 @@ CRITICAL RULES:
 4. Return the EXACT JSON schema below. Do not add or remove keys.
 
 QUALITY BAR & REQUIRED COUNTS:
-- topProblems: 2 to 4 true blockers.
+- topProblems: EXACTLY 1 single, definitive verdict on the biggest click-killer.
 - fixes: 3–5 short, direct fixes (each fix MUST include at least one measurable action like crop %, scale %, blur strength, opacity %, or "move X to left third")
 - layoutOptions: 2–3 composition layout options (A/B/C), each with 2–3 moves.
 
@@ -91,7 +91,7 @@ Output JSON only with this schema (no extra):
     "focus": ["two weakest buckets"]
   },
   "topProblems": [
-    { "problem": "string", "evidence": "must cite what you see in the image or references" }
+    { "problem": "single definitive verdict on the biggest click-killer", "evidence": "must cite what you see in the image or references" }
   ],
   "fixes": [
     {
