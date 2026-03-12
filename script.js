@@ -483,7 +483,7 @@ function renderPlan(containerId, planData) {
                 : '<div class="text-white/50 text-sm">No steps provided</div>';
 
             mainContentHtml = `${goalHtml}<div class="layout-moves-container">${movesHtml}</div>`;
-            buttonText = 'Copy Steps';
+            buttonText = 'Generate Fix';
 
             // Copy content is the steps joined
             copyContent = movesList.join('\n');

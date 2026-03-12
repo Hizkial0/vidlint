@@ -289,7 +289,9 @@ Rules:
                 instruction: fix.instruction || "",
                 applyTo: fix.applyTo || [],
                 lever: fix.lever || "",
-                evidence: fix.evidence || ""
+                evidence: fix.evidence || "",
+                goal: fix.goal || "",
+                moves: fix.moves || []
             }
         };
 
