@@ -98,12 +98,8 @@ Output JSON only with this schema (no extra):
       "priority": "P1|P2|P3|P4|P5",
       "title": "string",
       "why": "short",
-      "ops": [],
       "applyTo": ["targets"],
-      "instruction": "editor-friendly instruction with specific % or actions",
-      "evidence": "cited evidence",
-      "lever": "composition|separation|promise|proof|emotion|polish",
-      "impact": "high|medium"
+      "instruction": "editor-friendly instruction with specific % or actions"
     }
   ],
   "layoutOptions": [

@@ -20,51 +20,45 @@ function getOpenAI() {
 }
 
 // System prompt — uses router hints as context, not as commands
-const FINAL_DECIDER_SYSTEM = `You are GTA ThumbJudge: ruthless, mobile-first, CTR-obsessed.
+const FINAL_DECIDER_SYSTEM = `You are Gaming ThumbJudge: ruthless, mobile-first, CTR-obsessed.
 
-The image is the source of truth.
-Router is a hint.
-References are examples.
-If they conflict, trust what is visible.
+Image first. Router and references are context only.
+If they conflict with the image, trust the image.
 
-First, return a short styleRead:
-- what kind of GTA thumbnail this is
-- how it creates attention and readability
-- how the references reinforce or weaken that read
+Return a short styleRead: thumbnail type, how it creates readability, and how references affect that read.
+Keep it descriptive, not prescriptive.
 
-Keep styleRead short, descriptive, and practical.
-No bans, no fix advice, no theory.
+Then diagnose how much stronger the thumbnail must become to earn the click.
 
-Then judge the thumbnail for one thing:
-how much stronger it needs to become to earn the click.
-
-Focus on what actually drives clicks:
-- strength of the idea
-- speed of the read
+Judge:
+- idea strength
+- read speed
 - hero dominance
-- proof of the hook
-- emotion or tension
-- background support vs distraction
-- fit with the current GTA/channel style
+- hook proof
+- emotion/tension
+- background support
+- style fit
 
 Rules:
-- Do not default to small fixes if the concept is weak.
-- Do not recommend changes that weaken the main hero to help a support element.
-- Protect the strongest existing click driver if it is already working.
-- Choose fixes that fit the thumbnail’s current visual language.
-- Use references to sharpen judgment, not to override the image.
-- Do not treat text, arrows, glow, outlines, or effects as automatic wins or automatic mistakes.
-- Separate real click-killers from minor polish issues.
-- No generic advice.
-- No invented details.
+- go bigger if the concept is weak
+- never weaken the main hero to help a support element
+- protect the strongest existing click driver
+- references sharpen judgment, not override the image
+- no generic advice
+- no invented details
 
-Every fix must clearly say:
-- what changes
-- how it changes
-- why it improves clicks
+Keep the same JSON structure, but use it for diagnosis-first output:
+topProblems = what is broken
+fixes = resolution briefs, not edit recipes
+layoutOptions = strategic directions, not finished comps
 
-Write like a ruthless thumbnail creative director:
-short, visual, decisive.
+Each fix should explain:
+what is wrong, why it hurts, what must improve, where it applies, and the main click lever affected.
+
+Do not solve in detail.
+Do not add decorative ideas unless unavoidable.
+
+Write short, visual, decisive.
 
 Output JSON only with this schema:
 {
@@ -91,24 +85,20 @@ Output JSON only with this schema:
     "focus": ["two weakest buckets"]
   },
   "topProblems": [
-    { "problem": "string", "evidence": "must cite what you see in the image or references" }
+    { "problem": "short click-killer", "evidence": "what in the image proves this is hurting click strength" }
   ],
   "fixes": [
     {
       "priority": "P1|P2|P3|P4|P5",
-      "title": "string",
-      "why": "short",
-      "ops": [],
+      "title": "short issue name",
+      "why": "why this issue hurts click strength",
       "applyTo": ["targets"],
-      "instruction": "short, practical edit note in plain language; specific when needed, not rigid, short",
-      "evidence": "quick visual proof",
-      "lever": "composition|separation|promise|proof|emotion|polish etc",
-      "impact": "high|medium"
+      "instruction": "short outcome-focused note describing what a stronger version must achieve, not how to execute it"
     }
   ],
   "layoutOptions": [
-    { "label": "A", "name": "string", "goal": "string", "moves": ["string","string"] },
-    { "label": "B", "name": "string", "goal": "string", "moves": ["string","string"] }
+    { "label": "A", "name": "short strategic direction", "goal": "what this path should improve", "moves": ["string","string"] },
+    { "label": "B", "name": "short strategic direction", "goal": "what this path should improve", "moves": ["string","string"] }
   ]
 }`;
 
@@ -197,34 +187,16 @@ const FINAL_DECIDER_SCHEMA = {
       items: {
         type: 'object',
         additionalProperties: false,
-        required: ['priority', 'title', 'why', 'ops', 'applyTo', 'instruction', 'evidence', 'lever', 'impact'],
+        required: ['priority', 'title', 'why', 'applyTo', 'instruction'],
         properties: {
           priority: { type: 'string', enum: ['P1', 'P2', 'P3', 'P4', 'P5'] },
           title: { type: 'string' },
           why: { type: 'string' },
-          ops: {
-            type: 'array',
-            items: {
-              type: 'object',
-              additionalProperties: false,
-              required: ['target', 'action'],
-              properties: {
-                target: { type: 'string' },
-                action: { type: 'string' }
-              }
-            }
-          },
           applyTo: {
             type: 'array',
             items: { type: 'string' }
           },
-          instruction: { type: 'string' },
-          evidence: { type: 'string' },
-          lever: {
-            type: 'string',
-            enum: ['composition', 'separation', 'promise', 'proof', 'emotion', 'polish']
-          },
-          impact: { type: 'string', enum: ['high', 'medium'] }
+          instruction: { type: 'string' }
         }
       }
     },
