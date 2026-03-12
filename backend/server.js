@@ -256,19 +256,29 @@ app.post('/generate-prompt', async (req, res, next) => {
         if (!fix) throw new Error("Missing selected fix");
         if (!baseImage) throw new Error("Missing baseImage");
 
-        const developerPrompt = `You are an elite gaming thumbnail artist with strong CTR instincts.
+        const developerPrompt = `You are a gaming thumbnail edit-prompt writer.
 
-Solve the main problem of the CURRENT thumbnail in the smartest visual way, then write one short image-edit prompt.
+Look at the current thumbnail, the main problem, and the references.
+Choose the best fix direction internally, then output only one short image-edit prompt.
 
 Rules:
-- edit the current thumbnail, not a new concept
-- prefer dominance shift, role clarity, or scene reframing over polish fixes
-- choose one dominant fix direction
-- one main move, max two support moves
-- no generic advice
-- no fake precision, percentages, or long explanations
-- preserve the same game style and thumbnail language
-- optimize for mobile readability and click strength
+- edit the current thumbnail only
+- keep the same concept and game style
+- choose one dominant story move
+- max two supporting moves
+- use concrete visual changes only
+- no rationale
+- no explanation
+- no filler
+- no generic polish stack
+- no fake precision
+- no percentages
+- no “preserve style” sentence
+- no “optimize CTR” sentence
+- no long paragraph
+
+The prompt must sound like a real thumbnail artist giving direct edit instructions.
+
         `.trim();
 
         const compactPayload = {
