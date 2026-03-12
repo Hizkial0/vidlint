@@ -503,18 +503,13 @@ function renderPlan(containerId, planData) {
         // Safe copy string
         const safeCopy = (copyContent || '').replace(/'/g, "\\'").replace(/\n/g, '\\n');
 
-        let actionHtml = '';
-        if (isLayout) {
-            actionHtml = `<button class="btn-copy-fix" onclick="copyText('${safeCopy}')">${buttonText}</button>`;
-        } else {
-            actionHtml = `
-                <select class="strength-select" id="strength-${uniqueId}" style="background:rgba(255,255,255,0.1); color:#fff; border:1px solid rgba(255,255,255,0.2); padding:4px 8px; border-radius:4px; font-size:0.75rem; outline:none; margin-right: 8px;">
-                    <option value="low">Low (Fast)</option>
-                    <option value="high" selected>High (Best)</option>
-                </select>
-                <button class="btn-copy-fix btn-generate-fix" id="btn-gen-${uniqueId}" style="background: var(--color-primary); color: white; border: none; box-shadow: 0 0 10px rgba(59, 130, 246, 0.4);" onclick="generateFix('${uniqueId}', ${i}, '${containerId}')">${buttonText}</button>
-            `;
-        }
+        let actionHtml = `
+            <select class="strength-select" id="strength-${uniqueId}" style="background:rgba(255,255,255,0.1); color:#fff; border:1px solid rgba(255,255,255,0.2); padding:4px 8px; border-radius:4px; font-size:0.75rem; outline:none; margin-right: 8px;">
+                <option value="low">Low (Fast)</option>
+                <option value="high" selected>High (Best)</option>
+            </select>
+            <button class="btn-copy-fix btn-generate-fix" id="btn-gen-${uniqueId}" style="background: var(--color-primary); color: white; border: none; box-shadow: 0 0 10px rgba(59, 130, 246, 0.4);" onclick="generateFix('${uniqueId}', ${i}, '${containerId}')">${buttonText}</button>
+        `;
 
         return `
         <div class="fix-item" id="${uniqueId}" data-apply-to='${JSON.stringify(fix.applyTo || [])}'>
