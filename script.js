@@ -1642,6 +1642,21 @@ const variantState = {
     activeId: 'original' // Currently selected variant
 };
 
+let previewGenerationCount = 0;
+
+function setPreviewGenerating(isGenerating) {
+    const card = document.getElementById('thumbnail-card');
+    if (!card) return;
+
+    if (isGenerating) {
+        previewGenerationCount += 1;
+    } else {
+        previewGenerationCount = Math.max(0, previewGenerationCount - 1);
+    }
+
+    card.classList.toggle('generating', previewGenerationCount > 0);
+}
+
 // Initialize original image into variant state when analysis loads
 function initVariantOriginal() {
     const img = document.getElementById('main-thumbnail');
@@ -1746,6 +1761,8 @@ async function generateFix(uniqueId, fixIndex, containerId) {
 
     // Initialize original if not done yet
     if (!variantState.original) initVariantOriginal();
+
+    setPreviewGenerating(true);
 
     try {
         // === STEP A: Generate Prompt (ChatGPT) ===
@@ -1852,6 +1869,8 @@ async function generateFix(uniqueId, fixIndex, containerId) {
             btn.style.background = 'var(--color-primary)';
             btn.style.boxShadow = '0 0 10px rgba(59, 130, 246, 0.4)';
         }, 3000);
+    } finally {
+        setPreviewGenerating(false);
     }
 }
 
@@ -1888,6 +1907,8 @@ async function generateFromFocusBox() {
         console.error('[GenerateCustom] No active image found to use as base.');
         return;
     }
+
+    setPreviewGenerating(true);
 
     try {
         btn.innerHTML = 'Generating...<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path></svg>';
@@ -1942,6 +1963,8 @@ async function generateFromFocusBox() {
             btn.style.opacity = '1';
             btn.style.background = '';
         }, 3000);
+    } finally {
+        setPreviewGenerating(false);
     }
 }
 
