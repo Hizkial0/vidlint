@@ -18,6 +18,67 @@ const API_CONFIG = {
     useLiveBackend: true // ✅ ENABLED - Using OpenAI Vision
 };
 
+const PRO_PLANS = new Set(['pro', 'premium', 'paid']);
+let currentUserPlan = 'free';
+
+function normalizeUserPlan(plan) {
+    if (!plan || typeof plan !== 'string') return 'free';
+    const normalized = plan.trim().toLowerCase();
+    if (!normalized || normalized === '...') return 'free';
+    return normalized;
+}
+
+function isProUser() {
+    const plan = normalizeUserPlan(currentUserPlan || window.__userPlan || 'free');
+    return PRO_PLANS.has(plan);
+}
+
+function enforceHighAccess(selectEl) {
+    if (!selectEl) return true;
+    if (selectEl.value === 'high' && !isProUser()) {
+        selectEl.value = 'low';
+        window.location.href = 'pro-request.html';
+        return false;
+    }
+    return true;
+}
+
+function syncStrengthSelectAccess(selectEl) {
+    if (!selectEl) return;
+    const highOption = selectEl.querySelector('option[value="high"]');
+    if (!highOption) return;
+
+    if (isProUser()) {
+        highOption.disabled = false;
+        highOption.textContent = 'High (Best)';
+        return;
+    }
+
+    highOption.disabled = true;
+    highOption.textContent = 'Locked: High (Best)';
+    if (selectEl.value === 'high') {
+        selectEl.value = 'low';
+    }
+}
+
+function applyPlanAccessGates() {
+    document.querySelectorAll('select.strength-select, #focus-model-select').forEach(syncStrengthSelectAccess);
+}
+
+function setUserPlan(plan) {
+    currentUserPlan = normalizeUserPlan(plan);
+    window.__userPlan = currentUserPlan;
+    applyPlanAccessGates();
+}
+
+window.setUserPlan = setUserPlan;
+window.handleStrengthChange = enforceHighAccess;
+
+window.addEventListener('user-plan-updated', (event) => {
+    const plan = event?.detail?.plan || 'free';
+    setUserPlan(plan);
+});
+
 /**
  * Call the backend API for LLM-powered analysis
  * @param {Object} payload - Request body matching api_contract.json
@@ -503,10 +564,11 @@ function renderPlan(containerId, planData) {
         // Safe copy string
         const safeCopy = (copyContent || '').replace(/'/g, "\\'").replace(/\n/g, '\\n');
 
+        const proUser = isProUser();
         let actionHtml = `
-            <select class="strength-select" id="strength-${uniqueId}" style="background:rgba(255,255,255,0.1); color:#fff; border:1px solid rgba(255,255,255,0.2); padding:4px 8px; border-radius:4px; font-size:0.75rem; outline:none; margin-right: 8px;">
-                <option value="low">Low (Fast)</option>
-                <option value="high" selected>High (Best)</option>
+            <select class="strength-select" id="strength-${uniqueId}" onchange="handleStrengthChange(this)" style="background:rgba(255,255,255,0.1); color:#fff; border:1px solid rgba(255,255,255,0.2); padding:4px 8px; border-radius:4px; font-size:0.75rem; outline:none; margin-right: 8px;">
+                <option value="low"${proUser ? '' : ' selected'}>Low (Fast)</option>
+                <option value="high"${proUser ? ' selected' : ' disabled'}>${proUser ? 'High (Best)' : 'Locked: High (Best)'}</option>
             </select>
             <button class="btn-copy-fix btn-generate-fix" id="btn-gen-${uniqueId}" style="background: var(--color-primary); color: white; border: none; box-shadow: 0 0 10px rgba(59, 130, 246, 0.4);" onclick="generateFix('${uniqueId}', ${i}, '${containerId}')">${buttonText}</button>
         `;
@@ -528,6 +590,7 @@ function renderPlan(containerId, planData) {
         </div>
         `;
     }).join("");
+    applyPlanAccessGates();
 }
 
 function renderTopProblems(containerId, problems) {
@@ -1670,7 +1733,12 @@ async function generateFix(uniqueId, fixIndex, containerId) {
         return;
     }
 
-    const strength = strengthSelect ? strengthSelect.value : 'medium';
+    const strength = strengthSelect ? strengthSelect.value : 'low';
+    if (strength === 'high' && !isProUser()) {
+        if (strengthSelect) strengthSelect.value = 'low';
+        window.location.href = 'pro-request.html';
+        return;
+    }
     const originalBtnText = btn.textContent;
 
     // 2. Auto-switch to Focus Mode
@@ -1806,7 +1874,12 @@ async function generateFromFocusBox() {
         return;
     }
 
-    const strength = modelSelect ? modelSelect.value : 'high';
+    const strength = modelSelect ? modelSelect.value : 'low';
+    if (strength === 'high' && !isProUser()) {
+        if (modelSelect) modelSelect.value = 'low';
+        window.location.href = 'pro-request.html';
+        return;
+    }
     const originalBtnText = btn.innerHTML; // Contains the SVG
 
     // Determine the base image
@@ -1874,6 +1947,20 @@ async function generateFromFocusBox() {
 
 // Wire variant strip clicks (delegate)
 document.addEventListener('DOMContentLoaded', () => {
+    const planBadge = document.getElementById('plan-badge');
+    if (window.__userPlan) {
+        setUserPlan(window.__userPlan);
+    } else if (planBadge) {
+        setUserPlan(planBadge.textContent || 'free');
+    } else {
+        applyPlanAccessGates();
+    }
+
+    const focusModelSelect = document.getElementById('focus-model-select');
+    if (focusModelSelect) {
+        focusModelSelect.addEventListener('change', () => enforceHighAccess(focusModelSelect));
+    }
+
     // Bind Focus Mode Generate Button
     const focusGenBtn = document.getElementById('focus-generate-btn');
     if (focusGenBtn) {
