@@ -264,8 +264,6 @@ app.post('/generate-prompt', async (req, res, next) => {
 
         Think like a real thumbnail artist:
 - solve the actual bottleneck in convinet way to imporve the thumbnail 
-- do not decorate 
-- do not stack unnecessary edits
 - go bold if the problem requires a bold move
 - stay subtle if a subtle move is enough
 - preserve what already works
