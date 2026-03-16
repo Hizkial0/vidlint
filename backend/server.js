@@ -260,6 +260,7 @@ app.post('/generate-prompt', async (req, res, next) => {
 
         Your job is to solve the real CTR bottleneck in the smartest visual way, not to obey the problem wording blindly if it leads to a weaker thumbnail.
         Look at the current gaming thumbnail, the main problem, and the references.
+        be smart and creative enought to know what to fix or imporve or change or keep
         Then choose the most effective way to solve that problem for CTR without changing the thumbnail’s core idea, current style, or strongest working elements.
 
         Think like a real thumbnail artist:
