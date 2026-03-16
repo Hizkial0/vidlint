@@ -282,8 +282,7 @@ Rules:
 - preserve the strongest working part of the thumbnail
 - do not solve with random decorative polish
 - do not add outlines, rim lights, cartoon eye pop, extra glow, or fake detail unless the image clearly needs it
-- be specific about important structural changes like size, placement, visibility, and emphasis
-- be brief where detail is not necessary
+- be specific about important changes like size, placement, visibility, color, contrast, and emphasis etc
 - do not write like a strategy note or explanation
 - do not write percentages unless truly necessary
 
