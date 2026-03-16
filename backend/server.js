@@ -273,13 +273,20 @@ Be literal, clear, and be super specific so the ai will not fuckup.
 
 
 Rules for writing the Nano Banana prompt:
-- Describe the final desired image, focusing on the changes that matter most.
-- Be specific about important visual changes in scale, placement, overlap, depth, visibility, contrast, color, and emphasis — but only where precision is actually needed.
-- Prefer one dominant change and up to two supporting changes. Support changes must strengthen the same read, not introduce new ideas.
-- Use literal visual language, not abstract strategy words.
-- Do not micromanage with percentages, tiny measurements, or decorative rendering instructions unless truly necessary.
-- Use negative constraints when needed to prevent drift, but keep them short and important.
-- Write for editing the current thumbnail, not generating a brand new scene.
+- edit the current thumbnail only
+- keep the current style and core concept
+- solve the real click problem, not every problem
+- prefer one dominant move and up to two important support moves
+- prefer strengthening the right subject over weakening other important elements
+- do not solve hierarchy by simply shrinking, dimming, desaturating, or pushing back major elements unless that is clearly the least destructive solution
+- do not reduce the emotional hook just to make another object read better
+- if the stated problem conflicts with the image’s strongest click driver, fix the underlying CTR issue instead
+- preserve the strongest working part unless it is the problem
+- do not add decorative polish
+- do not add outlines, rim lights, extra glow, cartoon exaggeration, fake detail, or new text unless clearly needed
+- be specific about important changes in size, placement, overlap, visibility, depth, contrast, and emphasis
+- do not write like a strategy note
+- do not write percentages unless truly necessary
 
 Output format:
 Write ONE clean, literal visual description. No explanations, no strategy notes, no conversational filler. Just the direct prompt for the AI image editor.
