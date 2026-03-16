@@ -140,18 +140,23 @@ body::before {
     gap: 12px;
     padding: 24px 12px;
     overflow-y: auto;
+    scrollbar-gutter: stable;
     z-index: 100;
 }
 
 .variants-sidebar::-webkit-scrollbar {
-    width: 4px;
+    width: 6px;
 }
 .variants-sidebar::-webkit-scrollbar-track {
-    background: transparent;
+    background: rgba(0, 0, 0, 0.2);
 }
 .variants-sidebar::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    border: 2px solid #0d121c;
+}
+.variants-sidebar::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.25);
 }
 
 .variant-item {
@@ -432,16 +437,21 @@ textarea.auto-expand {
         flex-direction: row;
         border-right: none;
         border-bottom: 1px solid var(--border-subtle);
-        padding: 10px 16px;
+        padding: 12px 16px;
         overflow-x: auto;
         overflow-y: hidden;
         align-items: center;
-        justify-content: center;
-        gap: 10px;
+        justify-content: flex-start;
+        gap: 12px;
         -webkit-overflow-scrolling: touch;
         scroll-padding: 16px;
+        scrollbar-width: thin;
     }
-    
+
+    .variants-sidebar::-webkit-scrollbar {
+        height: 4px;
+    }
+
     .variant-item {
         width: 80px;
         flex-shrink: 0;
