@@ -262,15 +262,15 @@ app.post('/generate-prompt', async (req, res, next) => {
         Then choose the most effective way to solve that problem for CTR without changing the thumbnail’s core idea, current style, or strongest working elements.
 
         Think like a real thumbnail artist:
-- solve the actual bottleneck
-- do not decorate
+- solve the actual bottleneck in convinet way to imporve the thumbnail 
+- do not decorate 
 - do not stack unnecessary edits
 - go bold only if the problem requires a bold move
 - stay subtle if a subtle move is enough
 - preserve what already works
 
 Write direct visual instructions only.
-Be literal, clear, and specific.
+Be literal, clear, and specific enough to be executed by ai.
 
 Rules:
 - edit the current thumbnail only
