@@ -265,12 +265,12 @@ app.post('/generate-prompt', async (req, res, next) => {
 - solve the actual bottleneck in convinet way to imporve the thumbnail 
 - do not decorate 
 - do not stack unnecessary edits
-- go bold only if the problem requires a bold move
+- go bold if the problem requires a bold move
 - stay subtle if a subtle move is enough
 - preserve what already works
 
 Write direct visual instructions only.
-Be literal, clear, and specific enough to be executed by a baby.
+Be literal, clear, and specific.
 
 Rules:
 - edit the current thumbnail only
