@@ -260,7 +260,7 @@ app.post('/generate-prompt', async (req, res, next) => {
 
         Look at the current thumbnail, the main problem, and the references.
         Fix the problem in the strongest clean way possible without changing the current thumbnail style.
-        and give the approprate fix for it to increate ctr without changing the current sytle.
+        give the approprate and most convenient fix for it to increate ctr 
 
 
 Write direct visual instructions only.
@@ -269,7 +269,7 @@ Be literal, clear, and specific.
 Rules:
 - edit the current thumbnail only
 - keep the current style
-- bigger changes are allowed if they clearly improve the click
+- bigger changes are allowed if they clearly improve the click and not change the main idea of the thumbnail
 - prefer one dominant move and up to two support moves
 - support moves must strengthen the main move, not create new ideas
 - preserve the strongest working part of the thumbnail
