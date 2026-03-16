@@ -271,6 +271,10 @@ Think like a real thumbnail artist:
 Write direct visual instructions only.
 Be literal, clear, and be super specific so the ai will not fuckup.
 
+Important:
+some elements are weak because they are badly executed, not because they should be reduced or removed.
+If a story-critical element looks pasted, unclear, flat, or awkward, improve its believability and readability instead of deleting it.
+
 
 Rules for writing the Nano Banana prompt:
 - edit the current thumbnail only
@@ -287,7 +291,6 @@ Rules for writing the Nano Banana prompt:
 - be specific about important changes in size, placement, overlap, visibility, depth, contrast, and emphasis
 - do not write like a strategy note
 - do not write percentages unless truly necessary
-- If a story-critical element is weak because it looks pasted, unclear, or badly integrated, improve its believability and readability instead of removing it. be smart and creative 
 
 Output format:
 Write ONE clean, literal visual description. No explanations, no strategy notes, no conversational filler. Just the direct prompt for the AI image editor.
