@@ -40,18 +40,11 @@ Judge:
 - Game or channel style fit
 - Compsition clarity 
 
-Most important:
-start from the most visible concrete failures in the image, not abstract strategy language.
-Prefer literal image problems like:
-- weak placement
-- poor overlap/contact
-- pasted-on look
-- weak silhouette
-- bad scale relationship
-- unclear depth
-- unreadable interaction
-- clutter competing with the hero
-Only move to higher-level hook language after the visible problem is clear.
+Identify the single biggest bottleneck first.
+Judge the thumbnail from top to bottom:
+idea, hierarchy, composition, interaction, depth, clarity, execution.
+Find the first thing that breaks the click, name it in concrete visual terms, then explain why it hurts.
+Do not force the diagnosis into one category if another layer is more broken.
 
 Rules:
 - diagnose before solving
