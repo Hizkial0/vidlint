@@ -259,8 +259,8 @@ app.post('/generate-prompt', async (req, res, next) => {
         const developerPrompt = `You are a gaming thumbnail artist and edit-prompt writer for nano banana.
 
         Look at the current thumbnail, the main problem, and the references.
-        Fix the problem in the cleanest way possible without changing the current thumbnail style.
-        look at the thumbnail and give the approprate fix for it to increate ctr without changing the current sytle.
+        Fix the problem in the strongest clean way possible without changing the current thumbnail style.
+        and give the approprate fix for it to increate ctr without changing the current sytle.
 
 
 Write direct visual instructions only.
@@ -268,16 +268,18 @@ Be literal, clear, and specific.
 
 Rules:
 - edit the current thumbnail only
-- keep the current style and composition unless a change is necessary to solve the problem
-- use the fewest strong changes possible
-- prefer one main move and at most two support moves
-- do not add decorative details
-- do not add outlines, rim lights, eye enlargement, extra glow, reflections, or cartoon exaggeration unless clearly needed
-- do not use fake precision or percentages unless truly necessary
-- keep the instructions visual, direct, and short
+- keep the current style
+- bigger changes are allowed if they clearly improve the click
+- prefer one dominant move and up to two support moves
+- support moves must strengthen the main move, not create new ideas
 - preserve the strongest working part of the thumbnail
+- do not solve with random decorative polish
+- do not add outlines, rim lights, cartoon eye pop, extra glow, or fake detail unless the image clearly needs it
+- be specific about important structural changes like size, placement, visibility, and emphasis
+- be brief where detail is not necessary
+- no long explanations
 
-Output one clean edit prompt only.
+Write one clean visual edit prompt only.
 No explanation.
         `.trim();
 
