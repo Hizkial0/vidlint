@@ -270,13 +270,15 @@ Rules:
 - say what to keep
 - say what to change
 - say what to remove if needed but it should not change the current sytle.
+- say waht to add if needed but it should not change the current sytle.
 - say what must stay visible
 - avoid abstract thumbnail strategy words
 - avoid stylistic theory
 - keep it clean 
-- tell the fixes cleanily in detail to not confuse the ai so it will only create what you said cleanly 
+- tell the fixes cleanily in detail to not confuse the ai so it will only create what you said cleanly to not to messup the thumbnail
 - the more simpler and bigger effect and cleaner the prompt the better the ai will understand and generate the image
-- Be smart and creative as a super proffesional thumbnail artist who tells for a baby how to do it 
+- Be smart and creative as a super proffesional gaming thumbnail artist who tells for a baby how to do it
+- the prompt should also push nano banana smart thumbnail artist so it will know what to do better  
         `.trim();
 
         const compactPayload = {
