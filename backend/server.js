@@ -272,9 +272,9 @@ Write direct visual instructions only.
 Be literal, clear, and be super specific so the ai will not fuckup.
 
 Important:
-some elements are weak because they are badly executed, not because they should be reduced or removed.
-If a story-critical element looks pasted, unclear, flat, or awkward, improve its believability and readability instead of deleting it.
-
+- some elements are weak because they are badly executed, not because they should be reduced or removed.
+- so if you see a weak element, try to improve it instead of removing it.
+-if nessary you can add new elements or remove it
 
 Rules for writing the Nano Banana prompt:
 - edit the current thumbnail only
