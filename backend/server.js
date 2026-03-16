@@ -277,7 +277,7 @@ Rules:
 - keep the current style and main idea and important elements unless the problem clearly requires a structural change
 - solve the stated problem, not every possible problem
 - prefer one dominant move and up to two support moves
-- support moves must only help the main move
+- if it needs support moves must only help the main move but should be important not decorative 
 - bigger changes are allowed if they clearly improve the click 
 - preserve the strongest working part of the thumbnail
 - do not solve with random decorative polish
