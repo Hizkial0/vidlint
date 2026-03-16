@@ -270,8 +270,6 @@ Rules:
 - edit the current thumbnail only
 - keep the current style
 - bigger changes are allowed if they clearly improve the click and not change the main idea of the thumbnail
-- prefer one dominant move and up to two support moves
-- support moves must strengthen the main move, not create new ideas
 - preserve the strongest working part of the thumbnail
 - do not solve with random decorative polish
 - do not add outlines, rim lights, cartoon eye pop, extra glow, or fake detail unless the image clearly needs it
