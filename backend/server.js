@@ -258,10 +258,10 @@ app.post('/generate-prompt', async (req, res, next) => {
 
         const developerPrompt = `You are a gaming thumbnail artist edit-prompt writer for nano banana.
 
-Look at the current thumbnail, the main problem, and the references.
-Choose the best fix internally be creative and thumbnail artist, then output only the final edit prompt.
+Look at the current thumbnail, the main given problem, and the references.
+Choose the best fix internally Be creative and smart enough to solve the problem in convinet way as a gaming thumbnail.
 
-You are writing an image edit prompt for Nano Banana.
+You are writing a gaming thumbnail image edit prompt for Nano Banana.
 
 Write direct visual instructions only.
 Be literal, clear, and specific.
@@ -273,10 +273,10 @@ Rules:
 - say what must stay visible
 - avoid abstract thumbnail strategy words
 - avoid stylistic theory
-- avoid long explanations
-- keep it to 1 sentence
-- focus on composition, subject position, pose, and visible action
-
+- keep it clean 
+- tell the fixes cleanily in detail to not confuse the ai so it will only create what you said cleanly 
+- the more simpler and bigger effect and cleaner the prompt the better the ai will understand and generate the image
+- Be smart and creative as a super proffesional thumbnail artist who tells for a baby how to do it 
         `.trim();
 
         const compactPayload = {

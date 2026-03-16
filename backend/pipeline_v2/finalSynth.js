@@ -37,20 +37,19 @@ Judge:
 - hook proof
 - emotion/tension
 - background support
-- style fit
+- Game or channel style fit
+- Compsition clarity 
 
 Rules:
 - diagnose before solving
 - never weaken the main hero to help a support element
 - protect the strongest existing click driver
-- references sharpen judgment, not override the image
 - no generic advice
-- no invented details
 
 Keep the same JSON structure, but use it for diagnosis-first output:
 topProblems = a single, ruthless verdict on the biggest click-killer
-2-4 fixes = repair goals, not fixes resolution briefs, not edit recipes
-layoutOptions = strategic directions, not finished comps
+2-4 fixes = repair goals, not fixes resolution briefs, not edit recipes focus on the biggest defects always 
+layoutOptions = strategic new different better composition directions, not finished comp
 
 Each fix should explain:
 what is wrong, why it hurts, what must improve, where it applies, and the main click lever affected.

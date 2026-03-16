@@ -57,6 +57,7 @@
                             <div class="loader-text" id="preview-loader-text">Analyzing...</div>
                         </div>
                         <div class="mobile-status-badge">MOBILE: PASS</div>
+                        <div id="preview-gen-indicator" class="preview-gen-indicator" aria-hidden="true"></div>
                     </div>
                     
                     <!-- Integrated Controls at the bottom of the card -->
@@ -90,7 +91,7 @@
                         <input type="file" id="focus-add-image-input" accept="image/*" style="display:none;" />
                         <div class="prompt-actions-right">
                             <div class="custom-select-wrapper" style="margin-right: 8px;">
-                                <select id="focus-model-select" class="mode-select" onchange="if(this.value === 'high') { window.location.href = 'pro-request.html'; this.value = 'low'; }">
+                                <select id="focus-model-select" class="mode-select">
                                     <option value="low">Low (Fast)</option>
                                     <option value="high">🔒 High (Best)</option>
                                 </select>
@@ -207,10 +208,17 @@
         }
 
         const profile = await getMyProfile();
+        const userPlan = profile ? (profile.plan || 'free') : 'free';
         const planBadge = document.getElementById('plan-badge');
         if (planBadge) {
-          planBadge.textContent = profile ? (profile.plan || 'free') : 'free';
+          planBadge.textContent = userPlan;
         }
+
+        if (typeof window.setUserPlan === 'function') {
+          window.setUserPlan(userPlan);
+        }
+
+        window.dispatchEvent(new CustomEvent('user-plan-updated', { detail: { plan: userPlan } }));
       })();
     </script>
     <!-- Logout Modal -->
