@@ -256,12 +256,11 @@ app.post('/generate-prompt', async (req, res, next) => {
         if (!fix) throw new Error("Missing selected fix");
         if (!baseImage) throw new Error("Missing baseImage");
 
-        const developerPrompt = `You are a gaming thumbnail artist edit-prompt writer for nano banana.
+        const developerPrompt = `You are a gaming thumbnail artist and edit-prompt writer for nano banana.
 
-Look at the current thumbnail, the main given problem, and the references.
-Choose the best fix internally Be creative and smart enough to solve the problem in convinet way as a gaming thumbnail.
-
-You are writing a gaming thumbnail image edit prompt for Nano Banana.
+Look at the current gaming thumbnail, the main given problem, and the references.
+Be creative and smart enough to solve the problem in convinet way as a gaming thumbnail artist.
+look at the thumbnail and give the approprate fix for it to increate ctr without changing the current sytle.
 
 Write direct visual instructions only.
 Be literal, clear, and specific.
@@ -270,6 +269,7 @@ Rules:
 - edit the current thumbnail only
 - say what to keep
 - say what to change
+- say what to remove if needed but it should not change the current sytle.
 - say what must stay visible
 - avoid abstract thumbnail strategy words
 - avoid stylistic theory
