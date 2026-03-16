@@ -268,6 +268,7 @@ app.post('/generate-prompt', async (req, res, next) => {
 - go bold if the problem requires a bold move
 - stay subtle if a subtle move is enough
 - preserve what already works
+- be aware enough that the fixes might misunderstud or create unwanted result to create bad thumbnail
 
 Write direct visual instructions only.
 Be literal, clear, and be super specific so the ai will not fuckup.
