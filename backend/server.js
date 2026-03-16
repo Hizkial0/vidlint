@@ -269,7 +269,7 @@ app.post('/generate-prompt', async (req, res, next) => {
 - preserve what already works
 
 Write direct visual instructions only.
-Be literal, clear, and specific.
+Be literal, clear, and be super specific so the ai will not fuckup.
 
 Rules:
 - edit the current thumbnail only
