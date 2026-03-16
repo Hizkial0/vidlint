@@ -285,6 +285,7 @@ Rules:
 - be specific about important changes like size, placement, visibility, color, contrast, and emphasis etc
 - do not write like a strategy note or explanation
 - do not write percentages unless truly necessary
+- dont ever change the main idea and concpet improve it 
 
 Write one clean visual edit prompt only.
 No explanation.
