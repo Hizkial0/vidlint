@@ -293,10 +293,7 @@ async function runAnalysis(mode, metrics) {
         throw error; // Re-throw so caller knows it failed
     }
 }
-
-/**
- * Show analysis error in UI (non-blocking toast)
- */
+/* --- SHOW ANALYSIS ERROR --- */
 function showAnalysisError(message) {
     const toast = document.getElementById('toast');
     if (toast) {
@@ -330,6 +327,7 @@ const els = {
 function normalizeResult(raw, mode) {
     console.log("[NORMALIZE] Input raw data:", raw);
     const res = { ...raw, mode };
+    if (Array.isArray(raw.topProblems)) res.topProblems = raw.topProblems;
 
     // --- 1. Score & Metrics ---
     if (raw.rating) {
@@ -343,7 +341,6 @@ function normalizeResult(raw, mode) {
         res.verdict = res.score >= 80 ? "PUBLISH" : "FIX then publish";
 
         // Map rating object to metrics array
-        // Expected UI: [{ label, val, max, color }]
         const bucketKeys = ['POP', 'CLARITY', 'HOOK', 'CLEAN', 'TRUST'];
         res.metrics = bucketKeys.map(key => {
             const item = raw.rating[key] || { val: 0 };
@@ -357,7 +354,7 @@ function normalizeResult(raw, mode) {
                 val: val,
                 max: 20,
                 color: color,
-                why: item.why || "No explanation available." // Map explanation
+                why: item.why || "No explanation available."
             };
         });
     }
@@ -369,10 +366,6 @@ function normalizeResult(raw, mode) {
     if (!res.blockers || res.blockers.length === 0) res.blockers = ["None", "None"];
 
     // --- 3. Fixes (Quick Win Only) ---
-    // Core pipeline returns flat 'fixes' array. 
-    // Logic: First 3 -> Quick Wins.
-
-    // Map backend fix structure to frontend structure
     const mappedFixes = (raw.fixes || []).map(f => ({
         priority: f.priority || "P1",
         pts: f.pts || "+5",
@@ -384,24 +377,21 @@ function normalizeResult(raw, mode) {
 
     res.quickWinPlan = {
         time: "10-25 min",
-        fixes: mappedFixes.slice(0, 5) // Allowed up to 5 instead of 3
+        fixes: mappedFixes.slice(0, 5)
     };
 
-    // --- 4. Layout Options (Formerly High Impact) ---
-    // Maps to the UI panel #high-impact-panel (renamed Layout Options)
-    // Structure: { fixes: [ { priority: "Option A", ... }, { priority: "Option B", ... } ] }
+    // --- 4. Layout Options ---
     if (raw.layoutOptions && Array.isArray(raw.layoutOptions) && raw.layoutOptions.length >= 2) {
         res.highImpactPlan = {
-            time: "", // No time needed
+            time: "",
             fixes: raw.layoutOptions.map((l, i) => {
-                const letter = String.fromCharCode(65 + i); // 0 -> A, 1 -> B, 2 -> C
+                const letter = String.fromCharCode(65 + i);
                 return {
                     priority: `Option ${letter}`,
-                    pts: "", // No pts
+                    pts: "",
                     title: l.title || l.label || `Layout ${letter}`,
-                    goal: l.goal, // Pass through for new renderer
-                    moves: l.moves, // Pass through for new renderer
-                    // Fallbacks for safety
+                    goal: l.goal,
+                    moves: l.moves,
                     measurableFix: l.goal || "No goal provided",
                     detail: Array.isArray(l.moves) ? l.moves.join("; ") : (l.moves || ""),
                     applyTo: []
@@ -409,15 +399,11 @@ function normalizeResult(raw, mode) {
             })
         };
     } else {
-        // Fallback or empty
         res.highImpactPlan = { fixes: [] };
     }
 
-
-
     return res;
 }
-
 
 /* --- LOCAL ANALYSIS ENGINE --- */
 function analyzeLocalOld(mode, metrics) {
@@ -474,20 +460,14 @@ function analyzeLocalOld(mode, metrics) {
         };
     }
 
-    // DYNAMIC INJECTION: If Mobile Test Failed, inject a critical fix
     if (metrics && metrics.mobile && !metrics.mobile.pass) {
-        // Add to top of fixes
         result.fixes.unshift({
             priority: "CRITICAL",
             title: "Safe Area Fail",
             detail: "Your thumbnail loses critical detail when scaled down.",
             measurableFix: "The edge density or contrast is too low for small screens. Increase contrast or zoom in on the subject."
         });
-
-        // Penalize score
         result.score = Math.max(0, result.score - 15);
-
-        // Update weak list
         if (!result.weakest.includes("MOBILE")) {
             if (result.weakest[0] === "None") result.weakest = [];
             result.weakest.push("VISIBILITY");
@@ -498,7 +478,6 @@ function analyzeLocalOld(mode, metrics) {
 }
 
 /* --- RENDER FUNCTIONS --- */
-
 function renderPlan(containerId, planData) {
     const container = document.getElementById(containerId);
     if (!container) return;
@@ -508,20 +487,10 @@ function renderPlan(containerId, planData) {
         return;
     }
 
-    // Update time pill if it exists in header - REMOVED logic
-    // const timeId = containerId === 'quick-win-fixes' ? 'time-quick' : 'time-high';
-    // const timeEl = document.getElementById(timeId);
-    // if (timeEl && planData.time) timeEl.textContent = planData.time;
-
     container.innerHTML = planData.fixes.map((fix, i) => {
-        // map P1/P2/P3 to CSS class
         const pClass = (fix.priority || 'MED').toLowerCase().replace(" ", "");
         const uniqueId = `${containerId}-${i}`;
-
-        // DETECT TYPE: Layout vs Standard Fix
-        // Layouts have 'moves' array or 'goal' string
         const isLayout = Array.isArray(fix.moves) || typeof fix.moves === 'string';
-
         // Prepare content variables
         let mainContentHtml = '';
         let buttonText = 'Copy Fix';
@@ -877,6 +846,18 @@ function renderResult(result) {
         // Render Plans
         renderPlan('quick-win-fixes', result.quickWinPlan);
         renderPlan('high-impact-fixes', result.highImpactPlan);
+
+        // Render Top Problems (Verdict)
+        const probPanel = document.getElementById('top-problems-panel');
+        if (probPanel) {
+            if (result.topProblems && result.topProblems.length > 0) {
+                probPanel.style.display = 'block';
+                renderTopProblems('top-problems-list', result.topProblems);
+            } else {
+                probPanel.style.display = 'none';
+            }
+        }
+
 
         // Note handling
         const noteEl = document.getElementById('high-impact-note');

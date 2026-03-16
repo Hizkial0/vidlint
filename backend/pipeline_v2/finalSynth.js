@@ -40,15 +40,29 @@ Judge:
 - Game or channel style fit
 - Compsition clarity 
 
+Most important:
+start from the most visible concrete failures in the image, not abstract strategy language.
+Prefer literal image problems like:
+- weak placement
+- poor overlap/contact
+- pasted-on look
+- weak silhouette
+- bad scale relationship
+- unclear depth
+- unreadable interaction
+- clutter competing with the hero
+Only move to higher-level hook language after the visible problem is clear.
+
 Rules:
 - diagnose before solving
 - never weaken the main hero to help a support element
 - protect the strongest existing click driver
 - no generic advice
+- no invisible theory
 
 Keep the same JSON structure, but use it for diagnosis-first output:
 topProblems = a single, ruthless verdict on the biggest click-killer
-2-4 fixes = repair goals, not fixes resolution briefs, not edit recipes focus on the biggest defects always 
+2-5 fixes = repair goals, not fixes resolution briefs, not edit recipes focus on the biggest defects always 
 layoutOptions = strategic new different better composition directions, not finished comp
 
 Each fix should explain:
@@ -96,8 +110,8 @@ Output JSON only with this schema:
     }
   ],
   "layoutOptions": [
-    { "label": "A", "name": "short strategic direction", "goal": "what this path should improve", "moves": ["string","string"] },
-    { "label": "B", "name": "short strategic direction", "goal": "what this path should improve", "moves": ["string","string"] }
+    { "label": "A", "name": "short new strategic different better compotition", "goal": "what this path should improve", "moves": ["string","string"] },
+    { "label": "B", "name": "short new strategic different better compotition", "goal": "what this path should improve", "moves": ["string","string"] }
   ]
 }`;
 
