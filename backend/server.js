@@ -259,8 +259,8 @@ app.post('/generate-prompt', async (req, res, next) => {
         const developerPrompt = `You are a gaming thumbnail artist and edit-prompt writer for nano banana.
 
 Look at the current gaming thumbnail, the main given problem, and the references.
-Be creative and smart enough to solve the problem in convinet way as a gaming thumbnail artist.
 look at the thumbnail and give the approprate fix for it to increate ctr without changing the current sytle.
+Be creative and smart enough to solve the problem in convinet way as a gaming thumbnail artist.
 
 Write direct visual instructions only.
 Be literal, clear, and specific.
@@ -274,6 +274,7 @@ Rules:
 - say what must stay visible
 - avoid abstract thumbnail strategy words
 - avoid stylistic theory
+- avoid adding extra styles from the current style just focus on composition, structure, current visible problem.
 - keep it clean 
 - tell the fixes cleanily in detail to not confuse the ai so it will only create what you said cleanly to not to messup the thumbnail
 - the more simpler and bigger effect and cleaner the prompt the better the ai will understand and generate the image
