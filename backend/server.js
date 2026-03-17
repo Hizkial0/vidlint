@@ -17,7 +17,7 @@ const fetch = require('node-fetch'); // Needs v2 for CommonJS
 const { analyzePipeline, PipelineError } = require('./pipeline_v2/orchestrator');
 
 // Utilities
-const { connectDB, createRun, logStage, completeRun, failRun, getRun, listRuns } = require('./db');
+const { connectDB, createRun, logStage, completeRun, failRun, getRun, listRuns, createProRequest } = require('./db');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -233,6 +233,51 @@ app.post('/analyze', async (req, res, next) => {
 
     } catch (err) {
         // Error already logged to DB by executor
+        next(err);
+    }
+});
+
+/**
+ * PRO ACCESS REQUEST ENDPOINT
+ * Persists requests for later admin review/approval.
+ */
+app.post('/pro-request', async (req, res, next) => {
+    try {
+        const { name, email, channel, help, payment } = req.body || {};
+
+        if (!name || !email || !channel) {
+            return res.status(400).json({
+                ok: false,
+                status: 400,
+                message: 'Missing required fields: name, email, channel'
+            });
+        }
+
+        const normalizedEmail = String(email).trim().toLowerCase();
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(normalizedEmail)) {
+            return res.status(400).json({
+                ok: false,
+                status: 400,
+                message: 'Invalid email format'
+            });
+        }
+
+        const saved = await createProRequest({
+            name: String(name),
+            email: normalizedEmail,
+            channel: String(channel),
+            help: String(help || ''),
+            payment: String(payment || ''),
+            source: 'pro-request-form'
+        });
+
+        res.status(201).json({
+            ok: true,
+            id: saved.id,
+            status: saved.status
+        });
+    } catch (err) {
         next(err);
     }
 });
@@ -464,8 +509,12 @@ app.post('/generate-image', async (req, res, next) => {
             }
         }
 
+        // Select model based on strength
+        const modelName = strength === 'high' ? 'gemini-3.0-flash-image' : 'gemini-2.5-flash-image';
+        console.log(`[FixGenerator] Using model: ${modelName} (Strength: ${strength})`);
+
         const response = await ai.models.generateContent({
-            model: 'gemini-2.5-flash-image',
+            model: modelName,
             contents: [
                 {
                     role: 'user',

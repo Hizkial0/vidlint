@@ -5,7 +5,10 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "node --watch server.js"
+    "dev": "node --watch server.js",
+    "upgrade-user": "node upgrade_user.js",
+    "list-profiles": "node list_profiles.js",
+    "list-requests": "node list_requests.js"
   },
   "dependencies": {
     "@google/genai": "^1.43.0",

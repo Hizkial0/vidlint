@@ -33,6 +33,11 @@ async function connectDB() {
             await runs.createIndex({ "stages.cheap.status": 1, createdAt: -1 });
             await runs.createIndex({ "stages.final.status": 1, createdAt: -1 });
 
+            const proRequests = db.collection('pro_requests');
+            await proRequests.createIndex({ createdAt: -1 });
+            await proRequests.createIndex({ email: 1, createdAt: -1 });
+            await proRequests.createIndex({ status: 1, createdAt: -1 });
+
             console.log(`[DB] Connected & Indexed.`);
             return db;
         } catch (err) {
@@ -154,6 +159,25 @@ async function listRuns(limit = 50) {
         .toArray();
 }
 
+async function createProRequest({ name, email, channel, help, payment, source = 'web' }) {
+    if (!db) await connectDB();
+
+    const doc = {
+        name: (name || '').trim(),
+        email: (email || '').trim().toLowerCase(),
+        channel: (channel || '').trim(),
+        help: (help || '').trim(),
+        payment: (payment || '').trim(),
+        source,
+        status: 'pending',
+        createdAt: new Date(),
+        updatedAt: new Date()
+    };
+
+    const result = await db.collection('pro_requests').insertOne(doc);
+    return { id: result.insertedId.toString(), ...doc };
+}
+
 module.exports = {
     connectDB,
     createRun,
@@ -162,5 +186,6 @@ module.exports = {
     completeRun,
     failRun,
     getRun,
-    listRuns
+    listRuns,
+    createProRequest
 };
