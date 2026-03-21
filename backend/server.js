@@ -28,6 +28,7 @@ app.use(express.json({ limit: '50mb' }));
 
 // Serve landing page + static assets from project root with NO aggressive caching
 app.use(express.static(path.join(__dirname, '..'), {
+    extensions: ['html', 'htm'],
     setHeaders: (res, path) => {
         res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, private');
     }
