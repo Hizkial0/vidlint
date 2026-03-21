@@ -4,24 +4,24 @@
     <loc>https://vidlint.com/</loc>
   </url>
   <url>
-    <loc>https://vidlint.com/upload</loc>
+    <loc>https://vidlint.com/upload.html</loc>
   </url>
   <url>
-    <loc>https://vidlint.com/results</loc>
+    <loc>https://vidlint.com/results.html</loc>
   </url>
   <url>
-    <loc>https://vidlint.com/pro-request</loc>
+    <loc>https://vidlint.com/pro-request.html</loc>
   </url>
   <url>
-    <loc>https://vidlint.com/help</loc>
+    <loc>https://vidlint.com/help.html</loc>
   </url>
   <url>
-    <loc>https://vidlint.com/about</loc>
+    <loc>https://vidlint.com/about.html</loc>
   </url>
   <url>
-    <loc>https://vidlint.com/privacy</loc>
+    <loc>https://vidlint.com/privacy.html</loc>
   </url>
   <url>
-    <loc>https://vidlint.com/terms</loc>
+    <loc>https://vidlint.com/terms.html</loc>
   </url>
 </urlset>
