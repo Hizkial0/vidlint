@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="See real examples of YouTube thumbnails analyzed by VidLint. Learn how to spot weak contrast, low clarity, and bad focus before you publish.">
+    <title>Examples & Fixes - VidLint</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="landing.css?v=6">
+    <style>
+        .page-content { max-width: 1000px; margin: 0 auto; padding: 100px 24px 80px; }
+        .page-content h1 { font-size: 3rem; font-weight: 800; margin-bottom: 16px; background: linear-gradient(135deg, #fff 0%, #94a3b8 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; text-align: center;}
+        .page-subtitle { color: #94a3b8; font-size: 1.15rem; text-align: center; margin-bottom: 64px; max-width: 600px; margin-left: auto; margin-right: auto;}
+        
+        .example-card {
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 24px;
+            padding: 32px;
+            margin-bottom: 64px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .example-img-container {
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1);
+            align-self: start;
+        }
+        
+        .example-img-container img {
+            width: 100%;
+            display: block;
+            height: auto;
+        }
+
+        .example-details {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .category-tag {
+            display: inline-block;
+            background: rgba(59, 130, 246, 0.1);
+            color: #3b82f6;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            align-self: flex-start;
+        }
+
+        .example-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #f8fafc;
+            line-height: 1.3;
+        }
+
+        .example-score {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .score-circle {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: white;
+        }
+        .score-low { background: #ef4444; box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3); }
+        .score-med { background: #f59e0b; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3); }
+
+        .score-text {
+            color: #cbd5e1;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .list-section h4 {
+            color: #f8fafc;
+            font-size: 1.05rem;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .list-section ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .list-section li {
+            color: #94a3b8;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .prob-icon { color: #ef4444; flex-shrink: 0; margin-top: 2px;}
+        .fix-icon { color: #10b981; flex-shrink: 0; margin-top: 2px;}
+
+        .why-matters {
+            background: rgba(15, 23, 42, 0.6);
+            padding: 16px 20px;
+            border-radius: 12px;
+            border-left: 4px solid #3b82f6;
+            margin-top: 8px;
+        }
+        .why-matters h5 { color: #e2e8f0; margin-bottom: 6px; font-size: 0.95rem; font-weight: 600;}
+        .why-matters p { color: #94a3b8; font-size: 0.9rem; line-height: 1.6; margin: 0;}
+
+        .cta-bottom {
+            text-align: center;
+            margin-top: 80px;
+            padding: 64px 24px;
+            background: linear-gradient(180deg, rgba(30, 41, 59, 0) 0%, rgba(15, 23, 42, 0.8) 100%);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .cta-bottom h2 {
+            font-size: 2rem;
+            color: #f8fafc;
+            margin-bottom: 24px;
+        }
+
+        @media (max-width: 768px) {
+            .example-card { grid-template-columns: 1fr; gap: 24px; padding: 24px; }
+            .page-content h1 { font-size: 2.2rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="sticky-header">
+        <div class="container header-inner">
+            <a href="index.html" class="logo">VidLint</a>
+            <nav class="nav-center">
+                <a href="examples.html" style="color: #f8fafc; font-weight: 500;">Examples</a>
+                <a href="index.html#pricing">Pricing</a>
+                <a href="help.html">Support</a>
+            </nav>
+            <div class="auth-buttons">
+                <a href="upload.html" class="btn btn-primary" data-auth-trigger="google" data-next="/upload.html">Check My Thumbnail</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="page-content">
+        <h1>Thumbnail Breakdown Examples</h1>
+        <p class="page-subtitle">See how VidLint catches weak contrast, cluttered layouts, and poor focus before you burn impressions on YouTube.</p>
+
+        <!-- Example 1: Gaming -->
+        <div class="example-card">
+            <div class="example-img-container">
+                <img src="/test%20thumbnails/Hungry%20worm%20dark%20GTA%20v.jpg" alt="GTA V Gaming Thumbnail Example">
+            </div>
+            <div class="example-details">
+                <span class="category-tag">Gaming</span>
+                <div class="example-title">"I survived 100 days as a hungry worm in GTA V"</div>
+                
+                <div class="example-score">
+                    <div class="score-circle score-low">34</div>
+                    <div class="score-text">Weak / Needs Fixes</div>
+                </div>
+
+                <div class="list-section">
+                    <h4>Top Problems</h4>
+                    <ul>
+                        <li><span class="prob-icon">✕</span> Too much dark, muddy background hiding the main character.</li>
+                        <li><span class="prob-icon">✕</span> The "worm" mod is too small and blends into the road texture.</li>
+                        <li><span class="prob-icon">✕</span> Red text in the corner has zero contrast and is unreadable on mobile.</li>
+                    </ul>
+                </div>
+
+                <div class="list-section">
+                    <h4>Direct Fixes</h4>
+                    <ul>
+                        <li><span class="fix-icon">✓</span> Increase the brightness and saturation of the main character by 30%.</li>
+                        <li><span class="fix-icon">✓</span> Crop 20% closer to the action so the character fills the center frame.</li>
+                        <li><span class="fix-icon">✓</span> Add a thick white stroke or black drop-shadow behind the red text.</li>
+                    </ul>
+                </div>
+
+                <div class="why-matters">
+                    <h5>Why this matters</h5>
+                    <p>Gaming thumbnails die on mobile screens when contrast is muddy. If the viewer has to squint to understand the core concept (the worm mod), they just keep scrolling.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Example 2: Vlog / Talking Head -->
+        <div class="example-card">
+            <div class="example-img-container">
+                <img src="/test%20thumbnails/180%20Days%20Proving%20Science%20Shouldn%E2%80%99t%20Be%20in%20Charge%20Schedule%201.jpg" alt="Talking Head Vlog Thumbnail Example">
+            </div>
+            <div class="example-details">
+                <span class="category-tag">Vlog / Deep Dive</span>
+                <div class="example-title">"I spent 180 days tracking sleep science"</div>
+                
+                <div class="example-score">
+                    <div class="score-circle score-med">58</div>
+                    <div class="score-text">Average / Missed Potential</div>
+                </div>
+
+                <div class="list-section">
+                    <h4>Top Problems</h4>
+                    <ul>
+                        <li><span class="prob-icon">✕</span> The creator's face lacks lighting contrast and blends into the dark room.</li>
+                        <li><span class="prob-icon">✕</span> Too many background objects (bookshelf, lamp, plant) pulling eye focus.</li>
+                        <li><span class="prob-icon">✕</span> The emotion on the face is neutral; it doesn't match the "extreme" 180-day hook.</li>
+                    </ul>
+                </div>
+
+                <div class="list-section">
+                    <h4>Direct Fixes</h4>
+                    <ul>
+                        <li><span class="fix-icon">✓</span> Cut out the face and add a subtle rim light to separate it from the background.</li>
+                        <li><span class="fix-icon">✓</span> Apply a slight directional blur to the background bookshelf.</li>
+                        <li><span class="fix-icon">✓</span> Retake the reaction photo to show extreme exhaustion or shock.</li>
+                    </ul>
+                </div>
+
+                <div class="why-matters">
+                    <h5>Why this matters</h5>
+                    <p>In personality-driven content, eye-tracking always goes to the human face first. If the emotion is flat or the face is swallowed by background clutter, the personal connection fails.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Example 3: Tutorial -->
+        <div class="example-card">
+            <div class="example-img-container">
+                <img src="/test%20thumbnails/Top%2010%20Must-Have%20Mods%20for%20Schedule%201.jpg" alt="Tutorial Educational Thumbnail Example">
+            </div>
+            <div class="example-details">
+                <span class="category-tag">Tutorial / List</span>
+                <div class="example-title">"Top 10 Must-Have Mods for 2026"</div>
+                
+                <div class="example-score">
+                    <div class="score-circle score-low">41</div>
+                    <div class="score-text">Weak / Needs Fixes</div>
+                </div>
+
+                <div class="list-section">
+                    <h4>Top Problems</h4>
+                    <ul>
+                        <li><span class="prob-icon">✕</span> The thumbnail repeats the exact title ("Top 10 Mods") word-for-word.</li>
+                        <li><span class="prob-icon">✕</span> The background shows 4 different mod screenshots clustered together into visual noise.</li>
+                        <li><span class="prob-icon">✕</span> No clear focal point; the viewer doesn't know where to look first.</li>
+                    </ul>
+                </div>
+
+                <div class="list-section">
+                    <h4>Direct Fixes</h4>
+                    <ul>
+                        <li><span class="fix-icon">✓</span> Change the text to a complementary hook instead of the title (e.g., "Install These NOW").</li>
+                        <li><span class="fix-icon">✓</span> Use only ONE high-quality, recognizable mod screenshot as the full background.</li>
+                        <li><span class="fix-icon">✓</span> Add a large, high-contrast visual arrow or circle driving eye focus to the mod.</li>
+                    </ul>
+                </div>
+
+                <div class="why-matters">
+                    <h5>Why this matters</h5>
+                    <p>Tutorials compete on clarity. If the thumbnail forces the viewer to process highly detailed text *and* a fractured mosaic of images, cognitive load spikes and they scroll past.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="cta-bottom">
+            <h2>Don't guess on your next upload.</h2>
+            <p style="color: #94a3b8; font-size: 1.1rem; margin-bottom: 32px; max-width: 500px; margin-left: auto; margin-right: auto;">Upload your thumbnail design and catch exactly what's holding it back before you publish.</p>
+            <a href="upload.html" class="btn btn-primary btn-lg" style="padding: 16px 32px; font-size: 1.1rem;">Try VidLint on your thumbnail</a>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <div class="logo">VidLint</div>
+                <p>&copy; 2026 VidLint Inc.</p>
+                <p style="margin-top: 8px;"><a href="mailto:zeke@vidlint.com" style="color: var(--text-secondary); text-decoration: underline;">zeke@vidlint.com</a></p>
+            </div>
+            <div class="footer-col">
+                <h5>Product</h5>
+                <a href="examples.html">Examples</a>
+                <a href="upload.html">Upload Tool</a>
+                <a href="index.html#pricing">Pricing</a>
+            </div>
+            <div class="footer-col">
+                <h5>Company</h5>
+                <a href="about.html">About</a>
+            </div>
+            <div class="footer-col">
+                <h5>Support</h5>
+                <a href="help.html">Help Center</a>
+                <a href="privacy.html">Privacy</a>
+                <a href="terms.html">Terms</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
