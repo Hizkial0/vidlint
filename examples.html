@@ -85,6 +85,7 @@
         }
         .score-low { background: #ef4444; box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3); }
         .score-med { background: #f59e0b; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3); }
+        .score-high { background: #10b981; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3); }
 
         .score-text {
             color: #cbd5e1;
@@ -107,11 +108,11 @@
             margin: 0;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 16px;
         }
 
         .list-section li {
-            color: #94a3b8;
+            color: #cbd5e1;
             font-size: 0.95rem;
             line-height: 1.5;
             display: flex;
@@ -171,121 +172,121 @@
 
     <div class="page-content">
         <h1>Thumbnail Breakdown Examples</h1>
-        <p class="page-subtitle">See how VidLint catches weak contrast, cluttered layouts, and poor focus before you burn impressions on YouTube.</p>
+        <p class="page-subtitle">See how VidLint catches weak focus, bad hierarchy, and missed potential before you burn impressions on YouTube.</p>
 
-        <!-- Example 1: Gaming -->
+        <!-- Example 1 -->
         <div class="example-card">
             <div class="example-img-container">
-                <img src="/test%20thumbnails/Hungry%20worm%20dark%20GTA%20v.jpg" alt="GTA V Gaming Thumbnail Example">
+                <img src="/gta5-myth.webp" alt="GTA V Gaming Thumbnail Example">
             </div>
             <div class="example-details">
-                <span class="category-tag">Gaming</span>
-                <div class="example-title">"I survived 100 days as a hungry worm in GTA V"</div>
+                <span class="category-tag">GTA V GAMING</span>
+                <div class="example-title">"Busting 50 Myths in GTA 5"</div>
                 
                 <div class="example-score">
-                    <div class="score-circle score-low">34</div>
-                    <div class="score-text">Weak / Needs Fixes</div>
+                    <div class="score-circle score-med">61</div>
+                    <div class="score-text">Decent / Needs Focus Fixes</div>
                 </div>
 
                 <div class="list-section">
                     <h4>Top Problems</h4>
                     <ul>
-                        <li><span class="prob-icon">✕</span> Too much dark, muddy background hiding the main character.</li>
-                        <li><span class="prob-icon">✕</span> The "worm" mod is too small and blends into the road texture.</li>
-                        <li><span class="prob-icon">✕</span> Red text in the corner has zero contrast and is unreadable on mobile.</li>
+                        <li><span class="prob-icon">✕</span> <strong>Split focus between the cop and Franklin.</strong> Both faces are strong, but the viewer is not sure who the main subject is in the first second.</li>
+                        <li><span class="prob-icon">✕</span> <strong>"MYTH #49" takes up too much premium space without adding much curiosity.</strong> It tells the series number, but not the actual payoff or tension.</li>
+                        <li><span class="prob-icon">✕</span> <strong>The helicopter is too small to matter.</strong> It adds noise, not story. On mobile it reads like a random blur.</li>
                     </ul>
                 </div>
 
                 <div class="list-section">
                     <h4>Direct Fixes</h4>
                     <ul>
-                        <li><span class="fix-icon">✓</span> Increase the brightness and saturation of the main character by 30%.</li>
-                        <li><span class="fix-icon">✓</span> Crop 20% closer to the action so the character fills the center frame.</li>
-                        <li><span class="fix-icon">✓</span> Add a thick white stroke or black drop-shadow behind the red text.</li>
+                        <li><span class="fix-icon">✓</span> <strong>Make Franklin the clear hero.</strong> Crop 15–20% tighter so Franklin’s shocked face and hanging pose dominate the center-right.</li>
+                        <li><span class="fix-icon">✓</span> <strong>Reduce “MYTH #49” by around 25–35%</strong> or move it to a less dominant corner. Keep it as branding, not as the main hook.</li>
+                        <li><span class="fix-icon">✓</span> <strong>Push the cop slightly darker and add more contrast/rim light to Franklin.</strong> This keeps the cop useful as context while making the main emotional payoff clearer.</li>
                     </ul>
                 </div>
 
                 <div class="why-matters">
                     <h5>Why this matters</h5>
-                    <p>Gaming thumbnails die on mobile screens when contrast is muddy. If the viewer has to squint to understand the core concept (the worm mod), they just keep scrolling.</p>
+                    <p>This thumbnail already has strong emotion and a clear GTA-style look, which is good. The problem is hierarchy. On mobile, the eye bounces between the cop, Franklin, and the big text instead of locking onto one unforgettable moment. If the viewer has to decide what the thumbnail is about, you lose speed.</p>
                 </div>
             </div>
         </div>
 
-        <!-- Example 2: Vlog / Talking Head -->
+        <!-- Example 2 -->
         <div class="example-card">
             <div class="example-img-container">
-                <img src="/test%20thumbnails/180%20Days%20Proving%20Science%20Shouldn%E2%80%99t%20Be%20in%20Charge%20Schedule%201.jpg" alt="Talking Head Vlog Thumbnail Example">
+                <img src="/minecraft-711.webp" alt="Minecraft Thumbnail Example">
             </div>
             <div class="example-details">
-                <span class="category-tag">Vlog / Deep Dive</span>
-                <div class="example-title">"I spent 180 days tracking sleep science"</div>
+                <span class="category-tag">MINECRAFT</span>
+                <div class="example-title">"I Opened a 7-11 in Minecraft"</div>
+                
+                <div class="example-score">
+                    <div class="score-circle score-high">72</div>
+                    <div class="score-text">Solid / Could Hit Harder</div>
+                </div>
+
+                <div class="list-section">
+                    <h4>Top Problems</h4>
+                    <ul>
+                        <li><span class="prob-icon">✕</span> <strong>The thumbnail explains the setup, but not the payoff.</strong> You can tell it’s Minecraft + 7-Eleven, but there’s no strong tension, surprise, or “why I need to click” moment.</li>
+                        <li><span class="prob-icon">✕</span> <strong>The cartoon character steals too much attention from the actual Minecraft idea.</strong> The face is big and readable, but it competes with the store sign instead of supporting it.</li>
+                        <li><span class="prob-icon">✕</span> <strong>The villagers feel passive.</strong> They are useful context, but right now they look like background extras instead of part of the hook.</li>
+                    </ul>
+                </div>
+
+                <div class="list-section">
+                    <h4>Direct Fixes</h4>
+                    <ul>
+                        <li><span class="fix-icon">✓</span> <strong>Make the 7-Eleven build the undeniable hero.</strong> Crop slightly tighter so the store sign and counter area feel more central and important.</li>
+                        <li><span class="fix-icon">✓</span> <strong>Give the villagers a clearer role in the story.</strong> Show one villager at the counter or reacting in a way that makes the “opened a store” concept feel active instead of static.</li>
+                        <li><span class="fix-icon">✓</span> <strong>Reduce the cartoon character’s visual weight by 15–25%.</strong> Keep the character for personality, but let the actual Minecraft store concept lead the click.</li>
+                    </ul>
+                </div>
+
+                <div class="why-matters">
+                    <h5>Why this matters</h5>
+                    <p>This thumbnail is already clean and readable, which is good. The weak spot is story tension. Viewers understand what the video is about, but not yet why this version is interesting enough to click now. In gaming thumbnails, clarity gets you noticed — but a stronger payoff moment gets the click.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Example 3 -->
+        <div class="example-card">
+            <div class="example-img-container">
+                <img src="/cod-mobile.webp" alt="COD Mobile Thumbnail Example">
+            </div>
+            <div class="example-details">
+                <span class="category-tag">FPS GAME</span>
+                <div class="example-title">"6 Tips You Didn't Know Exist in COD Mobile!"</div>
                 
                 <div class="example-score">
                     <div class="score-circle score-med">58</div>
-                    <div class="score-text">Average / Missed Potential</div>
+                    <div class="score-text">Decent Hook / Mismatch Issues</div>
                 </div>
 
                 <div class="list-section">
                     <h4>Top Problems</h4>
                     <ul>
-                        <li><span class="prob-icon">✕</span> The creator's face lacks lighting contrast and blends into the dark room.</li>
-                        <li><span class="prob-icon">✕</span> Too many background objects (bookshelf, lamp, plant) pulling eye focus.</li>
-                        <li><span class="prob-icon">✕</span> The emotion on the face is neutral; it doesn't match the "extreme" 180-day hook.</li>
+                        <li><span class="prob-icon">✕</span> <strong>The thumbnail sells one “secret spot,” not six tips.</strong> The viewer sees a single sniper location trick, so the packaging clashes with the video title.</li>
+                        <li><span class="prob-icon">✕</span> <strong>The pink sniper character looks unnatural and slightly confusing.</strong> It stands out, but it also feels edited in rather than part of the real gameplay moment.</li>
+                        <li><span class="prob-icon">✕</span> <strong>Too much space is spent on the arrow and bright empty background.</strong> The core idea is there, but the thumbnail is not using its best space to increase clarity or tension.</li>
                     </ul>
                 </div>
 
                 <div class="list-section">
                     <h4>Direct Fixes</h4>
                     <ul>
-                        <li><span class="fix-icon">✓</span> Cut out the face and add a subtle rim light to separate it from the background.</li>
-                        <li><span class="fix-icon">✓</span> Apply a slight directional blur to the background bookshelf.</li>
-                        <li><span class="fix-icon">✓</span> Retake the reaction photo to show extreme exhaustion or shock.</li>
+                        <li><span class="fix-icon">✓</span> <strong>Match the thumbnail to the real promise.</strong> If the video is about 6 tips, show either multiple tip elements or make the thumbnail clearly feel like “one of several secrets,” not the whole concept.</li>
+                        <li><span class="fix-icon">✓</span> <strong>Reduce the arrow size by around 20–30%.</strong> Keep it for direction, but let the actual “secret spot” and sniper setup do more of the work.</li>
+                        <li><span class="fix-icon">✓</span> <strong>Make the hidden position clearer than the character skin.</strong> Shift attention toward the rooftop/hiding angle so the viewer instantly understands why this spot is useful.</li>
                     </ul>
                 </div>
 
                 <div class="why-matters">
                     <h5>Why this matters</h5>
-                    <p>In personality-driven content, eye-tracking always goes to the human face first. If the emotion is flat or the face is swallowed by background clutter, the personal connection fails.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Example 3: Tutorial -->
-        <div class="example-card">
-            <div class="example-img-container">
-                <img src="/test%20thumbnails/Top%2010%20Must-Have%20Mods%20for%20Schedule%201.jpg" alt="Tutorial Educational Thumbnail Example">
-            </div>
-            <div class="example-details">
-                <span class="category-tag">Tutorial / List</span>
-                <div class="example-title">"Top 10 Must-Have Mods for 2026"</div>
-                
-                <div class="example-score">
-                    <div class="score-circle score-low">41</div>
-                    <div class="score-text">Weak / Needs Fixes</div>
-                </div>
-
-                <div class="list-section">
-                    <h4>Top Problems</h4>
-                    <ul>
-                        <li><span class="prob-icon">✕</span> The thumbnail repeats the exact title ("Top 10 Mods") word-for-word.</li>
-                        <li><span class="prob-icon">✕</span> The background shows 4 different mod screenshots clustered together into visual noise.</li>
-                        <li><span class="prob-icon">✕</span> No clear focal point; the viewer doesn't know where to look first.</li>
-                    </ul>
-                </div>
-
-                <div class="list-section">
-                    <h4>Direct Fixes</h4>
-                    <ul>
-                        <li><span class="fix-icon">✓</span> Change the text to a complementary hook instead of the title (e.g., "Install These NOW").</li>
-                        <li><span class="fix-icon">✓</span> Use only ONE high-quality, recognizable mod screenshot as the full background.</li>
-                        <li><span class="fix-icon">✓</span> Add a large, high-contrast visual arrow or circle driving eye focus to the mod.</li>
-                    </ul>
-                </div>
-
-                <div class="why-matters">
-                    <h5>Why this matters</h5>
-                    <p>Tutorials compete on clarity. If the thumbnail forces the viewer to process highly detailed text *and* a fractured mosaic of images, cognitive load spikes and they scroll past.</p>
+                    <p>This thumbnail gets attention fast, which is good. The problem is expectation mismatch. Viewers click expecting one hidden sniper spot, but the title promises a broader “6 tips” video. When the thumbnail and title are pulling in different directions, the click becomes weaker and trust drops.</p>
                 </div>
             </div>
         </div>
