@@ -236,7 +236,8 @@ body.theme-dark {
     color: var(--v2-text-muted);
 }
 
-.mockup-input input {
+.mockup-input input,
+.mockup-input textarea {
     background: transparent;
     border: none;
     color: var(--v2-text);
@@ -244,6 +245,20 @@ body.theme-dark {
     width: 100%;
     outline: none;
     padding: 4px 0;
+    font-family: inherit;
+}
+
+.mockup-input textarea {
+    resize: none;
+    line-height: 1.5;
+}
+
+.mockup-textarea {
+    align-items: flex-start;
+}
+
+.mockup-textarea svg {
+    margin-top: 6px;
 }
 
 /* FAQ Section */
