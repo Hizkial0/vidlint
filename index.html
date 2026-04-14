@@ -77,21 +77,12 @@
 
                         <div class="input-stack">
                             <div class="mockup-input">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                                <input type="text" id="landing-game-title" placeholder="Game Title (e.g. Elden Ring)">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" class="brand-icon" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                                <input type="text" id="landing-game-title" placeholder="Video Title">
                             </div>
-                            <div class="task-row active-task">
-                                <div class="task-icon"><div class="circle outline"></div></div>
-                                <span class="task-text">Increase face size by 15%</span>
-                                <div class="tag blue">Hero</div>
-                            </div>
-                            <div class="task-row">
-                                <div class="task-icon"><div class="circle outline"></div></div>
-                                <span class="task-text">Boost contrast on character</span>
-                            </div>
-                            <div class="task-row">
-                                <div class="task-icon"><div class="circle filled"></div></div>
-                                <span class="task-text strike">Check 120px mobile view</span>
+                            <div class="mockup-input">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="brand-icon" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                                <input type="text" id="landing-context" placeholder="Any specific context? (Optional)">
                             </div>
                         </div>
                         <button class="btn btn-primary btn-full mockup-analyze-btn" id="landing-analyze-btn">Analyze Thumbnail</button>
@@ -260,6 +251,32 @@
                 </div>
             </div>
         </section>
+
+        <!-- FAQ Section -->
+        <section class="faq-v2">
+            <div class="container">
+                <div class="section-badge">FAQ</div>
+                <h2 class="section-title-clean">Common Questions</h2>
+                <div class="faq-grid">
+                    <details class="help-card glass-surface">
+                        <summary>How do I check my thumbnail?</summary>
+                        <p>Upload your thumbnail image, type your video title, and click analyze. You'll get a score and actionable fixes within seconds.</p>
+                    </details>
+                    <details class="help-card glass-surface">
+                        <summary>What image formats are supported?</summary>
+                        <p>We support PNG, JPG, and WEBP files up to 5MB. For best results, use standard YouTube thumbnail size (1280×720).</p>
+                    </details>
+                    <details class="help-card glass-surface">
+                        <summary>Is it completely free?</summary>
+                        <p>Yes, you can check up to 3 thumbnails a day completely free, with no credit card required.</p>
+                    </details>
+                    <details class="help-card glass-surface">
+                        <summary>How accurate is the analysis?</summary>
+                        <p>VidLint uses computer vision and AI models trained on thousands of thumbnails. It successfully flags common weaknesses like low contrast or poor face dominance.</p>
+                    </details>
+                </div>
+            </div>
+        </section>
     </main>
 
     <footer class="footer-v2">
@@ -370,20 +387,27 @@
             if (analyzeBtn) {
                 analyzeBtn.addEventListener('click', (e) => {
                     e.preventDefault();
+                    
+                    if (!uploadedImageData) {
+                        alert('Please upload a thumbnail image first!');
+                        return;
+                    }
+
                     const gameTitleInput = document.getElementById('landing-game-title');
                     const gameTitle = gameTitleInput ? gameTitleInput.value.trim() : '';
+                    
+                    const contextInput = document.getElementById('landing-context');
+                    const contextVal = contextInput ? contextInput.value.trim() : '';
 
-                    if (uploadedImageData) {
-                        const data = {
-                            method: "upload",
-                            imageData: uploadedImageData,
-                            gameName: gameTitle,
-                            context: "",
-                            mode: "fast",
-                            timestamp: Date.now()
-                        };
-                        localStorage.setItem("linter_data", JSON.stringify(data));
-                    }
+                    const data = {
+                        method: "upload",
+                        imageData: uploadedImageData,
+                        gameName: gameTitle,
+                        context: contextVal,
+                        mode: "fast",
+                        timestamp: Date.now()
+                    };
+                    localStorage.setItem("linter_data", JSON.stringify(data));
 
                     if (window.signInWithGoogle) {
                         window.signInWithGoogle('/upload.html');
