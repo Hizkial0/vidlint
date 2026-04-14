@@ -4,250 +4,278 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="/favicon.png">
-    <meta name="description" content="Upload your gaming thumbnail and get a fast breakdown of what reads weak before you publish.">
+    <meta name="description" content="We analyzed 500 gaming thumbnails. The #1 click-killer is weak subject dominance. Upload yours and get the exact fixes—like increasing face size by 15%—in seconds.">
     <title>YouTube Thumbnail Analyzer for Gaming Creators | VidLint</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="landing.css?v=3">
+    <link rel="stylesheet" href="landing.css?v=6">
+    <link rel="stylesheet" href="style-v2.css">
 </head>
-<body>
+<body class="homepage theme-dark">
 
-    <!-- 1. Sticky Header -->
-    <header class="sticky-header">
+    <!-- Sticky Header -->
+    <header class="sticky-header glass-header">
         <div class="container header-inner">
-            <div class="logo">VidLint</div>
-            <nav class="nav-center">
-                <a href="examples.html">Examples</a>
-                <a href="#pricing">Pricing</a>
-                <a href="help.html">Support</a>
-            </nav>
+            <div class="logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" class="brand-icon">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    <polyline points="17 8 12 3 7 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <line x1="12" y1="3" x2="12" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                vidlint
+            </div>
             <div class="auth-buttons">
-                <a href="#" class="btn btn-primary" data-auth-trigger="google" data-next="/upload.html" style="display: flex; align-items: center; gap: 8px;">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
-                    Sign in with Google
-                </a>
+                <!-- Simplelist uses a pill-shaped download button -->
+                <button class="btn btn-pill-outline header-auth-btn" data-auth-trigger="google" data-next="/upload.html">Score My Thumbnail</button>
             </div>
         </div>
     </header>
 
     <main>
-        <!-- 2. Hero Section -->
-        <section class="hero">
-            <div class="container hero-grid">
-                <div class="hero-content">
-                    <div class="badge">Powered by Emotion-Aware Thumbnail AI</div>
-                    <h1>Test your gaming thumbnail before you post</h1>
-                    <p class="subtext">Get a fast breakdown of what reads weak, why your CTR might drop, and get instant fixes to test before going live.</p>
-                    <div class="cta-row">
-                        <a href="upload.html" class="btn btn-primary">Check My Thumbnail</a>
-                        <a href="examples.html" class="btn btn-ghost">See Examples</a>
+        <!-- Center Hero -->
+        <section class="hero-v2">
+            <div class="hero-bg-glow"></div>
+            <div class="container hero-grid-v2">
+                <div class="hero-copy-col">
+                    <div class="hero-text-center">
+                        <h1>Test your gaming thumbnails for higher CTRs in seconds.</h1>
+                        <p class="subtext">We analyzed 500 gaming thumbnails. Here is the one visual mistake killing your click-through rate.</p>
+                        <button class="btn btn-primary btn-pill-solid" data-auth-trigger="google" data-next="/upload.html">Score My Thumbnail Now</button>
+                        <div class="hero-microcopy">Free · No credit card · 30-second results</div>
+                    </div>
+
+                    <div class="hero-trust">
+                        <span class="trust-text">Used by 200+ gaming creators this week</span>
+                        <div class="avatar-row">
+                            <img src="https://i.pravatar.cc/100?img=11" alt="User">
+                            <img src="https://i.pravatar.cc/100?img=33" alt="User">
+                            <img src="https://i.pravatar.cc/100?img=47" alt="User">
+                            <img src="https://i.pravatar.cc/100?img=12" alt="User">
+                            <img src="https://i.pravatar.cc/100?img=59" alt="User">
+                        </div>
                     </div>
                 </div>
-                
-                <div class="hero-analyzer">
-                    <div class="glass-card analyzer-card">
-                        <!-- Analyzer Mockup -->
-                        <div class="dropzone">
-                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" class="upload-icon">
+
+                <div class="hero-product-col">
+                    <div class="main-analyzer-mockup glass-surface">
+                        <div class="mockup-header">
+                            <button class="mockup-btn-back"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+                            <span>New Analysis</span>
+                            <button class="mockup-btn-add">+</button>
+                        </div>
+
+                        <div class="dropzone" id="demo-dropzone">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" class="upload-icon-small">
                                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                                 <polyline points="17 8 12 3 7 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                 <line x1="12" y1="3" x2="12" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                             </svg>
-                            <span>Drag & drop thumbnail or click to upload</span>
-                            <span class="file-hint">Supports PNG, JPG (Max 5MB)</span>
+                            <span class="upload-title">Upload your thumbnail</span>
+                            <span class="file-hint">PNG, JPG, WEBP ? Click or drag and drop</span>
                         </div>
 
-                        <div class="input-group">
-                            <label>Game Title</label>
-                            <input type="text" id="landing-game-title" placeholder="e.g. Elden Ring" class="input-dark">
+                        <div class="input-stack">
+                            <div class="mockup-input">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                <input type="text" id="landing-game-title" placeholder="Game Title (e.g. Elden Ring)">
+                            </div>
+                            <div class="task-row active-task">
+                                <div class="task-icon"><div class="circle outline"></div></div>
+                                <span class="task-text">Increase face size by 15%</span>
+                                <div class="tag blue">Hero</div>
+                            </div>
+                            <div class="task-row">
+                                <div class="task-icon"><div class="circle outline"></div></div>
+                                <span class="task-text">Boost contrast on character</span>
+                            </div>
+                            <div class="task-row">
+                                <div class="task-icon"><div class="circle filled"></div></div>
+                                <span class="task-text strike">Check 120px mobile view</span>
+                            </div>
                         </div>
-                        
-                        <div class="input-group">
-                            <label>Context (Optional)</label>
-                            <input type="text" id="landing-context" placeholder="Title or video topic..." class="input-dark">
-                        </div>
-
-                        <button class="btn btn-primary btn-full" id="landing-analyze-btn">Check My Thumbnail</button>
+                        <button class="btn btn-primary btn-full mockup-analyze-btn" id="landing-analyze-btn">Analyze Thumbnail</button>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 3. Trust Strip -->
-        <section class="trust-strip">
-            <div class="container trust-inner">
-                <span class="trust-label">Used by creators analyzing thumbnails daily</span>
-                <div class="trust-stats">
-                    <div class="stat-chip">
-                        <span class="stat-val">&lt;10s</span> Analysis time
-                    </div>
-                    <div class="stat-chip">
-                        <span class="stat-icon">⚡</span> Actionable fixes
-                    </div>
-                    <div class="stat-chip">
-                        <span class="stat-icon">❤️</span> Emotion-first scoring
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 4. Value Cards -->
-        <section class="value-cards" id="value-cards">
-            <div class="container value-grid">
-                <div class="glass-card value-card">
-                    <h3>Score Before You Publish</h3>
-                    <p>See if your thumbnail is strong enough before it goes live.</p>
-                </div>
-                <div class="glass-card value-card">
-                    <h3>Fast Fixes</h3>
-                    <p>Get the 2–3 edits most likely to improve clarity and clicks.</p>
-                </div>
-                <div class="glass-card value-card">
-                    <h3>Better Directions</h3>
-                    <p>If the concept is weak, get stronger visual angles to test.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- 5. How It Works -->
-        <section class="how-it-works">
+        <!-- Proof Slider Section -->
+        <section class="proof-slider-section">
             <div class="container">
-                <h2 class="section-title">How it works</h2>
-                <div class="steps-grid">
-                    <div class="step">
-                        <div class="step-num">01</div>
-                        <h4>Upload thumbnail</h4>
-                        <p>Upload your finished thumbnail or rough draft.</p>
-                    </div>
-                    <div class="step">
-                        <div class="step-num">02</div>
-                        <h4>Instant analysis</h4>
-                        <p>We check clarity, focus, contrast, and click strength.</p>
-                    </div>
-                    <div class="step">
-                        <div class="step-num">03</div>
-                        <h4>Fix before publish</h4>
-                        <p>Apply the fast fixes and upload with more confidence.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+                <div class="section-badge">REAL RESULTS</div>
+                <h2 class="section-title-clean">What 3 specific fixes look like on a real thumbnail</h2>
+                <p class="proof-slider-sub">Drag the slider. The "after" is built from VidLint's exact output—no manual guesswork.</p>
 
-        <!-- 6. Result Preview -->
-        <section class="result-preview">
-            <div class="container">
-                <div style="text-align: center; margin-bottom: 12px; font-size: 0.85rem; color: var(--text-muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em;">Example result from one thumbnail check</div>
-                <div class="glass-card preview-box">
-                    <div class="preview-header">
-                        <div class="score-ring-lg">84</div>
-                        <div class="metrics-row">
-                            <span class="metric good">POP</span>
-                            <span class="metric good">CLARITY</span>
-                            <span class="metric warn">HOOK</span>
-                            <span class="metric good">CLEAN</span>
-                            <span class="metric good">TRUST</span>
+                <div class="proof-slider-grid">
+                    <article class="comparison-card glass-surface">
+                        <div class="comparison-stage" style="--reveal: 58%;">
+                            <img class="comparison-image" src="/test%20thumbnails/cod-mobile.webp" alt="COD Mobile thumbnail before VidLint fixes">
+                            <img class="comparison-image comparison-image-after" src="/test%20thumbnails/cod-mobile-after.webp" alt="COD Mobile thumbnail after mock VidLint fixes">
+                            <div class="comparison-divider" aria-hidden="true">
+                                <span class="comparison-handle"></span>
+                            </div>
+                            <span class="comparison-label comparison-label-before">Before</span>
+                            <span class="comparison-label comparison-label-after">After</span>
                         </div>
+                        <input class="comparison-range" type="range" min="0" max="100" value="58" aria-label="Reveal optimized COD Mobile thumbnail">
+                        <div class="comparison-meta">
+                            <div class="comparison-topline">
+                                <span class="comparison-game">COD Mobile</span>
+                                <span class="comparison-score">58 &rarr; 74</span>
+                            </div>
+                            <h3>Hero pushed 40%, arrow cut, contrast +18%</h3>
+                            <ul class="comparison-fixes">
+                                <li>Push hero</li>
+                                <li>Reduce arrow</li>
+                                <li>Boost contrast</li>
+                            </ul>
+                        </div>
+                    </article>
+
+                    <article class="comparison-card glass-surface">
+                        <div class="comparison-stage" style="--reveal: 54%;">
+                            <img class="comparison-image" src="/test%20thumbnails/minecraft-711.webp" alt="Minecraft 7-11 thumbnail before VidLint fixes">
+                            <img class="comparison-image comparison-image-after" src="/test%20thumbnails/minecraft-711-after.webp" alt="Minecraft 7-11 thumbnail after mock VidLint fixes">
+                            <div class="comparison-divider" aria-hidden="true">
+                                <span class="comparison-handle"></span>
+                            </div>
+                            <span class="comparison-label comparison-label-before">Before</span>
+                            <span class="comparison-label comparison-label-after">After</span>
+                        </div>
+                        <input class="comparison-range" type="range" min="0" max="100" value="54" aria-label="Reveal optimized Minecraft thumbnail">
+                        <div class="comparison-meta">
+                            <div class="comparison-topline">
+                                <span class="comparison-game">Minecraft 7-11</span>
+                                <span class="comparison-score">72 &rarr; 84</span>
+                            </div>
+                            <h3>Build centered, face weight −30%, payoff clarified</h3>
+                            <ul class="comparison-fixes">
+                                <li>Center build</li>
+                                <li>Reduce face weight</li>
+                                <li>Clarify payoff</li>
+                            </ul>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Steps Section (Simplelist HOW IT WORKS) -->
+        <section class="how-it-works-v2">
+            <div class="container">
+                <div class="section-badge">HOW IT WORKS</div>
+                <h2 class="section-title-clean">Drop a thumbnail. Get your score<br>and 3 exact fixes in 30 seconds.</h2>
+                
+                <div class="steps-grid-v2">
+                    <div class="step-card glass-surface">
+                        <div class="step-icon-area">
+                            <div class="step-number float-anim delay-1">1</div>
+                            <div class="wireframe-mock upload-mock"></div>
+                        </div>
+                        <h4>Upload</h4>
+                        <p>Drop your 1280×720 thumbnail. PNG, JPG, or WEBP—no account needed to start.</p>
                     </div>
-                    <div class="preview-body">
-                        <h4>Quick Win Plan</h4>
-                        <ul class="check-list">
-                            <li>Check text contrast against background</li>
-                            <li>Increase face size by 15% for emotional connection</li>
-                            <li>Simplify background elements to reduce noise</li>
-                        </ul>
+                    
+                    <div class="step-card glass-surface">
+                        <div class="step-icon-area">
+                            <div class="step-number float-anim delay-2">2</div>
+                            <div class="wireframe-mock scan-mock">
+                                <div class="scan-line"></div>
+                            </div>
+                        </div>
+                        <h4>Get Your Score</h4>
+                        <p>AI checks face dominance, text readability at 120px, contrast ratio, and layout balance.</p>
+                    </div>
+                    
+                    <div class="step-card glass-surface">
+                        <div class="step-icon-area">
+                            <div class="step-number float-anim delay-3">3</div>
+                            <div class="wireframe-mock fix-mock">
+                                <div class="mini-check"></div>
+                                <div class="mini-check"></div>
+                                <div class="mini-check"></div>
+                            </div>
+                        </div>
+                        <h4>Fix & Publish</h4>
+                        <p>Get 3 specific fixes—like "increase face size by 15%"—then publish with confidence.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 7. Pricing -->
-        <section class="pricing" id="pricing">
+        <!-- Pricing Section (Simplelist PRICING) -->
+        <section class="pricing-v2" id="pricing">
             <div class="container">
-                <h2 class="section-title">Simple Pricing for MVP</h2>
-                <div class="pricing-grid">
-                    <!-- Pro Card First -->
-                    <div class="glass-card price-card popular">
-                        <div class="pop-badge">Recommended</div>
+                <div class="pricing-header">
+                    <div class="section-badge">PRICING</div>
+                    <h2 class="section-title-clean">Free to start. Pro when you're ready.</h2>
+                    <p class="pricing-sub">No trials, no surprises. See exactly what each plan includes<br>and decide in 30 seconds.</p>
+                    
+                    <div class="plan-toggle">
+                        <button class="toggle-btn active">Billed annually</button>
+                        <button class="toggle-btn">Billed monthly</button>
+                    </div>
+                </div>
+
+                <div class="pricing-cards-v2">
+                    <div class="price-card-v2 glass-surface">
+                        <div class="price-icon yellow-star">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+                        </div>
                         <h3>Pro</h3>
-                        <div class="price">$19 <span class="period">/mo</span></div>
-                        <p style="color: var(--text-muted); margin-bottom: 24px; font-size: 14px;">For creators who want stronger uploads</p>
-                        <ul class="features">
-                            <li>Unlimited checks</li>
-                            <li>Deeper scoring</li>
-                            <li>Stronger fix suggestions</li>
+                        <div class="price">$19 <span class="period">per month</span></div>
+                        <p class="price-desc">billed annually · cancel anytime</p>
+                        
+                        <a href="pro-request.html" class="btn btn-ghost btn-full plan-btn">Start Pro</a>
+                        
+                        <div class="feature-list-title">Everything in Free, plus:</div>
+                        <ul class="features-check">
+                            <li>Unlimited thumbnail checks per day</li>
+                            <li>Deep scoring: contrast ratio, color harmony, face %</li>
+                            <li>Fix suggestions with exact % adjustments</li>
+                            <li>Before/after variant generation</li>
+                            <li>Priority email support</li>
                         </ul>
-                        <a href="pro-request.html" class="btn btn-primary btn-full">Request Pro Access</a>
-                        <p style="font-size: 11px; color: var(--text-muted); text-align: center; margin-top: 8px;">Manual onboarding while billing is being finalized.</p>
                     </div>
 
-                    <!-- Free Card Second -->
-                    <div class="glass-card price-card">
+                    <div class="price-card-v2 glass-surface dark-variant">
+                        <div class="price-icon purple-swirl">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22ZM12 18C15.3137 18 18 15.3137 18 12C18 8.68629 15.3137 6 12 6C8.68629 6 6 8.68629 6 12C6 15.3137 8.68629 18 12 18Z"/><circle cx="12" cy="12" r="2" fill="#000"/></svg>
+                        </div>
                         <h3>Free</h3>
-                        <div class="price">0 <span class="period">/mo</span></div>
-                        <p style="color: var(--text-muted); margin-bottom: 24px; font-size: 14px;">Best for trying the tool</p>
-                        <ul class="features">
-                            <li>Limited daily checks</li>
-                            <li>Basic scoring</li>
-                            <li>Standard processing</li>
+                        <div class="price">$0 <span class="period">forever</span></div>
+                        <p class="price-desc">no credit card · no time limit</p>
+                        
+                        <button class="btn btn-ghost btn-full plan-btn" data-auth-trigger="google" data-next="/upload.html">Score My Thumbnail Now</button>
+                        
+                        <div class="feature-list-title">Included:</div>
+                        <ul class="features-check">
+                            <li>3 thumbnail checks per day</li>
+                            <li>120px mobile readability preview</li>
+                            <li>Top 3 fix suggestions per check</li>
+                            <li>Overall readability score (0–100)</li>
                         </ul>
-                        <button class="btn btn-ghost btn-full" data-auth-trigger="google" data-next="/upload.html">Check My Thumbnail</button>
                     </div>
                 </div>
-            </div>
-        </section>
-
-        <!-- 8. FAQ -->
-        <section class="faq">
-            <div class="container">
-                <h2 class="section-title">FAQ</h2>
-                <div class="faq-list">
-                    <details class="glass-card faq-item">
-                        <summary>Is this optimized for gaming channels only?</summary>
-                        <p>No. It works best anywhere thumbnails drive clicks, but it’s especially strong for gaming-style, high-contrast thumbnails.</p>
-                    </details>
-                    <details class="glass-card faq-item">
-                        <summary>How fast is the analysis?</summary>
-                        <p>Most checks finish in seconds.</p>
-                    </details>
-                    <details class="glass-card faq-item">
-                        <summary>Can I upload drafts?</summary>
-                        <p>Yes. You can test both rough drafts and finished thumbnails.</p>
-                    </details>
-                    <details class="glass-card faq-item">
-                        <summary>Do you give specific edit instructions?</summary>
-                        <p>Yes. You get clear, practical fixes—not vague feedback.</p>
-                    </details>
-                </div>
-            </div>
-        </section>
-
-        <!-- 9. Final CTA -->
-        <section class="final-cta">
-            <div class="container cta-box">
-                <h2>Your thumbnail gets one second. Make it count.</h2>
-                <a href="upload.html" class="btn btn-primary btn-lg">Check My Thumbnail</a>
             </div>
         </section>
     </main>
 
-    <!-- 10. Footer -->
-    <footer>
+    <footer class="footer-v2">
         <div class="container footer-grid">
             <div class="footer-brand">
-                <div class="logo">VidLint</div>
+                <div class="logo">vidlint</div>
                 <p>&copy; 2026 VidLint Inc.</p>
-                <p style="margin-top: 8px;"><a href="mailto:zeke@vidlint.com" style="color: var(--text-secondary); text-decoration: underline;">zeke@vidlint.com</a></p>
+                <div class="stars">★★★★★</div>
+                <p class="store-reviews">YouTube thumbnail analyzer for gaming creators</p>
             </div>
+            <div class="footer-col"></div>
             <div class="footer-col">
                 <h5>Product</h5>
                 <a href="examples.html">Examples</a>
                 <a href="upload.html">Upload Tool</a>
                 <a href="#pricing">Pricing</a>
-            </div>
-            <div class="footer-col">
-                <h5>Company</h5>
-                <a href="about.html">About</a>
             </div>
             <div class="footer-col">
                 <h5>Support</h5>
@@ -262,20 +290,30 @@
         </div>
     </footer>
 
-    </footer>
-
     <script>
         // Landing Page Image Upload & Auth Flow
         document.addEventListener('DOMContentLoaded', () => {
-            
             const dropzone = document.querySelector('.dropzone');
             const fileHint = document.querySelector('.file-hint');
             const analyzeBtn = document.getElementById('landing-analyze-btn');
-            
+            const comparisonRanges = document.querySelectorAll('.comparison-range');
             let uploadedImageData = null;
 
+            comparisonRanges.forEach((range) => {
+                const comparisonCard = range.closest('.comparison-card');
+                const comparisonStage = comparisonCard ? comparisonCard.querySelector('.comparison-stage') : null;
+
+                if (!comparisonStage) return;
+
+                const updateReveal = () => {
+                    comparisonStage.style.setProperty('--reveal', `${range.value}%`);
+                };
+
+                range.addEventListener('input', updateReveal);
+                updateReveal();
+            });
+
             if (dropzone) {
-                // Hover Effects
                 dropzone.addEventListener('dragover', (e) => {
                     e.preventDefault();
                     dropzone.style.borderColor = 'var(--primary)';
@@ -284,21 +322,16 @@
                 dropzone.addEventListener('dragleave', (e) => {
                     e.preventDefault();
                     dropzone.style.borderColor = 'var(--border-soft)';
-                    dropzone.style.background = 'rgba(15, 23, 42, 0.4)';
+                    dropzone.style.background = 'transparent';
                 });
-
-                // Drop Handling
                 dropzone.addEventListener('drop', (e) => {
                     e.preventDefault();
                     dropzone.style.borderColor = 'var(--border-soft)';
-                    dropzone.style.background = 'rgba(15, 23, 42, 0.4)';
-                    
+                    dropzone.style.background = 'transparent';
                     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
                         handleFile(e.dataTransfer.files[0]);
                     }
                 });
-
-                // Click Handling
                 dropzone.addEventListener('click', () => {
                     const input = document.createElement('input');
                     input.type = 'file';
@@ -317,55 +350,44 @@
                     alert('Please upload an image file.');
                     return;
                 }
-                
-                // Show a preview background
                 const reader = new FileReader();
                 reader.onload = (e) => {
                     uploadedImageData = e.target.result;
-                    
-                    // Replace dropzone content with success state
                     dropzone.innerHTML = `
-                        <div style="width: 100%; height: 160px; border-radius: 8px; overflow: hidden; position: relative;">
+                        <div style="width: 100%; height: 100%; border-radius: 8px; overflow: hidden; position: relative;">
                             <img src="${uploadedImageData}" style="width: 100%; height: 100%; object-fit: cover; filter: brightness(0.7);" />
                             <div style="position: absolute; top:0; left:0; width:100%; height:100%; display:flex; align-items:center; justify-content:center;">
-                                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
                             </div>
                         </div>
                     `;
-                    dropzone.style.padding = '8px';
-                    dropzone.style.border = '2px solid #10b981';
+                    dropzone.style.padding = '4px';
+                    dropzone.style.border = '1px solid #10b981';
                 };
                 reader.readAsDataURL(file);
             }
 
-            // Hook up the Check My Thumbnail Button
             if (analyzeBtn) {
                 analyzeBtn.addEventListener('click', (e) => {
-                    // Prevent the default auth trigger momentarily
                     e.preventDefault();
+                    const gameTitleInput = document.getElementById('landing-game-title');
+                    const gameTitle = gameTitleInput ? gameTitleInput.value.trim() : '';
 
-                    const gameTitle = document.getElementById('landing-game-title').value.trim();
-                    const context = document.getElementById('landing-context').value.trim();
-
-                    // If no image is provided, we still want them to go to the upload page
                     if (uploadedImageData) {
                         const data = {
                             method: "upload",
                             imageData: uploadedImageData,
                             gameName: gameTitle,
-                            context: context,
-                            mode: "fast", // Enforce Low/Fast model dynamically
+                            context: "",
+                            mode: "fast",
                             timestamp: Date.now()
                         };
                         localStorage.setItem("linter_data", JSON.stringify(data));
-                        console.log("Image and context saved for post-login.");
                     }
 
-                    // Now manually trigger the auth flow
                     if (window.signInWithGoogle) {
                         window.signInWithGoogle('/upload.html');
                     } else {
-                        // Fallback if auth.js didn't expose it yet
                         window.location.href = '/upload.html';
                     }
                 });
