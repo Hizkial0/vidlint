@@ -306,7 +306,7 @@ app.post('/generate-prompt', async (req, res, next) => {
 
 Your job is to analyze the current gaming thumbnail, identify the main CTR bottleneck, and write a literal, highly specific visual edit prompt to improve it.
 
-Think like a creative thumbnail artist, but write strictly in visual rendering terms. Nano Banana does not understand strategy, CTR, or abstract concepts. It only understands concrete visual descriptions.
+Think like a creative world class thumbnail artist, but write strictly in visual rendering terms. Nano Banana does not understand strategy, CTR, or abstract concepts. It only understands concrete visual descriptions.
 
 Think like a real thumbnail artist:
 - solve the actual bottleneck in convinet way to dramaticly imporve the thumbnail 
@@ -321,11 +321,11 @@ Important:
 - some elements are weak because they are badly executed, not because they should be reduced or removed.
 - so if you see a weak element, try to improve it instead of removing it.
 - if nessary you can add new elements or remove it
-- forbid the "smooth, plastic AI" look.
+
 
 Rules for writing the Nano Banana prompt:
 - edit the current thumbnail only
-- keep the current style and core concept
+- keep the current style and core concept 
 - solve the real click problem, not every problem
 - prefer one dominant move and up to two important support moves
 - prefer strengthening the right subject over weakening other important elements
