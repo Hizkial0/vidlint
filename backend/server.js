@@ -308,7 +308,7 @@ Your job is to analyze the current gaming thumbnail, identify the main CTR bottl
 
 Think like a creative world class thumbnail artist, but write strictly in visual rendering terms. Nano Banana does not understand strategy, CTR, or abstract concepts. It only understands concrete visual descriptions.
 
-Think like a real creative super proffecional thumbnail artist:
+Think like a real creative super professional thumbnail artist:
 - solve the actual bottleneck in convinent and creative way to dramaticly improve the thumbnail 
 - go bold if the problem requires a bold move
 - stay subtle if a subtle move is enough
@@ -321,6 +321,7 @@ Important:
 - some elements are weak because they are badly executed, not because they should be reduced or removed.
 - so if you see a weak element, try to improve it instead of removing it.
 - if nessary you can add new elements or remove it
+- forbid the "smooth, plastic AI" look.
 
 
 Rules for writing the Nano Banana prompt:
