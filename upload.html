@@ -4,11 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="/favicon.png">
-    <meta name="description" content="Use our YouTube thumbnail tester to check your thumbnail's readabilty and emotion score.">
-    <title>YouTube Thumbnail Tester | VidLint</title>
+    <meta name="description" content="Use VidLint as your YouTube thumbnail tester to check readability, emotion, and mobile clarity before you publish.">
+    <meta name="robots" content="index,follow">
+    <link rel="canonical" href="https://vidlint.com/upload.html">
+    <meta property="og:site_name" content="VidLint">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="YouTube Thumbnail Tester for Fast Pre-Publish Feedback | VidLint">
+    <meta property="og:description" content="Test your thumbnail before you publish and get fast AI feedback on readability, emotion, and mobile performance.">
+    <meta property="og:url" content="https://vidlint.com/upload.html">
+    <meta property="og:image" content="https://vidlint.com/favicon.png">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="YouTube Thumbnail Tester for Fast Pre-Publish Feedback | VidLint">
+    <meta name="twitter:description" content="Use VidLint to test thumbnail readability, emotion, and mobile clarity before you post.">
+    <meta name="twitter:image" content="https://vidlint.com/favicon.png">
+    <title>YouTube Thumbnail Tester for Fast Pre-Publish Feedback | VidLint</title>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="landing.css?v=5">
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "SoftwareApplication",
+            "name": "VidLint Thumbnail Tester",
+            "applicationCategory": "BusinessApplication",
+            "operatingSystem": "Web",
+            "url": "https://vidlint.com/upload.html",
+            "description": "A YouTube thumbnail tester that checks readability, emotion, and mobile clarity before you publish.",
+            "offers": [
+                {
+                    "@type": "Offer",
+                    "name": "Free",
+                    "price": "0",
+                    "priceCurrency": "USD"
+                },
+                {
+                    "@type": "Offer",
+                    "name": "Pro",
+                    "price": "19",
+                    "priceCurrency": "USD"
+                }
+            ]
+        }
+    </script>
     <style>
         /* Premium Upload Page Styles */
         body {
@@ -94,6 +131,18 @@
         .upload-header .subtitle {
             color: #94a3b8;
             font-size: 1.15rem;
+        }
+
+        .offer-note {
+            margin-top: 16px;
+            color: #cbd5e1;
+            font-size: 0.95rem;
+            text-align: center;
+            line-height: 1.5;
+        }
+
+        .offer-note strong {
+            color: #fff;
         }
 
         .upload-card {
@@ -349,8 +398,8 @@
                             <span>Basic analysis & resolution</span>
                         </div>
                         <div class="dropdown-item" style="cursor: pointer;" onclick="window.location.href='/pro-request.html'">
-                            <strong style="color: #3b82f6;">Request Pro Access 📨</strong>
-                            <span>Manual onboarding available</span>
+                            <strong style="color: #3b82f6;">Request Manual Pro Onboarding</strong>
+                            <span>For creators who want deeper feedback</span>
                         </div>
                     </div>
                 </div>
@@ -361,8 +410,9 @@
 
     <div class="upload-page">
         <div class="upload-header">
-            <h1>Analyze Your Thumbnail</h1>
-            <p class="subtitle">Upload your image, pick a game, and get instant AI feedback.</p>
+            <h1>YouTube Thumbnail Tester</h1>
+            <p class="subtitle">Test your thumbnail before you publish and get the 3 fastest fixes for readability, hierarchy, and click risk.</p>
+            <p class="offer-note"><strong>Free thumbnail audit for gaming creators.</strong> Fast Mode gives you the pre-upload check now, and manual Pro onboarding is there when you want deeper feedback.</p>
         </div>
 
         <div class="upload-card">
@@ -407,7 +457,7 @@
             <div id="statusText"></div>
 
             <!-- Analyze Button -->
-            <button id="analyzeBtn" disabled>Analyze Thumbnail</button>
+            <button id="analyzeBtn" disabled>Get My 3 Fastest Fixes</button>
 
             <div class="mode-options-simple">
                 <label class="simple-radio active">
@@ -416,7 +466,7 @@
                 </label>
                 <label class="simple-radio locked-mode" onclick="window.location.href='pro-request.html'">
                     <input type="radio" name="upload-mode" value="high" disabled>
-                    <span>🔒 High Mode</span>
+                    <span>High Mode (manual onboarding)</span>
                 </label>
             </div>
 

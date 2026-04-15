@@ -1,30 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://vidlint.com/</loc>
+    <loc>https://vidlint.com/index.html</loc>
   </url>
   <url>
-    <loc>https://vidlint.com/upload</loc>
+    <loc>https://vidlint.com/upload.html</loc>
   </url>
   <url>
-    <loc>https://vidlint.com/results</loc>
+    <loc>https://vidlint.com/examples.html</loc>
   </url>
   <url>
-    <loc>https://vidlint.com/examples</loc>
+    <loc>https://vidlint.com/help.html</loc>
   </url>
   <url>
-    <loc>https://vidlint.com/pro-request</loc>
+    <loc>https://vidlint.com/about.html</loc>
   </url>
   <url>
-    <loc>https://vidlint.com/help</loc>
+    <loc>https://vidlint.com/youtube-thumbnail-analyzer.html</loc>
   </url>
   <url>
-    <loc>https://vidlint.com/about</loc>
+    <loc>https://vidlint.com/youtube-thumbnail-tester.html</loc>
   </url>
   <url>
-    <loc>https://vidlint.com/privacy</loc>
+    <loc>https://vidlint.com/gaming-thumbnail-analyzer.html</loc>
   </url>
   <url>
-    <loc>https://vidlint.com/terms</loc>
+    <loc>https://vidlint.com/ai-thumbnail-analyzer.html</loc>
+  </url>
+  <url>
+    <loc>https://vidlint.com/youtube-thumbnail-preview-tool.html</loc>
+  </url>
+  <url>
+    <loc>https://vidlint.com/youtube-thumbnail-split-testing.html</loc>
   </url>
 </urlset>

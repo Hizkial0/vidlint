@@ -511,7 +511,7 @@ app.post('/generate-image', async (req, res, next) => {
         }
 
         // Select model based on strength
-        const modelName = strength === 'high' ? 'gemini-3.0-flash-image' : 'gemini-2.5-flash-image';
+        const modelName = strength === 'high' ? 'gemini-3.1-flash-image-preview' : 'gemini-3-flash-image-image';
         console.log(`[FixGenerator] Using model: ${modelName} (Strength: ${strength})`);
 
         const response = await ai.models.generateContent({

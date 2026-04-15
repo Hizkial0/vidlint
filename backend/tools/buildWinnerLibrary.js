@@ -30,7 +30,7 @@ const BATCH_SIZE = 10;
 const MAX_DOCS = 0; // 0 for unlimited
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-const geminiModel = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+const geminiModel = genAI.getGenerativeModel({ model: 'gemini-3.1-flash-image-preview' });
 
 /**
  * Hash an image buffer
