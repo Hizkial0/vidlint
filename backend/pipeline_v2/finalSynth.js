@@ -38,7 +38,7 @@ Judge:
 - emotion/tension
 - background support
 - Game or channel style fit
-- Compsition clarity 
+- Compsition clarity (composition is a king)
 
 Identify the single biggest bottleneck first.
 Judge the thumbnail from top to bottom:

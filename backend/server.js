@@ -320,7 +320,10 @@ Be literal, clear, and be super specific so the ai will not fuckup.
 Important:
 - some elements are weak because they are badly executed, not because they should be reduced or removed.
 - so if you see a weak element, try to improve it instead of removing it.
--if nessary you can add new elements or remove it
+- if necessary, you can add new elements to improve the hook, but you MUST command the AI to render them perfectly matching the specific visual style, textures, and lighting of the uploaded thumbnail. 
+- if changing scale or proportions, use relative terms. Explicitly command the model to maintain perfect anatomy and exactly match the uploaded image's native style. 
+- forbid deformed features and the "generic AI" look.
+- forbid the "smooth, plastic AI" look.
 
 Rules for writing the Nano Banana prompt:
 - edit the current thumbnail only
@@ -511,7 +514,7 @@ app.post('/generate-image', async (req, res, next) => {
         }
 
         // Select model based on strength
-        const modelName = strength === 'high' ? 'gemini-3.1-flash-image-preview' : 'gemini-3-flash-image-image';
+        const modelName = strength === 'high' ? 'gemini-3.1-flash-image-preview' : 'gemini-2.5-flash-image';
         console.log(`[FixGenerator] Using model: ${modelName} (Strength: ${strength})`);
 
         const response = await ai.models.generateContent({
